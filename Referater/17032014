@@ -20,11 +20,13 @@ Tilstede: Adrian og Hallbjørn
 -Vi velger å bruke Github for versjonshåndtering. Og NetBeans som utviklerverktøy.
 
 -Kommentarer: 	Hvem har gjort klassen og hva gjør klassen.
-              Kommentarer før hver metode.
-				      Yttligere kommentarer hvis det gjør programkoden mer oversiktlig.
+              	Kommentarer før hver metode.
+		Yttligere kommentarer hvis det gjør programkoden mer oversiktlig.
 
 
 -Dokumentering: Fortløpende dokumenter det vi gjør og bestemmer.
+		Vurderer å bruke JavaDoc i Netbeans. Må undersøke hvilke 
+		muligheter som er i programmet.
 
 -Arbeidsplan: Følger i stor grad den anbfalte arbeidsplan vi har fått utgitt.
 
