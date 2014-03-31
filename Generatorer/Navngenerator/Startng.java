@@ -1,11 +1,11 @@
 
 import java.awt.event.*;
 
-public class startGenPasient
+public class Startng
 {
 	public static void main(String[] args)
 	{
-		PasientGenerator vindu = new PasientGenerator();
+		Navngenvindu vindu = new Navngenvindu();
 
 		vindu.addWindowListener( new WindowAdapter()
 		{

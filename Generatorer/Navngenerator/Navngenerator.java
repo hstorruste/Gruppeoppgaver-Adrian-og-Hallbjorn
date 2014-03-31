@@ -1,23 +1,15 @@
-/*Dette er et program for å generere fiktive pasienter.
+/*Dette er et program for å generere fiktive navn.
 Laget av Hallbjørn Storruste*/
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
 import java.util.Random;
 
-
-public class PasientGenerator extends JFrame
+public class Navngenerator
 {
-	private JButton start;
-	private JTextArea utskrift;
-	private KnappeLytter lytter;
-
 	private char[] vok, kon, dobble, vokAlene, konSlutt, ikkeSlutt;
 
-	public PasientGenerator()
+
+	public Navngenerator()
 	{
-		super("PasientGenerator");
 
 		vok = new char[]{'a','a','a','a','a','e','e','e','e','e','i','i','i','i','i','o','o','u','u','y','ø','å'};
 		kon = new char[]{'b','b','d','d','f','g','g','h','j','k','k','l','l','m','m','n','n','n','n','p','r','r','r','r','s','s','s','s','s','s','t','t','t','t','t','t','v'};
@@ -25,27 +17,25 @@ public class PasientGenerator extends JFrame
 		vokAlene = new char[]{'o','y','ø','å'};
 		konSlutt = new char[]{'m','r'};
 		ikkeSlutt = new char[]{'j','u','h','v'};
-
-		setLayout(new FlowLayout() );
-
-		lytter = new KnappeLytter();
-
-		start = new JButton("Generer pasienter");
-		start.addActionListener(lytter);
-		add(start);
-
-		utskrift = new JTextArea(20,20);
-		add(new JScrollPane(utskrift));
-
-		setSize(400,400);
-		setVisible(true);
 	}
 
-	public void generer()
+	public String nesteNavn()
 	{
 		String nyttNavn = genererNavn() + " " + genererNavn();
 
-		skrivUt(nyttNavn);
+		return nyttNavn;
+	}
+
+	public String[] nesteNavn(int ant)
+	{
+		String navnliste[] = new String[ant];
+
+		for(int i=0; i < ant; i++)
+		{
+			navnliste[i] = nesteNavn();
+		}
+
+		return navnliste;
 	}
 
 	public String genererNavn()
@@ -156,19 +146,5 @@ public class PasientGenerator extends JFrame
 				return true;
 
 		return false;
-	}
-
-	public void skrivUt(String tekst)
-	{
-		utskrift.append(tekst + "\n");
-	}
-
-	private class KnappeLytter implements ActionListener
-	{
-		public void actionPerformed(ActionEvent e)
-		{
-			if(e.getSource() == start)
-				generer();
-		}
 	}
 }
