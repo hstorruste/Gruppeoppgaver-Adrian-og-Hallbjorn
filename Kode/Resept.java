@@ -11,36 +11,50 @@ public class Resept implements Serializable
 {
 	private static final long serialVersionUID = 1005L;
 
-	//SortedSet<Medisin> medisin;
+	Medisin medisin;
 	Calendar dato;
-	//SortedSet<Lege> lege;
+	Lege lege;
 	int reit;
-	public static final int RESEPTNUMMER;
+	//public static final int RESEPTNUMMER;//Kontrollera och behøvs den?
 	String beskrivelse;
 	boolean utlevert;
 
-	public Resept(Calendar d, int r, )
+	public Resept(Medisin m, Calendar d, Lege l, int r, String b)
 	{
-		//medisin = new TreeSet<>();
+		medisin = m;
 		dato = d;
-		//lege = new TreeSet<>();
-		reit = r;//Hær ær jag
+		lege = l;
+		reit = r;
+		beskrivelse = b;
+		utlevert = false;
 	}
 
-	public Calendar getBorn()
+	public Medisin getMedisin(){
+		return medisin;
+	}
+	public Calendar getDato()
 	{
-		return born;
+		return dato;
+	}
+	public Lege getLege()
+	{
+			return lege;
+	}
+	public int getReit()
+	{
+			return reit;
+	}
+	public String getBeskrivelse()
+	{
+			return beskrivelse;
+	}
+	public boolean getUtlevert()
+	{
+			return utlevert;
 	}
 
-	/*
-	public TreeSet<Resept> getReseptliste()
+	/*public String toString()
 	{
-		return Reseptliste;
-	}
-	*/
-
-	public String toString()
-	{
-		return super.toString() + "Født: " + born + "\n";
-	}
+		return ;
+	}*/
 }
