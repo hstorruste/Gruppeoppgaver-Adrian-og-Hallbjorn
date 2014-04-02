@@ -1,6 +1,6 @@
 /*	Denne klassen er en Legepost som er subklassen av Person.
 	Laget av Adrian Westlund
-	Siste versjon 01-04-2014*/
+	Siste versjon 02-04-2014*/
 
 import java.io.*;
 
@@ -14,7 +14,7 @@ public class Lege extends Person implements Serializable
 	//SortedSet<Pasient> Pasientliste;
 
 	public Lege(String fnavn, String enavn, String gate, String pSted, String aSted,
-				String ePost, int pNr, boolean a, boolean b, boolean c)
+				String ePost, int pNr)
 	{
 		super(fnavn, enavn);
 
@@ -23,9 +23,9 @@ public class Lege extends Person implements Serializable
 		Arbetssted = aSted;
 		EPost = ePost;
 		Postnummer = pNr;
-		A = a;
-		B = b;
-		C = c;
+		A = true;
+		B = true;
+		C = true;
 		//Pasientliste = new TreeSet<>();
 	}
 
@@ -109,12 +109,16 @@ public class Lege extends Person implements Serializable
 					if(!Arbetssted.equals(""))
 		   				ut += "Arbetssted: " + Arbetssted + "\n";
 		   			ut += "Bevilning: ";
-		   			if(A)
+		   			if(A && (B || C))
 		   				ut += "A, ";
-		   			if(B)
+		   			if(A && !(B || C))
+		   				ut += "A.";
+		   			if(B && C)
 		   				ut += "B, ";
+		   			if(B && !C)
+		   				ut += "B.";
 		   			if(C)
-		   				ut += "C";
+		   				ut += "C.";
 		return ut;
 	}
 }
