@@ -1,28 +1,29 @@
 /*	Denne klassen er en Pasientpost som er subklassen av Person.
 		Den har en Reseptliste over alle resepter som er forskrevet
-		den enkelte pasient. Laget av Hallbjørn Storruste*/
+		den enkelte pasient.
+		Laget av Hallbjørn Storruste
+		Siste versjon 03-04-2014*/
 
 import java.io.*;
-import java.util.Calendar;
 
 public class Pasient extends Person implements Serializable
 {
 	private static final long serialVersionUID = 1002L;
 
-	Calendar born;
+	long fnr;
 	//SortedSet<Resept> Reseptliste;
-	public Pasient(String fnavn, String enavn, Calendar b)
+	public Pasient(String fnavn, String enavn, long f)
 	{
 		super(fnavn, enavn);
 
-		born = b;
+		fnr = f;
 
 		//Reseptliste = new TreeSet<>();
 	}
 
-	public Calendar getBorn()
+	public long getFnr()
 	{
-		return born;
+		return fnr;
 	}
 
 	/*
@@ -34,6 +35,6 @@ public class Pasient extends Person implements Serializable
 
 	public String toString()
 	{
-		return super.toString() + "Født: " + born + "\n";
+		return super.toString() + "Fødselsnummer: " + fnr + "\n";
 	}
 }
