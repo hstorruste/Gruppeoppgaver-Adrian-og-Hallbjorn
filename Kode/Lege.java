@@ -8,58 +8,58 @@ public class Lege extends Person implements Serializable
 {
 	private static final long serialVersionUID = 1003L;
 
-	String Gateadresse, Poststed, Arbetssted, EPost;
-	int Postnummer;
-	boolean A,B,C;
+	String gateadresse, poststed, arbetssted, ePost;
+	int postnummer;
+	boolean a,b,c;
 	//SortedSet<Pasient> Pasientliste;
 
-	public Lege(String fnavn, String enavn, String gate, String pSted, String aSted,
-				String ePost, int pNr)
+	public Lege(String fnavn, String enavn, String g, String ps, String as,
+				String ep, int pNr)
 	{
 		super(fnavn, enavn);
 
-		Gateadresse = gate;
-		Poststed = pSted;
-		Arbetssted = aSted;
-		EPost = ePost;
-		Postnummer = pNr;
-		A = true;
-		B = true;
-		C = true;
+		gateadresse = g;
+		poststed = ps;
+		arbetssted = as;
+		ePost = ep;
+		postnummer = pNr;
+		a = true;
+		b = true;
+		c = true;
 		//Pasientliste = new TreeSet<>();
 	}
 
 	public String getGateadresse()
 	{
-		return Gateadresse;
+		return gateadresse;
 	}
 	public String getPoststed()
 	{
-		return Poststed;
+		return poststed;
 	}
 	public String getArbetssted()
 	{
-		return Arbetssted;
+		return arbetssted;
 	}
 	public String getEPost()
 	{
-		return EPost;
+		return ePost;
 	}
 	public int getPostnummer()
 	{
-		return Postnummer;
+		return postnummer;
 	}
 	public boolean getA()
 	{
-		return A;
+		return a;
 	}
 	public boolean getB()
 	{
-		return B;
+		return b;
 	}
 	public boolean getC()
 	{
-		return C;
+		return c;
 	}
 	/*
 	public TreeSet<Pasient> getPasientliste()
@@ -70,54 +70,54 @@ public class Lege extends Person implements Serializable
 
 	public void setGateadresse(String g)
 	{
-		Gateadresse = g;
+		gateadresse = g;
 	}
 	public void setPoststed(String p)
 	{
-		Poststed = p;
+		poststed = p;
 	}
 	public void setArbetssted(String as)
 	{
-		Arbetssted = as;
+		arbetssted = as;
 	}
 	public void setEPost(String e)
 	{
-		EPost = e;
+		ePost = e;
 	}
 	public void setPostnummer(int pNr)
 	{
-		Postnummer = pNr;
+		postnummer = pNr;
 	}
 	public void setA(boolean nyA)
 	{
-		A = nyA;
+		a = nyA;
 	}
 	public void setB(boolean nyB)
 	{
-		B = nyB;
+		b = nyB;
 	}
 	public void setC(boolean nyC)
 	{
-		C = nyC;
+		c = nyC;
 	}
 
 	public String toString()
 	{
-		String ut = super.toString() + "E-post: " + EPost + "\n";
-					if(!Gateadresse.equals(""))
-						ut += "Gateadresse: " + Gateadresse + " " + Postnummer + " " + Poststed + "\n";
-					if(!Arbetssted.equals(""))
-		   				ut += "Arbetssted: " + Arbetssted + "\n";
+		String ut = super.toString() + "E-post: " + ePost + "\n";
+					if(!gateadresse.equals(""))
+						ut += "Gateadresse: " + gateadresse + "\n" + postnummer + " " + poststed + "\n";
+					if(!arbetssted.equals(""))
+		   				ut += "Arbetssted: " + arbetssted + "\n";
 		   			ut += "Bevilning: ";
-		   			if(A && (B || C))
+		   			if(a && (b || c))
 		   				ut += "A, ";
-		   			if(A && !(B || C))
+		   			if(a && !(b || c))
 		   				ut += "A.";
-		   			if(B && C)
+		   			if(b && c)
 		   				ut += "B, ";
-		   			if(B && !C)
+		   			if(b && !c)
 		   				ut += "B.";
-		   			if(C)
+		   			if(c)
 		   				ut += "C.";
 		return ut;
 	}

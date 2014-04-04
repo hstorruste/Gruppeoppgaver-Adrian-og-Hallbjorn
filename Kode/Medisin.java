@@ -8,52 +8,52 @@ public class Medisin implements Serializable
 {
 	private static final long serialVersionUID = 1004L;
 
-	String Grupp, Kategori, Navn, ATCNr;
+	String grupp, kategori, navn, atcNr;
 
 	public Medisin(String g, String k, String n, String a)
 	{
-		Grupp = g;
-		Kategori = k;
-		Navn = n;
-		ATCNr = a;
+		grupp = g;
+		kategori = k;
+		navn = n;
+		atcNr = a;
 	}
 
 	public String getGrupp()
 	{
-		return Grupp;
+		return grupp;
 	}
 	public String getKategori()
 	{
-		return Kategori;
+		return kategori;
 	}
 	public String getNavn()
 	{
-		return Navn;
+		return navn;
 	}
 	public String getATCNr()
 	{
-		return ATCNr;
+		return atcNr;
 	}
 
 	public void setGrupp(String g)
 	{
-		Grupp = g;
+		grupp = g;
 	}
 	public void setKategori(String k)
 	{
-		Kategori = k;
+		kategori = k;
 	}
 	public void setNavn(String n)
 	{
-		Navn = n;
+		navn = n;
 	}
 	public void setATCNr(String a)
 	{
-		ATCNr = a;
+		atcNr = a;
 	}
 
 	public String toString()
 	{
-		return "Grupp: " + Grupp + "\nKategori: " + Kategori + "\nMedisin: " + Navn + "\nATC-nr: " + ATCNr;
+		return "Grupp: " + grupp + "\nKategori: " + kategori + "\nMedisin: " + navn + "\nATC-nr: " + atcNr;
 	}
 }//End of class Medisin
