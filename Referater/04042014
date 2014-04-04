@@ -1,0 +1,11 @@
+Møte 4/4-154
+
+Sjekk skisser for brukegrensesnittet for å se om det er noen metoder vi kan lage for å knytte elementer sammen i egne Jpanel's til gjenbruk. (Access  protected).
+
+Aktuelle metoder/moduler
+
+Jlabel og JtextField på en rad.
+Jlabel og JtextField på to rader.
+Jlabel og JcomboBox på to rader
+Jlabel og JcomboBox på en rad.
+
