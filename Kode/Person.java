@@ -37,7 +37,7 @@ public abstract class Person implements Serializable
 
 	public String toString()
 	{
-		return "Fornavn: " + fornavn + "\nEtternavn: " + etternavn + "\n";
+		return "Navn: " + etternavn + ", " + etternavn + "\n";
 	}
 
 }
