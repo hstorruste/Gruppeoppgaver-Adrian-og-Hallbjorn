@@ -11,10 +11,11 @@ public class Lege extends Person implements Serializable
 	String gateadresse, poststed, arbetssted, ePost;
 	int postnummer;
 	boolean a,b,c;
+	char[] passord;
 	SortedSet<Pasient> Pasientliste;
 
 	public Lege(String fnavn, String enavn, String g, String ps, String as,
-				String ep, int pNr)
+				String ep, int pNr, char[] pass)
 	{
 		super(fnavn, enavn);
 
@@ -26,6 +27,10 @@ public class Lege extends Person implements Serializable
 		a = true;
 		b = true;
 		c = true;
+
+		passord = pass;
+
+
 		Pasientliste = new TreeSet<>();
 	}
 
@@ -60,6 +65,10 @@ public class Lege extends Person implements Serializable
 	public boolean getC()
 	{
 		return c;
+	}
+	public char[] getPassord()
+	{
+		return passord;
 	}
 	public TreeSet<Pasient> getPasientliste()
 	{
@@ -98,6 +107,10 @@ public class Lege extends Person implements Serializable
 	public void setC(boolean nyC)
 	{
 		c = nyC;
+	}
+	public void setPassord(char[] p)
+	{
+		passord = p;
 	}
 
 	public String toString()
