@@ -11,7 +11,7 @@ public class Lege extends Person implements Serializable
 	String gateadresse, poststed, arbetssted, ePost;
 	int postnummer;
 	boolean a,b,c;
-	//SortedSet<Pasient> Pasientliste;
+	SortedSet<Pasient> Pasientliste;
 
 	public Lege(String fnavn, String enavn, String g, String ps, String as,
 				String ep, int pNr)
@@ -26,7 +26,7 @@ public class Lege extends Person implements Serializable
 		a = true;
 		b = true;
 		c = true;
-		//Pasientliste = new TreeSet<>();
+		Pasientliste = new TreeSet<>();
 	}
 
 	public String getGateadresse()
@@ -61,12 +61,11 @@ public class Lege extends Person implements Serializable
 	{
 		return c;
 	}
-	/*
 	public TreeSet<Pasient> getPasientliste()
 	{
 		return Pasientliste;
 	}
-	*/
+
 
 	public void setGateadresse(String g)
 	{
