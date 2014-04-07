@@ -1,26 +1,27 @@
 /* Denne klassen er til for å legge Pasientobjekter in i en Collection
 	og gjøre oprasjoner mot den.
 	Laget av Hallbjørn Storruste, s165519
-	Siste versjon: 04-04-2014*/
+	Siste versjon: 06-04-2014*/
 
 import java.io.*;
 import java.util.*;
 
 public class Pasientregister implements Serializable
 {
-	private Comparator komp;
-	private SortedSet<Pasient> pasientregister;
+    private static final long serialVersionUID = 1007L;
+    private Comparator komp;
+    private SortedSet<Pasient> pasientregister;
 
-	public Pasientregister()
-	{
-		komp = new PersonComparator();
-		pasientregister = new TreeSet<>(komp);
-	}
+    public Pasientregister()
+    {
+            komp = new PersonComparator();
+            pasientregister = new TreeSet<>(komp);
+    }
 
 
 /*Oppretter en ny pasient og setter den inn i registeret.
 	Returnerer true hvis det er vellykket.*/
-	public boolean settInn(String fornavn, String etternavn, Long fødselsnr)
+	public boolean settInn(String fornavn, String etternavn, String fødselsnr)
 	{
 		Pasient ny = new Pasient(fornavn, etternavn, fødselsnr);
 
@@ -30,8 +31,8 @@ public class Pasientregister implements Serializable
 //Setter inn ny pasient i registeret. Returnerer true hvis det er vellykket.
 	public boolean settInn(Pasient ny)
 	{
-		if(ny == null)
-					return false;
+                if(ny == null)
+                    return false;
 
 		return pasientregister.add(ny);
 	}
@@ -46,8 +47,8 @@ public class Pasientregister implements Serializable
             while(iterator.hasNext())
             {
                 runner = iterator.next();
-                if(runner.getEtternavn().equals(etternavn)
-                        && runner.getFornavn().equals(fornavn))
+                if(runner.getEtternavn().matches(etternavn)
+                        && runner.getFornavn().matches(fornavn))
                 {
                     if(pasientarray != null)
                     {
@@ -69,7 +70,8 @@ public class Pasientregister implements Serializable
 
 	}
 
-//Finner en eller flere pasienter basert på navn. Søker både gjennom for og etternavn.
+/*Finner en eller flere pasienter som begynner med det aktuelle navn. 
+        Søker først gjennom etternavn og så fornavn.*/
 	public Pasient[] finnPasient(String navn)
 	{          
             Pasient[] etternavnarray = finnPasient(navn + ".*", ".*");   
@@ -105,7 +107,7 @@ public class Pasientregister implements Serializable
 
 /*Finner og returnerer en pasient i registeret basert på fødselsnummer.
 	Returnerer 'null' hvis ikke den finnes. */
-	public Pasient finnPasient(Long fødselsnummer)
+	public Pasient finnPasientFnr(String fødselsnummer)
 	{
 		Iterator<Pasient> iterator = pasientregister.iterator();
 		Pasient runner = null;
@@ -113,7 +115,7 @@ public class Pasientregister implements Serializable
 		while(iterator.hasNext())
 		{
 			runner = iterator.next();
-			if(runner.getFnr() == fødselsnummer)
+			if(runner.getFnr().equals(fødselsnummer))
 				return runner;
 		}
 		return null;
@@ -125,16 +127,18 @@ public class Pasientregister implements Serializable
 		return pasientregister;
 	}
 
+//Returnerer en string med all informasjon om hver pasient.
+        @Override
 	public String toString()
 	{
-                StringBuilder str = new StringBuilder();
-		Iterator<Pasient> iter = pasientregister.iterator();
+            StringBuilder str = new StringBuilder();
+            Iterator<Pasient> iter = pasientregister.iterator();
 
-		while(iter.hasNext())
-		{
-			str.append(iter.next() + "\n");
-		}
+            while(iter.hasNext())
+            {
+                str.append(iter.next() + "\n");
+            }
 
-		return str.toString();
+            return str.toString();
 	}
 }

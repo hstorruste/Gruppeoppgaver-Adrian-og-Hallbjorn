@@ -1,6 +1,6 @@
-/*	Denne klassen er en Reseptpost.
-	Klassen har en Medisinpeker som peker på medisinen for reseptet.
-	Legepeker som peker på den lege som har skrivit reseptet.
+/* Denne klassen er en Reseptpost.
+	Klassen har en Medisinpeker som peker pÃ¥ medisinen for reseptet.
+	Legepeker som peker pÃ¥ den lege som har skrivit reseptet.
 	Laget av Adrian Westlund
 	Siste versjon 03-04-2014*/
 
@@ -11,13 +11,12 @@ public class Resept implements Serializable
 {
 	private static final long serialVersionUID = 1005L;
 
-	Medisin medisin;
-	Calendar dato;
-	Lege lege;
-	int reit;
-	private int reseptNr;
-	String beskrivelse;
-	boolean utlevert;
+	private Medisin medisin;
+	private int reseptNr, reit;
+        private Calendar dato;
+	private Lege lege;	
+	private String beskrivelse;
+	private boolean utlevert;
 
 	public Resept(Medisin m, Calendar d, Lege l, int r, int rNr, String b)
 	{
@@ -39,11 +38,11 @@ public class Resept implements Serializable
 	}
 	public Lege getLege()
 	{
-			return lege;
+                return lege;
 	}
 	public int getReit()
 	{
-			return reit;
+                return reit;
 	}
 	public String getBeskrivelse()
 	{

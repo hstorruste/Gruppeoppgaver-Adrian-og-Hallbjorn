@@ -8,13 +8,13 @@ public class Medisin implements Serializable
 {
 	private static final long serialVersionUID = 1004L;
 
-	String grupp, kategori, navn, atcNr;
+	String navn, kategori, grupp, atcNr;
 
-	public Medisin(String g, String k, String n, String a)
+	public Medisin(String n, String k, String g, String a)
 	{
-		grupp = g;
-		kategori = k;
 		navn = n;
+                kategori = k;
+                grupp = g;
 		atcNr = a;
 	}
 

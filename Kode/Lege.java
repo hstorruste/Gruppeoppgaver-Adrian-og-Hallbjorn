@@ -3,6 +3,7 @@
 	Siste versjon 02-04-2014*/
 
 import java.io.*;
+import java.util.*;
 
 public class Lege extends Person implements Serializable
 {
@@ -12,18 +13,18 @@ public class Lege extends Person implements Serializable
 	int postnummer;
 	boolean a,b,c;
 	char[] passord;
-	SortedSet<Pasient> Pasientliste;
+	SortedSet<Pasient> pasientliste;
 
-	public Lege(String fnavn, String enavn, String g, String ps, String as,
-				String ep, int pNr, char[] pass)
+	public Lege(String fnavn, String enavn, String ep, String g, int pNr,
+                        String ps, String as, char[] pass)
 	{
 		super(fnavn, enavn);
 
-		gateadresse = g;
-		poststed = ps;
-		arbetssted = as;
 		ePost = ep;
+                gateadresse = g;
 		postnummer = pNr;
+                poststed = ps;
+                arbetssted = as;
 		a = true;
 		b = true;
 		c = true;
@@ -31,7 +32,7 @@ public class Lege extends Person implements Serializable
 		passord = pass;
 
 
-		Pasientliste = new TreeSet<>();
+		pasientliste = new TreeSet<>();
 	}
 
 	public String getGateadresse()
@@ -70,9 +71,9 @@ public class Lege extends Person implements Serializable
 	{
 		return passord;
 	}
-	public TreeSet<Pasient> getPasientliste()
+	public SortedSet<Pasient> getPasientliste()
 	{
-		return Pasientliste;
+		return pasientliste;
 	}
 
 
