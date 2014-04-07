@@ -1,5 +1,5 @@
 /*	Dette er en abstrakt superklasse som inneholder Fornavn og Etternavn
-		Laget av Hallbjørn Storruste
+		Laget av HallbjÃ¸rn Storruste
 		Siste versjon 03-04-2014*/
 import java.io.*;
 
@@ -37,7 +37,7 @@ public abstract class Person implements Serializable
 
 	public String toString()
 	{
-		return "Navn: " + etternavn + ", " + etternavn + "\n";
+		return "Navn: " + etternavn + ", " + fornavn + "\n";
 	}
 
 }
