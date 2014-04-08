@@ -6,6 +6,7 @@
 
 import java.io.*;
 import java.util.Calendar;
+import java.text.DateFormat;
 
 public class Resept implements Serializable
 {
@@ -53,8 +54,22 @@ public class Resept implements Serializable
 			return utlevert;
 	}
 
-	/*public String toString()
+	public String toString()
 	{
-		return ;
-	}*/
+		String ut = "Reseptnr: " + reseptNr + "\nDato: ";
+                
+                DateFormat datoformat = DateFormat.getDateInstance();
+                ut += datoformat.format(dato.getTime());
+                
+                ut += "\nPreparat: " + medisin.toString()
+                        + "\nBeskrivelse: " + beskrivelse + "\nLege: " + lege.toString()
+                        + "\nReit: " + reit + "\nUtlevert: ";
+                
+                if(utlevert)
+                    ut += "Ja";
+                else
+                    ut += "Nei";
+                
+                return ut;
+	}
 }
