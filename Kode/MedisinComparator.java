@@ -4,35 +4,39 @@
  * and open the template in the editor.
  */
 
-/**
- *
+/**Dette er en comporator for medisin-objekter.
+ * Laget av Hallbjørn Storruste
+ * Siste versjon: 08-04-2014
  * @author Hallbjørn
  */
 import java.io.*;
-import java.text.ParseException;
 import java.text.RuleBasedCollator;
 import java.util.Comparator;
 
 public class MedisinComparator implements Comparator<Medisin>, Serializable {
     private static final long serialVersionUID = 1010L;
-    
-    private final String rekkefølge = "<\0<0<1<2<3<4<5<6<7<8<9" +
-                      "<A,a<B,b<C,c<D,d<E,e<F,f<G,g<H,h<I,i<J,j" +
-                     "<K,k<L,l<M,m<N,n<O,o<P,p<Q,q<R,r<S,s<T,t" +
-             "<U,u<V,v<W,w<X,x<Y,y<Z,z<Æ,æ<Ø,ø<Å=AA,å=aa;AA,aa<Ä,ä<Ö,ö";
 
-    private RuleBasedCollator kollator;
+    private transient RuleBasedCollator kollator;
 
     public MedisinComparator()
     {
-        try
-        {
-                kollator = new RuleBasedCollator(rekkefølge);
-        }
-        catch( ParseException pe )
-        {
-                System.out.println("Feil i rekkefølge for kollator");
-        }
+       initCollator();
+    }
+    //Initialiserer collatoren
+    private void initCollator()
+    {
+        kollator = MyCollator.getCollator();
+    }
+    //Skriver objektet til strømmen
+    private void writeObject(ObjectOutputStream out) throws IOException
+    {
+        out.defaultWriteObject();
+    }
+    //leser objektet fra strømmen og initialiserer collatoren
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
+    {
+        in.defaultReadObject();
+        initCollator();     
     }
     
     @Override

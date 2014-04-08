@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 
-/**
+/**Denne klassen legger leger inn i et register og gjør operasjoner mot den.
+ * Laget av Hallbjørn Storruste
+ * Siste versjon: 08-04-2014
  *
  * @author Hallbjørn
  */

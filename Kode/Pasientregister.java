@@ -25,7 +25,8 @@ public class Pasientregister implements Serializable
 	Returnerer true hvis det er vellykket.*/
 	public boolean settInn(String fornavn, String etternavn, String fødselsnr)
 	{
-		
+		if(!fødselsnr.matches(korrektFnr))
+                    return false;
             
                 Pasient ny = new Pasient(fornavn, etternavn, fødselsnr);
 
