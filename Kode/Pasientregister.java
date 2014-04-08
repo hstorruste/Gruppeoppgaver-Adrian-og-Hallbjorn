@@ -11,11 +11,13 @@ public class Pasientregister implements Serializable
     private static final long serialVersionUID = 1007L;
     private Comparator komp;
     private SortedSet<Pasient> pasientregister;
+    private final String korrektFnr;
 
     public Pasientregister()
     {
-            komp = new PersonComparator();
-            pasientregister = new TreeSet<>(komp);
+        korrektFnr = "[0-3]\\d[01]\\d{8]";
+        komp = new PersonComparator();
+        pasientregister = new TreeSet<>(komp);
     }
 
 
@@ -23,7 +25,9 @@ public class Pasientregister implements Serializable
 	Returnerer true hvis det er vellykket.*/
 	public boolean settInn(String fornavn, String etternavn, String fødselsnr)
 	{
-		Pasient ny = new Pasient(fornavn, etternavn, fødselsnr);
+		
+            
+                Pasient ny = new Pasient(fornavn, etternavn, fødselsnr);
 
 		return settInn(ny);
 	}
@@ -42,7 +46,7 @@ public class Pasientregister implements Serializable
 	{
             Iterator<Pasient> iterator = pasientregister.iterator();
             Pasient[] pasientarray = null;
-            Pasient runner = null;
+            Pasient runner;
             
             while(iterator.hasNext())
             {
@@ -54,9 +58,7 @@ public class Pasientregister implements Serializable
                     {
                         int antall = pasientarray.length + 1;
                         Pasient[] temp = new Pasient[antall];
-                    
-                        for(int i=0; i < pasientarray.length; i++)
-                            temp[i] = pasientarray[i];
+                        System.arraycopy(pasientarray, 0, temp, 0, pasientarray.length);
                         
                         pasientarray = temp;
                         pasientarray[pasientarray.length-1] = runner;
@@ -76,32 +78,39 @@ public class Pasientregister implements Serializable
 	{          
             Pasient[] etternavnarray = finnPasient(navn + ".*", ".*");   
             Pasient[] fornavnarray = finnPasient(".*", navn + ".*");
+            Pasient[] pasientarray;
             int dobble=0;
-            for (Pasient etternavnarray1 : etternavnarray) {
-                for (Pasient fornavnarray1 : fornavnarray) 
-                {
-                    if (etternavnarray1 == fornavnarray1) {
-                        dobble++;
-                        fornavnarray1 = null;
-                    }
+            if(etternavnarray == null)
+                pasientarray = fornavnarray;
+            else if(fornavnarray == null)
+                pasientarray = etternavnarray;
+            else
+            {
+                for (Pasient etternavnarray1 : etternavnarray) {
+                   for (Pasient fornavnarray1 : fornavnarray) 
+                        if (etternavnarray1 == fornavnarray1) {
+                            dobble++;
+                            fornavnarray1 = null;
+                        }
                 }
-            }
-            Pasient[] pasientarray = new Pasient[etternavnarray.length 
+                pasientarray = new Pasient[etternavnarray.length 
                     + fornavnarray.length - dobble];
             
-            int i=0;
-            for (Pasient etternavnarray1 : etternavnarray) {
-                if (etternavnarray1 != null) {
-                    pasientarray[i] = etternavnarray1;
-                    i++;
+                int i=0;
+                for (Pasient etternavnarray1 : etternavnarray) {
+                    if (etternavnarray1 != null) {
+                        pasientarray[i] = etternavnarray1;
+                        i++;
+                    }
                 }
-            }
-            for (Pasient fornavnarray1 : fornavnarray) {
-                if (fornavnarray1 != null) {
-                    pasientarray[i] = fornavnarray1;
-                    i++;
-                }
-            }   
+                for (Pasient fornavnarray1 : fornavnarray) {
+                    if (fornavnarray1 != null) {
+                        pasientarray[i] = fornavnarray1;
+                        i++;
+                    }
+                }   
+            }//end of else
+           
             return pasientarray;
 	}
 
@@ -110,7 +119,7 @@ public class Pasientregister implements Serializable
 	public Pasient finnPasientFnr(String fødselsnummer)
 	{
 		Iterator<Pasient> iterator = pasientregister.iterator();
-		Pasient runner = null;
+		Pasient runner;
 
 		while(iterator.hasNext())
 		{
@@ -136,7 +145,8 @@ public class Pasientregister implements Serializable
 
             while(iter.hasNext())
             {
-                str.append(iter.next() + "\n");
+                str.append(iter.next());
+                str.append("\n");
             }
 
             return str.toString();

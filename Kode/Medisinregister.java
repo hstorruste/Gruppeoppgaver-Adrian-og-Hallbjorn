@@ -136,7 +136,8 @@ public class Medisinregister implements Serializable {
 
         while(iter.hasNext())
         {
-            str.append(iter.next() + "\n");
+            str.append(iter.next());
+            str.append("\n");
         }
 
         return str.toString();

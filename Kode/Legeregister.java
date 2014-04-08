@@ -58,9 +58,7 @@ public class Legeregister implements Serializable{
                 {
                     int antall = legearray.length + 1;
                     Lege[] temp = new Lege[antall];
-
-                    for(int i=0; i < legearray.length; i++)
-                        temp[i] = legearray[i];
+                    System.arraycopy(legearray, 0, temp, 0, legearray.length);
 
                     legearray = temp;
                     legearray[legearray.length-1] = runner;
@@ -79,32 +77,40 @@ public class Legeregister implements Serializable{
     {          
         Lege[] etternavnarray = finnLege(navn + ".*", ".*");   
         Lege[] fornavnarray = finnLege(".*", navn + ".*");
+        Lege[] legearray;
         int dobble=0;
-        for (Lege etternavnarray1 : etternavnarray) {
-            for (Lege fornavnarray1 : fornavnarray) 
-            {
-                if (etternavnarray1 == fornavnarray1) {
-                    dobble++;
-                    fornavnarray1 = null;
+        if(etternavnarray == null)
+            legearray = fornavnarray;
+        else if(fornavnarray == null)
+            legearray = etternavnarray;
+        else
+        {
+            for (Lege etternavnarray1 : etternavnarray) {
+                for (Lege fornavnarray1 : fornavnarray) 
+                {
+                    if (etternavnarray1 == fornavnarray1) {
+                        dobble++;
+                        fornavnarray1 = null;
+                    }
                 }
             }
-        }
-        Lege[] legearray = new Lege[etternavnarray.length 
-                + fornavnarray.length - dobble];
+            legearray = new Lege[etternavnarray.length 
+                    + fornavnarray.length - dobble];
 
-        int i=0;
-        for (Lege etternavnarray1 : etternavnarray) {
-            if (etternavnarray1 != null) {
-                legearray[i] = etternavnarray1;
-                i++;
+            int i=0;
+            for (Lege etternavnarray1 : etternavnarray) {
+                if (etternavnarray1 != null) {
+                    legearray[i] = etternavnarray1;
+                    i++;
+                }
             }
-        }
-        for (Lege fornavnarray1 : fornavnarray) {
-            if (fornavnarray1 != null) {
-                legearray[i] = fornavnarray1;
-                i++;
+            for (Lege fornavnarray1 : fornavnarray) {
+                if (fornavnarray1 != null) {
+                    legearray[i] = fornavnarray1;
+                    i++;
+                }
             }
-        }   
+        }//end of else
         return legearray;
     }
     
@@ -123,6 +129,43 @@ public class Legeregister implements Serializable{
             }
             return null;
     }
+    
+    /*Tar imot en epostadresse og ett passord og sjekker om dette
+    stemmer med det tilhørende lege-objektet. Returnerer true hvis det stemmer,
+    false hvis det ikke stemmer eller epostadressen ikke fins i registeret.*/
+    public boolean riktigPassord(String epost, char[] passord)
+    {
+        Lege lege = finnLegeEpost(epost);
+        if(lege == null)
+            return false;
+        
+        boolean riktig = riktigPassord(lege, passord); 
+        
+        Arrays.fill(passord,'0');
+        
+        return riktig;
+    }
+   
+    /*Tar imot et lege-objekt og et passord som et char-array,
+    sjekker om passordet stemmer med passordet til legen.
+    Returnerer true hvis det er likt.
+    */
+    public static boolean riktigPassord(Lege lege, char[] passord)
+    {
+        if(lege == null)
+            return false;
+        boolean riktig;
+        char[] kontroll = lege.getPassord();
+        if(kontroll.length == passord.length)
+            riktig = Arrays.equals(passord, kontroll);
+        else
+            riktig = false;
+        
+        Arrays.fill(kontroll, '0');
+        Arrays.fill(passord, '0');
+        
+        return riktig;
+    }
 
     //Returnerer legeregisteret
     public SortedSet<Lege> getRegister()
@@ -139,7 +182,8 @@ public class Legeregister implements Serializable{
 
             while(iter.hasNext())
             {
-                    str.append(iter.next() + "\n");
+                    str.append(iter.next());
+                    str.append("\n");
             }
 
             return str.toString();
