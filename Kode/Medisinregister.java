@@ -116,9 +116,8 @@ public class Medisinregister implements Serializable {
                 else {
                     int antall = medisinarray.length + 1;
                     Medisin[] temp = new Medisin[antall];
-
-                    for(int i=0; i < medisinarray.length; i++)
-                        temp[i] = medisinarray[i];
+                    
+                    System.arraycopy(medisinarray, 0, temp, 0, medisinarray.length);
 
                     medisinarray = temp;
                     medisinarray[medisinarray.length-1] = runner;

@@ -30,7 +30,11 @@ public class Resept implements Serializable
 		utlevert = false;
 	}
 
-	public Medisin getMedisin(){
+	public int getReseptNr()
+        {
+            return reseptNr;
+        }
+        public Medisin getMedisin(){
 		return medisin;
 	}
 	public Calendar getDato()
@@ -53,7 +57,11 @@ public class Resept implements Serializable
 	{
 			return utlevert;
 	}
-
+        
+        public void setUtlevert()
+        {
+            utlevert = true;
+        }
 	public String toString()
 	{
 		String ut = "Reseptnr: " + reseptNr + "\nDato: ";

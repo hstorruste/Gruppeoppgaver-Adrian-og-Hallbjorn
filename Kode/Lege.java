@@ -1,9 +1,8 @@
 /*	Denne klassen er en Legepost som er subklassen av Person.
 	Laget av Adrian Westlund
-	Siste versjon 02-04-2014*/
+	Siste versjon 09-04-2014*/
 
 import java.io.*;
-import java.util.*;
 
 public class Lege extends Person implements Serializable
 {
@@ -13,7 +12,7 @@ public class Lege extends Person implements Serializable
 	int postnummer;
 	boolean a,b,c;
 	char[] passord;
-	SortedSet<Pasient> pasientliste;
+	Pasientregister pasientliste;
 
 	public Lege(String fnavn, String enavn, String ep, String g, int pNr,
                         String ps, String as, char[] pass)
@@ -32,7 +31,7 @@ public class Lege extends Person implements Serializable
 		passord = pass;
 
 
-		pasientliste = new TreeSet<>();
+		pasientliste = new Pasientregister();
 	}
 
 	public String getGateadresse()
@@ -71,11 +70,10 @@ public class Lege extends Person implements Serializable
 	{
 		return passord;
 	}
-	public SortedSet<Pasient> getPasientliste()
+	public Pasientregister getPasientliste()
 	{
 		return pasientliste;
 	}
-
 
 	public void setGateadresse(String g)
 	{
@@ -113,6 +111,10 @@ public class Lege extends Person implements Serializable
 	{
 		passord = p;
 	}
+        public boolean settInnPasient(Pasient ny)
+        {
+            return pasientliste.settInn(ny);
+        }
 
 	public String toString()
 	{
