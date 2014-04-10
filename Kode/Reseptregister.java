@@ -37,9 +37,9 @@ public class Reseptregister implements Serializable {
         return reseptregister.add(ny);
     }
     //Finner og returnerer et array med respeter som ikke er utlevert.
-    public Resept[] finnNyeResepter()
+    public TreeSet<Resept> finnNyeResepter()
     {
-        Resept[] liste = null;
+        TreeSet<Resept> liste = new TreeSet<>(komp);
         Iterator<Resept> iterator = reseptregister.iterator();
         Resept runner;
         while(iterator.hasNext())
@@ -47,25 +47,15 @@ public class Reseptregister implements Serializable {
             runner = iterator.next();
             if(!runner.getUtlevert())
             {
-                if(liste == null)
-                    liste = new Resept[]{runner};
-                else {
-                    int antall = liste.length + 1;
-                    Resept[] temp = new Resept[antall];
-                    
-                    System.arraycopy(liste, 0, temp, 0, liste.length);
-
-                    liste = temp;
-                    liste[liste.length-1] = runner;
-                }
+                liste.add(runner);
             }
         }
         return liste;
     }
      //Finner og returnerer et array med respeter som er utlevert.
-    public Resept[] finnGamleResepter()
+    public TreeSet<Resept> finnGamleResepter()
     {
-        Resept[] liste = null;
+        TreeSet<Resept> liste = new TreeSet<>(komp);
         Iterator<Resept> iterator = reseptregister.iterator();
         Resept runner;
         while(iterator.hasNext())
@@ -73,25 +63,15 @@ public class Reseptregister implements Serializable {
             runner = iterator.next();
             if(runner.getUtlevert())
             {
-                if(liste == null)
-                    liste = new Resept[]{runner};
-                else {
-                    int antall = liste.length + 1;
-                    Resept[] temp = new Resept[antall];
-                    
-                    System.arraycopy(liste, 0, temp, 0, liste.length);
-
-                    liste = temp;
-                    liste[liste.length-1] = runner;
-                }
+                liste.add(runner);
             }
         }
         return liste;
     }
     //Finner og returnerer et array av resepter forskrevet av den aktuelle legen.
-    public Resept[] finnReseptAvLege(Lege lege)
+    public TreeSet<Resept> finnReseptAvLege(Lege lege)
     {
-        Resept[] liste = null;
+        TreeSet<Resept> liste = new TreeSet<>(komp);
         Iterator<Resept> iterator = reseptregister.iterator();
         Resept runner;
         while(iterator.hasNext())
@@ -99,25 +79,15 @@ public class Reseptregister implements Serializable {
             runner = iterator.next();
             if(runner.getLege().equals(lege))
             {
-                if(liste == null)
-                    liste = new Resept[]{runner};
-                else {
-                    int antall = liste.length + 1;
-                    Resept[] temp = new Resept[antall];
-                    
-                    System.arraycopy(liste, 0, temp, 0, liste.length);
-
-                    liste = temp;
-                    liste[liste.length-1] = runner;
-                }
+                liste.add(runner);
             }
         }
         return liste;
     }
     //Finner og returnerer et array av resepter skrevet ut på den aktuelle medisinen.
-    public Resept[] finnReseptAvMedisin(Medisin med)
+    public TreeSet<Resept> finnReseptAvMedisin(Medisin med)
     {
-        Resept[] liste = null;
+        TreeSet<Resept> liste = new TreeSet<>(komp);
         Iterator<Resept> iterator = reseptregister.iterator();
         Resept runner;
         while(iterator.hasNext())
@@ -125,17 +95,7 @@ public class Reseptregister implements Serializable {
             runner = iterator.next();
             if(runner.getMedisin().equals(med))
             {
-                if(liste == null)
-                    liste = new Resept[]{runner};
-                else {
-                    int antall = liste.length + 1;
-                    Resept[] temp = new Resept[antall];
-                    
-                    System.arraycopy(liste, 0, temp, 0, liste.length);
-
-                    liste = temp;
-                    liste[liste.length-1] = runner;
-                }
+               liste.add(runner);
             }
         }
         return liste;

@@ -44,11 +44,11 @@ public class Legeregister implements Serializable{
     }
     
     //Finner en eller flere leger basert på etternavn og fornavn.
-    public Lege[] finnLege(String etternavn, String fornavn)
+    public TreeSet<Lege> finnLege(String etternavn, String fornavn)
     {
         Iterator<Lege> iterator = legeregister.iterator();
-        Lege[] legearray = null;
-        Lege runner = null;
+        TreeSet<Lege> legeSet = new TreeSet<>(komp);
+        Lege runner;
 
         while(iterator.hasNext())
         {
@@ -56,63 +56,23 @@ public class Legeregister implements Serializable{
             if(runner.getEtternavn().matches(etternavn)
                     && runner.getFornavn().matches(fornavn))
             {
-                if(legearray != null)
-                {
-                    int antall = legearray.length + 1;
-                    Lege[] temp = new Lege[antall];
-                    System.arraycopy(legearray, 0, temp, 0, legearray.length);
-
-                    legearray = temp;
-                    legearray[legearray.length-1] = runner;
-                }        
-                else
-                    legearray = new Lege[]{runner};
+                legeSet.add(runner);
             }
 
         }
-        return legearray;
+        return legeSet;
     }
     
     /*Finner en eller flere leger som begynner med det aktuelle navn. 
         Søker først gjennom etternavn og så fornavn.*/
-    public Lege[] finnLege(String navn)
+    public TreeSet<Lege> finnLege(String navn)
     {          
-        Lege[] etternavnarray = finnLege(navn + ".*", ".*");   
-        Lege[] fornavnarray = finnLege(".*", navn + ".*");
-        Lege[] legearray;
-        int dobble=0;
-        if(etternavnarray == null)
-            legearray = fornavnarray;
-        else if(fornavnarray == null)
-            legearray = etternavnarray;
-        else
-        {
-            for (Lege etternavnarray1 : etternavnarray) {
-                for (Lege fornavnarray1 : fornavnarray) 
-                {
-                    if (etternavnarray1 == fornavnarray1) {
-                        dobble++;
-                        fornavnarray1 = null;
-                    }
-                }
-            }
-            legearray = new Lege[etternavnarray.length 
-                    + fornavnarray.length - dobble];
+        TreeSet<Lege> etternavnarray = finnLege(navn + ".*", ".*");   
+        TreeSet<Lege> fornavnarray = finnLege(".*", navn + ".*");
+        
+        TreeSet<Lege> legearray = etternavnarray;
+        legearray.addAll(fornavnarray);
 
-            int i=0;
-            for (Lege etternavnarray1 : etternavnarray) {
-                if (etternavnarray1 != null) {
-                    legearray[i] = etternavnarray1;
-                    i++;
-                }
-            }
-            for (Lege fornavnarray1 : fornavnarray) {
-                if (fornavnarray1 != null) {
-                    legearray[i] = fornavnarray1;
-                    i++;
-                }
-            }
-        }//end of else
         return legearray;
     }
     

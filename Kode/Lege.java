@@ -111,6 +111,7 @@ public class Lege extends Person implements Serializable
 	{
 		passord = p;
 	}
+        //Setter inn ny pasient i legens eget pasientregister.
         public boolean settInnPasient(Pasient ny)
         {
             return pasientliste.settInn(ny);

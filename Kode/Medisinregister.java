@@ -38,11 +38,11 @@ public class Medisinregister implements Serializable {
         return medisinregister.add(ny);
     }
     /*Finner en eller flere medisiner som begynner med det aktuelle navnet.*/
-    public Medisin[] finnMedisin(String navn)
+    public TreeSet<Medisin> finnMedisin(String navn)
     {
         Iterator<Medisin> iterator = medisinregister.iterator();
-        Medisin[] medisinarray = null;
-        Medisin runner = null;
+        TreeSet<Medisin> medisinSet = new TreeSet<>(komp);
+        Medisin runner;
         navn = navn + ".*";
 
         while(iterator.hasNext())
@@ -50,82 +50,49 @@ public class Medisinregister implements Serializable {
             runner = iterator.next();
             if(runner.getNavn().matches(navn))
             {
-                if(medisinarray != null)
-                {
-                    int antall = medisinarray.length + 1;
-                    Medisin[] temp = new Medisin[antall];
-
-                    for(int i=0; i < medisinarray.length; i++)
-                        temp[i] = medisinarray[i];
-
-                    medisinarray = temp;
-                    medisinarray[medisinarray.length-1] = runner;
-                }        
-                else
-                    medisinarray = new Medisin[]{runner};
+                medisinSet.add(runner);
             }
 
         }
-        return medisinarray;
+        return medisinSet;
     }
     /*Finner og returnerer alle medisiner i den eller de gruppene 
     som passer med det aktuelle regionære uttrykket.*/
-     public Medisin[] finnMedisiniGruppe(String regex)
+     public TreeSet<Medisin> finnMedisiniGruppe(String regex)
      {
         Iterator<Medisin> iterator = medisinregister.iterator();
-        Medisin[] medisinarray = null;
-        Medisin runner = null;
+        TreeSet<Medisin> medisinSet = new TreeSet<>(komp);
+        Medisin runner;
 
         while(iterator.hasNext())
         {
             runner = iterator.next();
             if(runner.getGrupp().matches(regex))
             {
-                if(medisinarray == null)
-                    medisinarray = new Medisin[]{runner};
-                else {
-                    int antall = medisinarray.length + 1;
-                    Medisin[] temp = new Medisin[antall];
-
-                    for(int i=0; i < medisinarray.length; i++)
-                        temp[i] = medisinarray[i];
-
-                    medisinarray = temp;
-                    medisinarray[medisinarray.length-1] = runner;
-                }
+                medisinSet.add(runner);
             }
 
         }
-        return medisinarray;
+        return medisinSet;
      }
      /*Finner og returnerer alle medisiner innen cen eller de kategorier
      som passer med det aktuelle regulære uttrykket.*/
-     public Medisin[] finnMedisiniKategori(String regex)
+     public TreeSet<Medisin> finnMedisiniKategori(String regex)
      {
         Iterator<Medisin> iterator = medisinregister.iterator();
-        Medisin[] medisinarray = null;
-        Medisin runner = null;
+        TreeSet<Medisin> medisinSet = new TreeSet<>(komp);
+        Medisin runner;
 
         while(iterator.hasNext())
         {
             runner = iterator.next();
             if(runner.getKategori().matches(regex))
             {
-                if(medisinarray == null)
-                    medisinarray = new Medisin[]{runner};
-                else {
-                    int antall = medisinarray.length + 1;
-                    Medisin[] temp = new Medisin[antall];
-                    
-                    System.arraycopy(medisinarray, 0, temp, 0, medisinarray.length);
-
-                    medisinarray = temp;
-                    medisinarray[medisinarray.length-1] = runner;
-                }
+                medisinSet.add(runner);
             }
 
         }
-        return medisinarray;
+        return medisinSet;
      }
      
     @Override

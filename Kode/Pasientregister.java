@@ -15,7 +15,7 @@ public class Pasientregister implements Serializable
 
     public Pasientregister()
     {
-        korrektFnr = "[0-3]\\d[01]\\d{8]";
+        korrektFnr = "[0-3]\\d[01]\\d{8}";
         komp = new PersonComparator();
         pasientregister = new TreeSet<>(komp);
     }
@@ -43,10 +43,10 @@ public class Pasientregister implements Serializable
 	}
 
 //Finner en eller flere pasienter basert på etternavn og fornavn.
-	public Pasient[] finnPasient(String etternavn, String fornavn)
+	public TreeSet<Pasient> finnPasient(String etternavn, String fornavn)
 	{
             Iterator<Pasient> iterator = pasientregister.iterator();
-            Pasient[] pasientarray = null;
+            TreeSet<Pasient> pasientSet = new TreeSet<>(komp);
             Pasient runner;
             
             while(iterator.hasNext())
@@ -55,64 +55,25 @@ public class Pasientregister implements Serializable
                 if(runner.getEtternavn().matches(etternavn)
                         && runner.getFornavn().matches(fornavn))
                 {
-                    if(pasientarray != null)
-                    {
-                        int antall = pasientarray.length + 1;
-                        Pasient[] temp = new Pasient[antall];
-                        System.arraycopy(pasientarray, 0, temp, 0, pasientarray.length);
-                        
-                        pasientarray = temp;
-                        pasientarray[pasientarray.length-1] = runner;
-                    }        
-                    else
-                        pasientarray = new Pasient[]{runner};
+                   pasientSet.add(runner);
                 }
                 
             }
-            return pasientarray;
+            return pasientSet;
 
 	}
 
 /*Finner en eller flere pasienter som begynner med det aktuelle navn. 
         Søker først gjennom etternavn og så fornavn.*/
-	public Pasient[] finnPasient(String navn)
+	public TreeSet<Pasient> finnPasient(String navn)
 	{          
-            Pasient[] etternavnarray = finnPasient(navn + ".*", ".*");   
-            Pasient[] fornavnarray = finnPasient(".*", navn + ".*");
-            Pasient[] pasientarray;
-            int dobble=0;
-            if(etternavnarray == null)
-                pasientarray = fornavnarray;
-            else if(fornavnarray == null)
-                pasientarray = etternavnarray;
-            else
-            {
-                for (Pasient etternavnarray1 : etternavnarray) {
-                   for (Pasient fornavnarray1 : fornavnarray) 
-                        if (etternavnarray1 == fornavnarray1) {
-                            dobble++;
-                            fornavnarray1 = null;
-                        }
-                }
-                pasientarray = new Pasient[etternavnarray.length 
-                    + fornavnarray.length - dobble];
-            
-                int i=0;
-                for (Pasient etternavnarray1 : etternavnarray) {
-                    if (etternavnarray1 != null) {
-                        pasientarray[i] = etternavnarray1;
-                        i++;
-                    }
-                }
-                for (Pasient fornavnarray1 : fornavnarray) {
-                    if (fornavnarray1 != null) {
-                        pasientarray[i] = fornavnarray1;
-                        i++;
-                    }
-                }   
-            }//end of else
+            TreeSet<Pasient> etternavnSet = finnPasient(navn + ".*", ".*");   
+            TreeSet<Pasient> fornavnSet = finnPasient(".*", navn + ".*");
+            TreeSet<Pasient> pasientSet;
+            pasientSet = etternavnSet;
+            pasientSet.addAll(fornavnSet);
            
-            return pasientarray;
+            return pasientSet;
 	}
 
 /*Finner og returnerer en pasient i registeret basert på fødselsnummer.
