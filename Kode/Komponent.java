@@ -1,6 +1,6 @@
 /*	Denne klassen lager vanligt anvendte komponenter.
     Laget av Adrian Westlund
-    Siste versjon 09-04-2014*/
+    Siste versjon 25-04-2014*/
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,7 +56,7 @@ public class Komponent
     }
     /*	Metoden ändrar font genom att alla komponenter av Container
     	blir kallade på och sätter den bestämda fonten på dessa.*/
-    public static void endreFont( Component komponent )
+    protected static void endreFont( Component komponent )
 	{
 		komponent.setFont( font );
 		if ( komponent instanceof Container )
@@ -68,7 +68,7 @@ public class Komponent
 		}
 	}
 	// Endrer ikon
-	public static void bilde(JFrame klass)
+	protected static void bilde(JFrame klass)
 	{
 		String bildefil = "Handprint.png";
 		URL kilde = Komponent.class.getResource(bildefil);
@@ -81,7 +81,7 @@ public class Komponent
 		}
 	}
 	//	Lager ett popup box
-	public static void popup(JFrame klass, String tekst)
+	protected static void popup(JFrame klass, String tekst)
 	{
 		 JOptionPane.showMessageDialog(klass, tekst);
 	}
