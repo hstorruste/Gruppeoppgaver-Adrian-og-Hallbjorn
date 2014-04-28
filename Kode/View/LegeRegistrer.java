@@ -137,8 +137,8 @@ public class LegeRegistrer extends JPanel{
                     String melding = "Du er registrert!";
                     Komponent.popup(parentFrame, melding);
                     if(parentFrame instanceof LegekontorVindu){
-
-                        Lege innlogget = parentFrame.login(epost, passord);
+                        LegekontorVindu vindu = (LegekontorVindu)parentFrame;
+                        Lege innlogget = vindu.login(epost, passord);
 
                         if(innlogget == null)
                         {
@@ -147,7 +147,7 @@ public class LegeRegistrer extends JPanel{
                         }
                         else
                         {
-                            LegekontorVindu vindu = (LegekontorVindu)parentFrame;
+                            
                             vindu.tegnFinnPasientGUI(innlogget);
                             melding = "Det er riktig!";
                             Komponent.popup(parentFrame, melding);

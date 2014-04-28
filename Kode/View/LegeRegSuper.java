@@ -21,9 +21,5 @@ public abstract class LegeRegSuper  extends JFrame{
     }
     public abstract boolean registrerLege(String fornavn, String etternavn, String ep, 
                 String gadresse, int pNr, String psted, String as, char[] pass);
-    
-    public abstract Lege login(String epost, char[] passord);
-
-
 
 }
