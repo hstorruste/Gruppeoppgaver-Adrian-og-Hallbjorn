@@ -13,7 +13,7 @@ public class Komponent
     private static Font font = new Font("SansSerif", Font.PLAIN, 16);
 
     //	Lager en komponent med en label og en textField på samme rad
-    protected static JComponent labelFieldRow(String text, JTextField field)
+    protected static JPanel labelFieldRow(String text, JTextField field)
     {
         JPanel panel = new JPanel();
         JLabel label = new JLabel(text);
@@ -24,7 +24,7 @@ public class Komponent
         return panel;
 	}
 	//	Lager en komponent med en label og en textField på två rader
-    protected static JComponent labelFieldColumb(String text, JTextField field)
+    protected static JPanel labelFieldColumb(String text, JTextField field)
     {
         JPanel panel = new JPanel(false);
         JLabel label = new JLabel(text);
@@ -34,7 +34,7 @@ public class Komponent
         return panel;
     }
 	//	Lager en komponent med en label og en combobox på samme rad
-    protected static JComponent labelComboBoxRow(String text, JComboBox<String> comboBox)
+    protected static JPanel labelComboBoxRow(String text, JComboBox<String> comboBox)
     {
 		JPanel panel = new JPanel();
 		JLabel label = new JLabel(text);
@@ -45,7 +45,7 @@ public class Komponent
         return panel;
     }
 	//	Lager en komponent med en label og en combobox på två rader
-    protected static JComponent labelComboBoxColumb(String text, JComboBox<String> comboBox)
+    protected static JPanel labelComboBoxColumb(String text, JComboBox<String> comboBox)
     {
 		JPanel panel = new JPanel();
 		JLabel label = new JLabel(text);
