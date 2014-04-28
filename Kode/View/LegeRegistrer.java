@@ -27,7 +27,7 @@ import javax.swing.JTextField;
  */
 public class LegeRegistrer extends JPanel{
     
-    private LegekontorVindu parentFrame;
+    private LegeRegSuper parentFrame;
     private JTextField fornavnFelt, etternavnFelt, epostFelt, epostigjenFelt,
             gtadrFelt, postnrFelt, poststedFelt, arbstedFelt;
     private JPasswordField passordFelt, passordigjenFelt;
@@ -39,9 +39,12 @@ public class LegeRegistrer extends JPanel{
     
     private KnappeLytter knappeLytter;
     
-    public LegeRegistrer(LegekontorVindu p)
+    public LegeRegistrer(LegeRegSuper p)
     {
         super(new GridLayout(0, 1, 5, 5));
+        
+        parentFrame = p;
+        knappeLytter = new KnappeLytter();
         
         fornavnFelt = new JTextField(TEKSTFELTLENGDE);
         JPanel fornavnPanel = (JPanel) Komponent.labelFieldRow(labeltekst[0], fornavnFelt);
@@ -133,19 +136,22 @@ public class LegeRegistrer extends JPanel{
                 {
                     String melding = "Du er registrert!";
                     Komponent.popup(parentFrame, melding);
-                    
-                    Lege innlogget = parentFrame.login(epost, passord);
-        
-                    if(innlogget == null)
-                    {
-                        melding = "Feil epost eller passord!";
-                        Komponent.popup(parentFrame, melding);
-                    }
-                    else
-                    {
-                        parentFrame.tegnFinnPasientGUI(innlogget);
-                        melding = "Det er riktig!";
-                        Komponent.popup(parentFrame, melding);
+                    if(parentFrame instanceof LegekontorVindu){
+
+                        Lege innlogget = parentFrame.login(epost, passord);
+
+                        if(innlogget == null)
+                        {
+                            melding = "Feil epost eller passord!";
+                            Komponent.popup(parentFrame, melding);
+                        }
+                        else
+                        {
+                            LegekontorVindu vindu = (LegekontorVindu)parentFrame;
+                            vindu.tegnFinnPasientGUI(innlogget);
+                            melding = "Det er riktig!";
+                            Komponent.popup(parentFrame, melding);
+                        }
                     }
                 }
                 else

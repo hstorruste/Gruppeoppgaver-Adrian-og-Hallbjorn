@@ -1,18 +1,23 @@
 package View;
 /**Dette er en GUI for Legekontorvinduet arver JFrame-klassen.
  * Laget av Hallbjørn Storruste s165519
- * Siste versjon 27-04-2014
+ * Siste versjon 28-04-2014
  *
  */
 import Model.*;
 import Controller.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import javax.swing.*;
 
 
-public class LegekontorVindu extends JFrame
+public class LegekontorVindu extends LegeRegSuper
 {
-        private JTabbedPane loginGUI;
+        private JTabbedPane GUI;
+        private Lege innlogget;
+        private Pasient pasient;
         
         private Legeregister legeregister;
 
@@ -20,14 +25,16 @@ public class LegekontorVindu extends JFrame
 	{
 		super("Legekontor");
 
-		setLayout(new GridLayout(0, 1, 40, 40));
+		setLayout(new GridLayout(0, 1));
 
-                loginGUI = new LegekontorLogin(this);
+                GUI = new LegekontorLogin(this);
                 
-                add(loginGUI);
+                add(GUI);
                 
                 legeregister = new Legeregister();
                 
+                Komponent.endreFont(this);
+                Komponent.bilde(this);
                 pack();
 		setVisible(true);
 	}
@@ -51,7 +58,7 @@ public class LegekontorVindu extends JFrame
         }
         /*Setter inn en ny lege i registeret. 
         Returnerer true hvis det er vellykket*/
-        public boolean registrer(String fornavn, String etternavn, String ep, 
+        public boolean registrerLege(String fornavn, String etternavn, String ep, 
                 String gadresse, int pNr, String psted, String as, char[] pass)
         {
             return legeregister.settInn(fornavn, etternavn, ep, 
@@ -62,5 +69,27 @@ public class LegekontorVindu extends JFrame
         public void tegnFinnPasientGUI(Lege innlogget)
         {
             
+            this.innlogget = innlogget;
+            String legenavn = this.innlogget.getNavn();
+            String arbeidssted = this.innlogget.getArbetssted();
+            if(arbeidssted.length() < 1)
+                arbeidssted = this.innlogget.getGateadresse();
+                        
+            JLabel navn = new JLabel(legenavn);
+            JLabel sted = new JLabel(arbeidssted);
+            JPanel infoPanel = new JPanel(new BorderLayout(40,40));
+            infoPanel.add(navn, BorderLayout.LINE_START);
+            infoPanel.add(sted, BorderLayout.LINE_END);
+            
+            String nyTittel = getTitle() + navn;
+            setTitle(nyTittel);
+            
+            remove(GUI);
+            
+            GUI = new LegekontorFinnPasient(this);
+           
+            add(GUI);
+            pack();
+            repaint();
         }
 }
