@@ -26,13 +26,10 @@ import javax.swing.*;
 public class LegekontorLogin extends JTabbedPane{
     
     private LegekontorVindu parentFrame;
-    private JTextField fornavnFelt, etternavnFelt, epostFelt, epostigjenFelt,
-            gtadrFelt, postnrFelt, poststedFelt, arbstedFelt, epostLoginFelt;
-    private JPasswordField passordFelt, passordigjenFelt, passordLoginFelt;
-    private JButton registrerKnapp, loginKnapp;
-    private String[] labeltekst = {"E-post", "Passord", "Fornavn", "Etternavn",
-            "E-post", "E-post igjen", "Passord", "Passord igjen", "Gateadresse",
-            "Postnummer", "Poststed", "Arbeidssted"};
+    private JTextField epostLoginFelt;
+    private JPasswordField passordLoginFelt;
+    private JButton loginKnapp;
+    private String[] labeltekst = {"E-post", "Passord"};
     private final int TEKSTFELTLENGDE = 20;
     
     private KnappeLytter knappeLytter;
