@@ -25,6 +25,11 @@ public abstract class Person implements Serializable
 	{
 		return etternavn;
 	}
+        
+        public String getNavn()
+        {
+            return etternavn + ", " + fornavn;
+        }
 
 	public void setFornavn(String f)
 	{
