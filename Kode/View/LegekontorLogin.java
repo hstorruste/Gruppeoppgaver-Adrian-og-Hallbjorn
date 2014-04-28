@@ -19,7 +19,7 @@ import javax.swing.*;
  * JTabbedPane og innholder fanene login og registerr. Den er en del av 
  * Legekontorvinduet(Brukes av LegekontorVindu).
  * Laget av Hallbjørn Storruste s165519
- * Siste versjon 27-04-2014
+ * Siste versjon 28-04-2014
  * 
  * @author Hallbjørn
  */
@@ -53,7 +53,8 @@ public class LegekontorLogin extends JTabbedPane{
         login.add(loginGUI());
         
         JPanel registrer = new JPanel(new FlowLayout());
-        registrer.add(registrerGUI());
+        LegeRegistrer registrerGUI = new LegeRegistrer(parentFrame);
+        registrer.add(registrerGUI);
        
         addTab("Login", login);
         addTab("Registrer", registrer);
@@ -81,61 +82,7 @@ public class LegekontorLogin extends JTabbedPane{
         
         return login;     
     }
-    //Oppretter alt i fane for registrering av lege
-    private JPanel registrerGUI()
-    {
-        fornavnFelt = new JTextField(TEKSTFELTLENGDE);
-        JPanel fornavnPanel = (JPanel) Komponent.labelFieldRow(labeltekst[2], fornavnFelt);
-        
-        etternavnFelt = new JTextField(TEKSTFELTLENGDE);
-        JPanel etternavnPanel = (JPanel) Komponent.labelFieldRow(labeltekst[3], etternavnFelt);
-        
-        epostFelt = new JTextField(TEKSTFELTLENGDE);
-        JPanel epostPanel = (JPanel) Komponent.labelFieldRow(labeltekst[4], epostFelt);
-        
-        epostigjenFelt = new JTextField(TEKSTFELTLENGDE);
-        JPanel epostigjenPanel = (JPanel) Komponent.labelFieldRow(labeltekst[5], epostigjenFelt);
-        
-        passordFelt = new JPasswordField(TEKSTFELTLENGDE);
-        JPanel passordPanel = (JPanel) Komponent.labelFieldRow(labeltekst[6], passordFelt);
-        
-        passordigjenFelt = new JPasswordField(TEKSTFELTLENGDE);
-        JPanel passordigjenPanel = (JPanel) Komponent.labelFieldRow(labeltekst[7], passordigjenFelt);
-        
-        gtadrFelt = new JTextField(TEKSTFELTLENGDE);
-        JPanel gtadrPanel = (JPanel) Komponent.labelFieldRow(labeltekst[8], gtadrFelt);
-        
-        postnrFelt = new JTextField(TEKSTFELTLENGDE);
-        JPanel postnrPanel = (JPanel) Komponent.labelFieldRow(labeltekst[9], postnrFelt);
-        
-        poststedFelt = new JTextField(TEKSTFELTLENGDE);
-        JPanel poststedPanel = (JPanel) Komponent.labelFieldRow(labeltekst[10], poststedFelt);
-        
-        arbstedFelt = new JTextField(TEKSTFELTLENGDE);
-        JPanel arbstedPanel = (JPanel) Komponent.labelFieldRow(labeltekst[11], arbstedFelt);
-        
-        registrerKnapp = new JButton("Registrer");
-        registrerKnapp.addActionListener(knappeLytter);
-        
-        JPanel registrerKnappPanel = new JPanel(new BorderLayout());
-        registrerKnappPanel.add(registrerKnapp, BorderLayout.LINE_END);
-        
-        JPanel registrer = new JPanel(new GridLayout(0, 1, 5, 5));
-        registrer.add(fornavnPanel);
-        registrer.add(etternavnPanel);
-        registrer.add(epostPanel);
-        registrer.add(epostigjenPanel);
-        registrer.add(passordPanel);
-        registrer.add(passordigjenPanel);
-        registrer.add(gtadrPanel);
-        registrer.add(postnrPanel);
-        registrer.add(poststedPanel);
-        registrer.add(arbstedPanel);
-        registrer.add(registrerKnappPanel);
-        
-        return registrer;
-        
-    }
+ 
     /*Denne metoden sjekker om epost og passord er skrevet riktig inn.
     Og sender eventuelt videre til login.*/
     public void login()
@@ -154,75 +101,6 @@ public class LegekontorLogin extends JTabbedPane{
             
     }
     
-    /*Registerer en lege i registeret. Gir beskjed via et dialogvindu
-    om hvordan registeringen går og eventuelle brukerfeil.*/
-    public void registrer()
-    {
-        String fornavn = fornavnFelt.getText();
-        String etternavn = etternavnFelt.getText();
-        String epost = epostFelt.getText();
-        String epostigjen = epostigjenFelt.getText();
-        char[] passord = passordFelt.getPassword(); 
-        char[] passordigjen = passordigjenFelt.getPassword(); 
-        String gateadresse = gtadrFelt.getText();
-        int postnr;
-        String poststed = poststedFelt.getText();
-        String arbeidssted = arbstedFelt.getText();
-        try{
-           postnr = Integer.parseInt(postnrFelt.getText());
-        }
-        catch(NumberFormatException nfe)
-        {
-            String melding = "Ulovlig postnummer!";
-            Komponent.popup(parentFrame, melding);
-            return;
-        }
-        
-        if(!epost.equals(epostigjen))
-        {
-            String melding = "Epost stemmer ikke!";
-            Komponent.popup(parentFrame, melding);
-        }
-        else
-        {
-            if(Arrays.equals(passord, passordigjen))            
-            {
-                boolean registrert = parentFrame.registrer(fornavn, etternavn, 
-                    epost, gateadresse, postnr, poststed, epost, passord);
-                if(registrert)
-                {
-                    String melding = "Du er registrert!";
-                    Komponent.popup(parentFrame, melding);
-                    
-                    Lege innlogget = parentFrame.login(epost, passord);
-        
-                    if(innlogget == null)
-                    {
-                        melding = "Feil epost eller passord!";
-                        Komponent.popup(parentFrame, melding);
-                    }
-                    else
-                    {
-                        parentFrame.tegnFinnPasientGUI(innlogget);
-                        melding = "Det er riktig!";
-                        Komponent.popup(parentFrame, melding);
-                    }
-                }
-                else
-                {
-                    String melding = "Du ble ikke registrert!";
-                    Komponent.popup(parentFrame, melding);
-                }
-            }
-            else
-            {
-                String melding = "Passordene er ikke identiske";
-                Komponent.popup(parentFrame, melding);
-            }
-        }
-                
-    }
-    
     private class KnappeLytter implements ActionListener
     {
         @Override
@@ -230,8 +108,6 @@ public class LegekontorLogin extends JTabbedPane{
         {
             if(e.getSource() == loginKnapp)
                 login();
-            else
-                registrer();
         }
     }
 }
