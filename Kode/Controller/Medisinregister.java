@@ -75,7 +75,7 @@ public class Medisinregister implements Serializable {
                         break;    
             }
         }
-        kategorier = Arrays.copyOfRange(kategorier, 0, i-1);
+        kategorier = Arrays.copyOfRange(kategorier, 0, i);
         
         return kategorier;   
     }

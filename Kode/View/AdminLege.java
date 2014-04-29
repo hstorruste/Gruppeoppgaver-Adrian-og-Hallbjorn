@@ -7,6 +7,9 @@ import java.awt.event.*;
 import java.util.Arrays;
 import javax.swing.*;
 
+/*Denne klassen upprättar alla komponenter till lege fanan.
+ Laget av Adrian Westlund s198571.
+ Siste versjon 29-04-2014*/
 public class AdminLege extends JTabbedPane {
 
     private AdminVindu parentFrame;
@@ -23,7 +26,6 @@ public class AdminLege extends JTabbedPane {
     private final int TEKSTFELTLENGDE = 10;
 
     private KnappeLytter knappeLytter;
-    private ItemLytter itemLytter;
 
     public AdminLege(AdminVindu a) {
 
@@ -106,11 +108,8 @@ public class AdminLege extends JTabbedPane {
 
         JPanel checkbox = new JPanel(new GridLayout(1, 0));
         a = new JCheckBox("A");
-        a.addItemListener(itemLytter);
         b = new JCheckBox("B");
-        b.addItemListener(itemLytter);
         c = new JCheckBox("C");
-        c.addItemListener(itemLytter);
         checkbox.add(a);
         checkbox.add(b);
         checkbox.add(c);
@@ -165,7 +164,7 @@ public class AdminLege extends JTabbedPane {
     }
 
     public void skrivListe() {
-        legeTextArea.setText(parentFrame.skrivListe());
+        legeTextArea.setText(parentFrame.skrivLegeListe());
     }
 
     public void updateLege() {
@@ -220,7 +219,7 @@ public class AdminLege extends JTabbedPane {
                     } else {
                         lege.setC(false);
                     }
-                    String melding = "Jippi";
+                    String melding = "Vellykket oppdatering";
                     Komponent.popup(parentFrame, melding);
                     fornavnFelt.setText("");
                     etternavnFelt.setText("");
@@ -236,7 +235,7 @@ public class AdminLege extends JTabbedPane {
                     b.setSelected(false);
                     c.setSelected(false);
                 } else {
-                    String melding = "Du ble ikke registrert!";
+                    String melding = "Mislykket oppdatering!";
                     Komponent.popup(parentFrame, melding);
                 }
             }
@@ -255,12 +254,4 @@ public class AdminLege extends JTabbedPane {
             }
         }
     }
-
-    private class ItemLytter implements ItemListener {
-
-        public void itemStateChanged(ItemEvent e) {
-
-        }
-    }
-
 }
