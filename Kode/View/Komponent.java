@@ -11,6 +11,9 @@ import java.net.URL;
 public class Komponent
 {
     private static Font font = new Font("SansSerif", Font.PLAIN, 16);
+    protected static final String medisinFil = "medisiner.dat";
+    protected static final String legeFil = "leger.dat";
+    protected static final String pasientFil = "pasienter.dat";
 
     //	Lager en komponent med en label og en textField på samme rad
     protected static JPanel labelFieldRow(String text, JTextField field)
