@@ -104,7 +104,7 @@ public class Legeregister implements Serializable{
         
         boolean riktig = riktigPassord(lege, passord); 
         
-        Arrays.fill(passord,'0');
+        //Arrays.fill(passord,'0');
         
         return riktig;
     }
