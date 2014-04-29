@@ -16,7 +16,7 @@ import java.util.Arrays;
 import javax.swing.*;
 
 /**Dette er GUI for innlogging og registering av lege. Klassen arver
- * JTabbedPane og innholder fanene login og registerr. Den er en del av 
+ * JTabbedPane og innholder fanene login og registrer. Den er en del av 
  * Legekontorvinduet(Brukes av LegekontorVindu).
  * Laget av Hallbjørn Storruste s165519
  * Siste versjon 28-04-2014
@@ -36,8 +36,8 @@ public class LegekontorLogin extends JTabbedPane{
     
     /*Konstruktøren tar imot LegekontorVindu, dvs vindusklassen som oppretter
     objektet av denne klassen. Dette gjøres for å kunne benytte seg av metodene
-    som ligger i dette objektet og kunne få tilgang på bl.a registerne, samt
-    kunne gå vidrere/logge inn. Det vil si å tegne vinduet på nytt med 
+    som ligger i dette objektet og kunne få tilgang til bl.a registerne, samt
+    kunne gå videre/logge inn. Det vil si: å tegne vinduet på nytt med 
     brukergrensesnittet for å finne en pasient.*/
     public LegekontorLogin(LegekontorVindu p)
     {

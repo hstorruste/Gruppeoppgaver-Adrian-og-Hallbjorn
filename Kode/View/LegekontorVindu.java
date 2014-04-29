@@ -1,7 +1,7 @@
 package View;
 /**Dette er en GUI for Legekontorvinduet arver JFrame-klassen.
  * Laget av Hallbjørn Storruste s165519
- * Siste versjon 28-04-2014
+ * Siste versjon 29-04-2014
  *
  */
 import Model.*;
@@ -10,6 +10,13 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.NotSerializableException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import javax.swing.*;
 
 
@@ -20,6 +27,8 @@ public class LegekontorVindu extends LegeRegSuper
         private Pasient pasient;
         
         private Legeregister legeregister;
+        private Pasientregister pasientregister;
+        private Medisinregister medisinregister;
 
 	public LegekontorVindu()
 	{
@@ -31,7 +40,9 @@ public class LegekontorVindu extends LegeRegSuper
                 
                 add(GUI);
                 
-                legeregister = new Legeregister();
+                opprettTommeLister();
+                
+                lesFil();
                 
                 Komponent.endreFont(this);
                 Komponent.bilde(this);
@@ -64,24 +75,16 @@ public class LegekontorVindu extends LegeRegSuper
             return legeregister.settInn(fornavn, etternavn, ep, 
                     gadresse, pNr, psted, as, pass);
         }
-        /*Denne metoden repainter vinduet med finnPasientGUI,
-        og sender med info om innlogget lege.*/
+        /*Denne metoden tar imot objektet til legen som er innlogget, setter
+        tittelen på vinduet på nytt med legens navn og repainter vinduet med 
+        finnPasientGUI.*/
         public void tegnFinnPasientGUI(Lege innlogget)
         {
             
             this.innlogget = innlogget;
             String legenavn = this.innlogget.getNavn();
-            String arbeidssted = this.innlogget.getArbetssted();
-            if(arbeidssted.length() < 1)
-                arbeidssted = this.innlogget.getGateadresse();
-                        
-            JLabel navn = new JLabel(legenavn);
-            JLabel sted = new JLabel(arbeidssted);
-            JPanel infoPanel = new JPanel(new BorderLayout(40,40));
-            infoPanel.add(navn, BorderLayout.LINE_START);
-            infoPanel.add(sted, BorderLayout.LINE_END);
             
-            String nyTittel = getTitle() + navn;
+            String nyTittel = getTitle() + " - " + legenavn;
             setTitle(nyTittel);
             
             remove(GUI);
@@ -91,5 +94,108 @@ public class LegekontorVindu extends LegeRegSuper
             add(GUI);
             pack();
             repaint();
+        }
+        //Finner en pasient på fødselsnummer. Returnerer pasientobjektet.
+        public Pasient finnPasient(String fnr)
+        { 
+            return pasientregister.finnPasientFnr(fnr);
+        }
+        
+        /*Setter inn en pasient i pasientregisteret. Hvis dette er vellykket 
+        settes en peker til objektet inn i legen sitt eget pasientregister. 
+        Returnerer false hvis en av innsettingene mislykkes.*/
+        public boolean registrerPasient(String fornavn, String etternavn, String fnr)
+        {
+            boolean registrert = pasientregister.settInn(fornavn, etternavn, fnr);
+            if(registrert)
+            {
+                Pasientregister egen = innlogget.getPasientliste();
+                Pasient ny = pasientregister.finnPasientFnr(fnr);
+                registrert = egen.settInn(ny);
+            }
+            return registrert;
+        }
+        
+        //Returnerer pasientobjektet. (Pasienten det skal skrives ut resept til)
+        public Pasient getPasient(){
+            return pasient;
+        }
+        /*Denne metoden tar imot objektet til pasienten som det skal skrives ut
+        resept til og repainter vinduet med skrivReseptGUI. Den sørger også for 
+        at pasienten finnes i legens eget register.*/
+        public void tegnSkrivReseptGUI(Pasient pasient){
+            this.pasient = pasient;
+            
+            Pasientregister egen = innlogget.getPasientliste();
+            Pasient alleredePasient = egen.finnPasientFnr(pasient.getFnr());
+            
+            if(alleredePasient == null) //Sjekker om pasienten er kunde hos legen
+                egen.settInn(pasient);
+
+            
+            remove(GUI);
+            
+            GUI = new LegekontorSkrivResept(this);
+            
+            add(GUI);
+            pack();
+            repaint();
+        }
+        
+        /*Skriver medisinregister, legeregister og pasientregister til fil.*/
+        public void skrivTilFil()
+        {
+            try(ObjectOutputStream pasientfil = new ObjectOutputStream( new FileOutputStream(Komponent.pasientFil));
+                    ObjectOutputStream legefil = new ObjectOutputStream( new FileOutputStream(Komponent.legeFil));
+                    ObjectOutputStream medisinfil = new ObjectOutputStream( new FileOutputStream(Komponent.medisinFil)))
+            {
+                medisinfil.writeObject(medisinregister);
+                legefil.writeObject(legeregister);
+                pasientfil.writeObject(pasientregister);
+            }
+            catch( NotSerializableException nse)
+            {
+                System.out.println("Objektet er ikke serialisert!");
+                System.out.println(nse.getMessage());
+            }
+            catch( IOException ioe )
+            {
+                System.out.println("Problemer med utskrift til fil");
+                System.out.println(ioe.getMessage());
+            }
+        }
+        /*Leser medisinregister, legeregister og pasientregister fra fil.*/
+        public void lesFil()
+        {
+            try(ObjectInputStream medisinfil = new ObjectInputStream( new FileInputStream(Komponent.medisinFil));
+                    ObjectInputStream legefil = new ObjectInputStream( new FileInputStream(Komponent.legeFil));
+                    ObjectInputStream pasientfil = new ObjectInputStream( new FileInputStream(Komponent.pasientFil)))
+            {
+                medisinregister = (Medisinregister)medisinfil.readObject();
+                legeregister = (Legeregister)legefil.readObject();
+                pasientregister = (Pasientregister)pasientfil.readObject();
+            }
+            catch(ClassNotFoundException cnfe)
+            {
+                System.out.println("Oppretter tom liste");
+                opprettTommeLister();
+            }
+            catch(FileNotFoundException fnfe)
+            {
+                System.out.println("Finner ikke fil. Oppretter tom liste");
+                opprettTommeLister();
+            }
+            catch(IOException ioe)
+            {
+                System.out.println("Leseproblemer. Oppretter tom liste");
+                System.out.println(ioe.getMessage());
+                opprettTommeLister();
+            }
+        }
+        //Opretter tomme lister
+        private void opprettTommeLister(){
+            medisinregister = new Medisinregister();
+            legeregister = new Legeregister();
+            pasientregister = new Pasientregister();
         }
 }
