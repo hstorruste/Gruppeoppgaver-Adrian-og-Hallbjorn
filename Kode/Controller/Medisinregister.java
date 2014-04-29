@@ -5,9 +5,10 @@ package Controller;
  * and open the template in the editor.
  */
 
-/**Denne klassen legger medisiner inn i et register og gjør operasjoner mot den.
- * Laget av Hallbjørn Storruste
- * Siste versjon: 08-04-2014
+/**
+ * Denne klassen legger medisiner inn i et register og gjør operasjoner mot den.
+ * Laget av Hallbjørn Storruste Siste versjon: 08-04-2014
+ *
  * @author Hallbjørn
  */
 import Model.*;
@@ -15,43 +16,56 @@ import java.io.*;
 import java.util.*;
 
 public class Medisinregister implements Serializable {
-    
+
     private static final long serialVersionUID = 1009L;
     private Comparator komp;
     private SortedSet<Medisin> medisinregister;
-    
-    public Medisinregister()
-    {
+
+    public Medisinregister() {
         komp = new MedisinComparator();
         medisinregister = new TreeSet<>(komp);
     }
     /*Oppretter og setter inn et Medisin-objekt. Returnerer true hvis vellykket.*/
-    public boolean settInn(String navn, String kat, String gruppe, String actNr)
-    {
+
+    public boolean settInn(String navn, String kat, String gruppe, String actNr) {
         Medisin ny = new Medisin(navn, kat, gruppe, actNr);
-        
+
         return settInn(ny);
     }
     /*Setter inn et nytt Medisin-objekt i medisinregisteret.*/
-    public boolean settInn(Medisin ny)
-    {
-        if(ny == null)
+
+    public boolean settInn(Medisin ny) {
+        if (ny == null) {
             return false;
+        }
         return medisinregister.add(ny);
     }
+    /*Finner og returnerer en medisin i registeret basert på navnet.
+     Returnerer 'null' hvis ikke den finnes. */
+
+    public Medisin finnMedisinNavn(String navn) {
+        Iterator<Medisin> iterator = medisinregister.iterator();
+        Medisin runner = null;
+
+        while (iterator.hasNext()) {
+            runner = iterator.next();
+            if (runner.getNavn().equals(navn)) {
+                return runner;
+            }
+        }
+        return null;
+    }
     /*Finner en eller flere medisiner som begynner med det aktuelle navnet.*/
-    public TreeSet<Medisin> finnMedisin(String navn)
-    {
+
+    public TreeSet<Medisin> finnMedisin(String navn) {
         Iterator<Medisin> iterator = medisinregister.iterator();
         TreeSet<Medisin> medisinSet = new TreeSet<>(komp);
         Medisin runner;
         navn = navn + ".*";
 
-        while(iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             runner = iterator.next();
-            if(runner.getNavn().matches(navn))
-            {
+            if (runner.getNavn().matches(navn)) {
                 medisinSet.add(runner);
             }
 
@@ -59,56 +73,50 @@ public class Medisinregister implements Serializable {
         return medisinSet;
     }
     /*Finner og returnerer alle medisiner i den eller de gruppene 
-    som passer med det aktuelle regionære uttrykket.*/
-     public TreeSet<Medisin> finnMedisiniGruppe(String regex)
-     {
+     som passer med det aktuelle regionære uttrykket.*/
+
+    public TreeSet<Medisin> finnMedisiniGruppe(String regex) {
         Iterator<Medisin> iterator = medisinregister.iterator();
         TreeSet<Medisin> medisinSet = new TreeSet<>(komp);
         Medisin runner;
 
-        while(iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             runner = iterator.next();
-            if(runner.getGrupp().matches(regex))
-            {
+            if (runner.getGrupp().matches(regex)) {
                 medisinSet.add(runner);
             }
 
         }
         return medisinSet;
-     }
-     /*Finner og returnerer alle medisiner innen cen eller de kategorier
+    }
+    /*Finner og returnerer alle medisiner innen cen eller de kategorier
      som passer med det aktuelle regulære uttrykket.*/
-     public TreeSet<Medisin> finnMedisiniKategori(String regex)
-     {
+
+    public TreeSet<Medisin> finnMedisiniKategori(String regex) {
         Iterator<Medisin> iterator = medisinregister.iterator();
         TreeSet<Medisin> medisinSet = new TreeSet<>(komp);
         Medisin runner;
 
-        while(iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             runner = iterator.next();
-            if(runner.getKategori().matches(regex))
-            {
+            if (runner.getKategori().matches(regex)) {
                 medisinSet.add(runner);
             }
 
         }
         return medisinSet;
-     }
-     
+    }
+
     @Override
-     public String toString()
-     {
+    public String toString() {
         StringBuilder str = new StringBuilder();
         Iterator<Medisin> iter = medisinregister.iterator();
 
-        while(iter.hasNext())
-        {
+        while (iter.hasNext()) {
             str.append(iter.next());
             str.append("\n");
         }
 
         return str.toString();
-     }
+    }
 }
