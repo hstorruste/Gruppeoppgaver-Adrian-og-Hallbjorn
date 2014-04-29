@@ -25,8 +25,62 @@ public class Medisinregister implements Serializable {
         komp = new MedisinComparator();
         medisinregister = new TreeSet<>(komp);
     }
-    /*Oppretter og setter inn et Medisin-objekt. Returnerer true hvis vellykket.*/
-
+   
+    //Returnerer medisinregisteret
+    public SortedSet<Medisin> getMedisinregister()
+    {
+        return medisinregister;
+    }
+    
+    //Returnerer et Stringarray med alle medisinnavn.
+    public String[] getAlleMedisinnavn()
+    {
+        int size = medisinregister.size();
+        
+        String[] navn = new String[size];
+        int i =0;
+        
+        Iterator<Medisin> iterator = medisinregister.iterator();
+        Medisin runner = null;
+        while (iterator.hasNext()) {
+            runner = iterator.next();
+            navn[i] = runner.getNavn();
+            i++;
+        }
+        return navn;
+    }
+    
+    //
+    public String[] getAlleKategorier()
+    {
+        int size = medisinregister.size();
+        String[] kategorier = new String[size]; 
+        int i = 0;
+        
+        Iterator<Medisin> iterator = medisinregister.iterator();
+        Medisin runner = null;
+        while (iterator.hasNext()) {
+            runner = iterator.next();
+            String runnerKat = runner.getKategori();
+            for(int j = 0; j <= i; j++)
+            {
+                if(kategorier[j] == null)
+                {
+                    kategorier[j] = runner.getKategori();
+                    i++;
+                    break;
+                }
+                else
+                    if(kategorier[j].equals(runnerKat))
+                        break;    
+            }
+        }
+        kategorier = Arrays.copyOfRange(kategorier, 0, i-1);
+        
+        return kategorier;   
+    }
+    
+     /*Oppretter og setter inn et Medisin-objekt. Returnerer true hvis vellykket.*/
     public boolean settInn(String navn, String kat, String gruppe, String actNr) {
         Medisin ny = new Medisin(navn, kat, gruppe, actNr);
 
