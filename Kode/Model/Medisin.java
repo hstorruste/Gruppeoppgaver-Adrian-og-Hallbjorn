@@ -9,7 +9,7 @@ public class Medisin implements Serializable
 {
 	private static final long serialVersionUID = 1004L;
 
-	String navn, kategori, grupp, atcNr;
+	private String navn, kategori, grupp, atcNr;
 
 	public Medisin(String n, String k, String g, String a)
 	{
