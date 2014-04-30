@@ -138,6 +138,7 @@ public class Lege extends Person implements Serializable
 		   				ut += "B.";
 		   			if(c)
 		   				ut += "C.";
+                                        ut += "\n";
 		return ut;
 	}
 }

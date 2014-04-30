@@ -78,6 +78,7 @@ public class Resept implements Serializable
                     ut += "Ja";
                 else
                     ut += "Nei";
+                ut += "\n";
                 
                 return ut;
 	}

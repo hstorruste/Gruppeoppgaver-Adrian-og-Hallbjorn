@@ -55,6 +55,6 @@ public class Medisin implements Serializable
 
 	public String toString()
 	{
-		return "Grupp: " + grupp + "\nKategori: " + kategori + "\nMedisin: " + navn + "\nATC-nr: " + atcNr;
+		return "Grupp: " + grupp + "\nKategori: " + kategori + "\nMedisin: " + navn + "\nATC-nr: " + atcNr + "\n";
 	}
 }//End of class Medisin
