@@ -47,14 +47,14 @@ public class AdminMedisin extends JTabbedPane {
         medisinRediger.add(kompFinnMedisin);
 
         finnMedisinKnapp = new JButton("Finn");
-        finnMedisinKnapp.setPreferredSize(new Dimension(135, 20));
+        finnMedisinKnapp.setPreferredSize(new Dimension(152, 20));
         finnMedisinKnapp.addActionListener(knappeLytter);
         JPanel finnMedisinKnappPanel = new JPanel(new BorderLayout());
         finnMedisinKnappPanel.add(finnMedisinKnapp, BorderLayout.LINE_END);
         medisinRediger.add(finnMedisinKnappPanel);
 
         seMedisinListeKnapp = new JButton("Se hele listen");
-        seMedisinListeKnapp.setPreferredSize(new Dimension(135, 20));
+        seMedisinListeKnapp.setPreferredSize(new Dimension(152, 20));
         seMedisinListeKnapp.addActionListener(knappeLytter);
         JPanel seMedisinListeKnappPanel = new JPanel(new BorderLayout());
         seMedisinListeKnappPanel.add(seMedisinListeKnapp, BorderLayout.LINE_END);
@@ -194,18 +194,24 @@ public class AdminMedisin extends JTabbedPane {
         String kategori = (String) regKategoriVelger.getSelectedItem();
         String navn = regMedisinNavn.getText();
         String atcNr = regATC.getText();
-
-        boolean registrert = parentFrame.registrerMedisin(navn, kategori, grupp, atcNr);
-        if (registrert) {
-            String melding = "Medisin er registrert!";
+        if (((grupp.equals("") || kategori.equals("")) || navn.equals("")) || atcNr.equals("")) {
+            String melding = "Alle felt må vare utfyllt!";
             Komponent.popup(parentFrame, melding);
-            regGruppVelger.setSelectedIndex(-1);
-            regKategoriVelger.setSelectedIndex(-1);
-            regMedisinNavn.setText("");
-            regATC.setText("");
         } else {
-            String melding = "Du ble ikke registrert!";
-            Komponent.popup(parentFrame, melding);
+            boolean registrert = parentFrame.registrerMedisin(navn, kategori, grupp, atcNr);
+            
+            if (registrert) {
+                parentFrame.skrivTilFil();
+                String melding = "Medisin er registrert!";
+                Komponent.popup(parentFrame, melding);
+                regGruppVelger.setSelectedIndex(-1);
+                regKategoriVelger.setSelectedIndex(-1);
+                regMedisinNavn.setText("");
+                regATC.setText("");
+            } else {
+                String melding = "Du ble ikke registrert!";
+                Komponent.popup(parentFrame, melding);
+            }
         }
     }
 
