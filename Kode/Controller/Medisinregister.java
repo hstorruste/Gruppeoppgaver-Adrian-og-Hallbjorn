@@ -7,7 +7,7 @@ package Controller;
 
 /**
  * Denne klassen legger medisiner inn i et register og gjør operasjoner mot den.
- * Laget av Hallbjørn Storruste Siste versjon: 08-04-2014
+ * Laget av Hallbjørn Storruste Siste versjon: 29-04-2014
  *
  * @author Hallbjørn
  */
@@ -50,7 +50,7 @@ public class Medisinregister implements Serializable {
         return navn;
     }
     
-    //
+    //Returnerer et array med alle de ulike kategorinavnene til medisinene.
     public String[] getAlleKategorier()
     {
         int size = medisinregister.size();

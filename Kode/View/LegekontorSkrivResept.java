@@ -6,10 +6,13 @@
 
 package View;
 
+import Model.Medisin;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
+import java.util.TreeSet;
 import javax.swing.*;
 
 /**Dette er GUI for å finne og skrive ut en resept til en pasient. Klassen arver
@@ -30,8 +33,9 @@ public class LegekontorSkrivResept extends JTabbedPane{
     private JButton sendKnapp, tilbakeKnapp, tilbakeHistKnapp;
     private String[] labeltekst = {"Medisin", "Gruppe", "Kategori", "ATC-nr", 
         "Reit", "Dosering//Bruksanvisning", "Tidligere resepter"};
+    private String[] medisiner;
     
-    private KnappeLytter knappeLytter;
+    private KnappeLytter lytter;
     
     private final int TEKSTFELTLENGDE = 20;
     
@@ -47,6 +51,8 @@ public class LegekontorSkrivResept extends JTabbedPane{
         
         parentFrame = p;
         
+        lytter = new KnappeLytter();
+        
         String pasientnavn = parentFrame.getPasient().getNavn();
          
         addTab("Skriv resept til " + pasientnavn, skrivReseptGUI());
@@ -56,9 +62,12 @@ public class LegekontorSkrivResept extends JTabbedPane{
     //Oppretter alt i fane for "Skriv resept".
     private JPanel skrivReseptGUI()
     {
-        String[] medisiner = {};//Må sette inn alle medisiner.
+        
+        medisiner = parentFrame.getAlleMedisinnavn();
         medisinFelt = new JComboBox<>(medisiner);
+        medisinFelt.setSelectedIndex(-1);
         medisinFelt.setEditable(false);
+        medisinFelt.addActionListener(lytter);
         JPanel medisinSkriv = (JPanel) Komponent.labelComboBoxColumb(labeltekst[0], medisinFelt);
         
         gruppeFelt = new JTextField(TEKSTFELTLENGDE);
@@ -86,16 +95,16 @@ public class LegekontorSkrivResept extends JTabbedPane{
         JPanel labelPanel = new JPanel( new BorderLayout());
         labelPanel.add(new JLabel(labeltekst[5]), BorderLayout.LINE_START);
         
-        bruksanvOmrade = new JTextArea(20,30);
+        bruksanvOmrade = new JTextArea(15,20);
         
         JPanel bruksanvPanel = new JPanel( new GridLayout(1,1));
         bruksanvPanel.add(new JScrollPane(bruksanvOmrade));
         
         sendKnapp = new JButton("Send");
-        sendKnapp.addActionListener(knappeLytter);
+        sendKnapp.addActionListener(lytter);
         
         tilbakeKnapp = new JButton("Tilbake");
-        tilbakeKnapp.addActionListener(knappeLytter);
+        tilbakeKnapp.addActionListener(lytter);
         
         JPanel knappePanel = new JPanel( new BorderLayout());
         knappePanel.add(sendKnapp, BorderLayout.LINE_START);
@@ -115,14 +124,16 @@ public class LegekontorSkrivResept extends JTabbedPane{
     //Oppretter alt i fane "historikk".
     private JPanel historikkGUI(){
         
-        historikkOmrade = new JTextArea(20,30);
+        historikkOmrade = new JTextArea(15,20);
         historikkOmrade.setEditable(false);
+        String historikk = parentFrame.getPasientHistorikk();
+        historikkOmrade.setText(historikk);
         
         JPanel historikkPanel = new JPanel( new GridLayout(1,1));
         historikkPanel.add(new JScrollPane(historikkOmrade));
         
         tilbakeHistKnapp = new JButton("Tilbake");
-        tilbakeHistKnapp.addActionListener(knappeLytter);
+        tilbakeHistKnapp.addActionListener(lytter);
         
         JPanel knappePanel = new JPanel( new BorderLayout());
         knappePanel.add(tilbakeHistKnapp, BorderLayout.LINE_END);
@@ -137,15 +148,32 @@ public class LegekontorSkrivResept extends JTabbedPane{
         
         return historikkGUI;
     }
+    /*Setter gruppeFelt kategoriFelt og atcFelt til de respektive verdiene som
+    medisinen som er valgt har.*/
+    private void setMedisinFelt()
+    {
+        String medisinNavn = (String)medisinFelt.getSelectedItem();
+        Medisin medisin = parentFrame.finnMedisin(medisinNavn);
+        if(medisin == null)
+            return;
+        
+        String gruppe = medisin.getGrupp();
+        String kategori = medisin.getKategori();
+        String atc = medisin.getATCNr();
+        gruppeFelt.setText(gruppe);
+        kategoriFelt.setText(kategori);
+        atcFelt.setText(atc);
+    }
     /*Setter inn  en resept i pasientens reseptregister.*/
     private void sendResept()
     {
-        
+        //registerer resept
+        parentFrame.tegnSkrivReseptGUI(parentFrame.getPasient());
     }
     /*Tegner GUI for å finne en pasient.*/
     private void tilbake()
     {
-        
+        parentFrame.tegnFinnPasientGUI(parentFrame.getLege());
     }
     
     private class KnappeLytter implements ActionListener
@@ -155,6 +183,8 @@ public class LegekontorSkrivResept extends JTabbedPane{
         {
             if(e.getSource() == sendKnapp)
                 sendResept();            
+            else if(e.getSource() == medisinFelt)
+                setMedisinFelt();
             else
                 tilbake();           
         }

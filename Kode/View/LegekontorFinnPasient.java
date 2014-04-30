@@ -59,6 +59,7 @@ public class LegekontorFinnPasient extends JTabbedPane{
     private JPanel finnGUI()
     {
         fodselsnrFinnFelt = new JTextField(TEKSTFELTLENGDE);
+        fodselsnrFinnFelt.addActionListener(knappeLytter);
         JPanel fodselsnrFinn = (JPanel) Komponent.labelFieldRow(labeltekst[0], fodselsnrFinnFelt);
         
         finnKnapp = new JButton("Finn");
@@ -142,7 +143,7 @@ public class LegekontorFinnPasient extends JTabbedPane{
         @Override
         public void actionPerformed( ActionEvent e)
         {
-            if(e.getSource() == finnKnapp)
+            if(e.getSource() == finnKnapp || e.getSource() == fodselsnrFinnFelt)
                 finn();
             else
               registrer();

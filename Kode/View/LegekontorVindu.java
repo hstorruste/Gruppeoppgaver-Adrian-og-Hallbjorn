@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.TreeSet;
 import javax.swing.*;
 
 
@@ -29,6 +30,8 @@ public class LegekontorVindu extends LegeRegSuper
         private Legeregister legeregister;
         private Pasientregister pasientregister;
         private Medisinregister medisinregister;
+        private final int BREDDE = 800;
+        private final int HOYDE = 600;
 
 	public LegekontorVindu()
 	{
@@ -46,7 +49,7 @@ public class LegekontorVindu extends LegeRegSuper
                 
                 Komponent.endreFont(this);
                 Komponent.bilde(this);
-                pack();
+                setSize(BREDDE, HOYDE);
 		setVisible(true);
 	}
         
@@ -92,7 +95,7 @@ public class LegekontorVindu extends LegeRegSuper
             GUI = new LegekontorFinnPasient(this);
            
             add(GUI);
-            pack();
+            Komponent.endreFont(this);
             repaint();
         }
         //Finner en pasient på fødselsnummer. Returnerer pasientobjektet.
@@ -138,10 +141,36 @@ public class LegekontorVindu extends LegeRegSuper
             GUI = new LegekontorSkrivResept(this);
             
             add(GUI);
-            pack();
+            Komponent.endreFont(this);
             repaint();
         }
         
+        //Returnerer medisinregisteret.
+        public String[] getAlleMedisinnavn()
+        {
+            return medisinregister.getAlleMedisinnavn();
+        }
+        
+        //Returnerer en String med alle resepter for pasienten.
+        public String getPasientHistorikk()
+        {
+            Reseptregister reseptregister = pasient.getReseptliste();
+            String historikk = reseptregister.toString();
+            return historikk;
+        }
+        
+        //Returnerer lege-objektet til den innloggete legen.
+        public Lege getLege()
+        {
+            return innlogget;
+        }
+        
+        //Finner og returnerer et medisinobjekt
+        public Medisin finnMedisin(String navn)
+        {
+            Medisin funnet = medisinregister.finnMedisinNavn(navn);
+            return funnet;
+        }
         /*Skriver medisinregister, legeregister og pasientregister til fil.*/
         public void skrivTilFil()
         {
@@ -164,6 +193,7 @@ public class LegekontorVindu extends LegeRegSuper
                 System.out.println(ioe.getMessage());
             }
         }
+        
         /*Leser medisinregister, legeregister og pasientregister fra fil.*/
         public void lesFil()
         {

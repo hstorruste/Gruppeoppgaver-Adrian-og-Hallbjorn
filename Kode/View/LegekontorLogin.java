@@ -64,6 +64,7 @@ public class LegekontorLogin extends JTabbedPane{
         JPanel epostLogin = (JPanel) Komponent.labelFieldRow(labeltekst[0], epostLoginFelt);
         
         passordLoginFelt = new JPasswordField(TEKSTFELTLENGDE);
+        passordLoginFelt.addActionListener(knappeLytter);
         JPanel passordLogin = (JPanel) Komponent.labelFieldRow(labeltekst[1], passordLoginFelt);
         
         loginKnapp = new JButton("Logg inn");
@@ -103,7 +104,7 @@ public class LegekontorLogin extends JTabbedPane{
         @Override
         public void actionPerformed( ActionEvent e)
         {
-            if(e.getSource() == loginKnapp)
+            if(e.getSource() == loginKnapp || e.getSource() ==passordLoginFelt)
                 login();
         }
     }
