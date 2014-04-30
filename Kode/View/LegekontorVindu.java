@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Calendar;
 import java.util.TreeSet;
 import javax.swing.*;
 
@@ -170,6 +171,11 @@ public class LegekontorVindu extends LegeRegSuper
         {
             Medisin funnet = medisinregister.finnMedisinNavn(navn);
             return funnet;
+        }
+        //Registrerer en resept på pasienten
+        public boolean registrerResept(Medisin medisin, Calendar d, Lege lege, int reit, String beskrivelse)
+        {
+           return pasient.settInnResept(medisin, d, lege, reit, beskrivelse);
         }
         /*Skriver medisinregister, legeregister og pasientregister til fil.*/
         public void skrivTilFil()

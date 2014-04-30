@@ -6,11 +6,13 @@
 
 package View;
 
+import Model.Lege;
 import Model.Medisin;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.TreeSet;
 import javax.swing.*;
@@ -168,7 +170,47 @@ public class LegekontorSkrivResept extends JTabbedPane{
     private void sendResept()
     {
         //registerer resept
-        parentFrame.tegnSkrivReseptGUI(parentFrame.getPasient());
+        Lege lege = parentFrame.getLege();
+        String medisinNavn = (String)medisinFelt.getSelectedItem();
+        Medisin medisin = parentFrame.finnMedisin(medisinNavn);
+        String gruppe = medisin.getGrupp();
+        int reit = 0;
+        String reitTekst = reitFelt.getText();
+        if(!reitTekst.equals("")){
+            try{
+                reit = Integer.parseInt(reitTekst);
+            }
+            catch(NumberFormatException nfe){
+                String melding = "Ugyldig antall reit! \nBruk kun tegnene 0-9.";
+                Komponent.popup(parentFrame, melding);
+                return;
+            }
+        }
+        
+        boolean bevilling = false;
+        if(gruppe.equals("A"))
+            bevilling = lege.getA();
+        else if(gruppe.equals("B"))
+            bevilling = lege.getB();
+        else if(gruppe.equals("C"))
+            bevilling = lege.getC(); 
+        if(!bevilling){
+            String melding = "Du har ikke bevilling til å skrive ut medisiner"
+                    +" i reseptgruppe: " + gruppe +".";
+            Komponent.popup(parentFrame, melding);
+            return;
+        }
+        
+        Calendar d = Calendar.getInstance();
+        
+        String beskrivelse = bruksanvOmrade.getText();
+        
+        boolean sendt = parentFrame.registrerResept(medisin, d, lege, reit, beskrivelse);   
+        if(sendt){
+            String melding = "Resepten er sendt";
+            Komponent.popup(parentFrame, melding);
+            parentFrame.tegnSkrivReseptGUI(parentFrame.getPasient());
+        }
     }
     /*Tegner GUI for å finne en pasient.*/
     private void tilbake()
