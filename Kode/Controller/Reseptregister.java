@@ -7,7 +7,7 @@ package Controller;
 
 /**Denne klassen legger resepter inn i register og gjør oprasjoner mot den.
  * Laget av Hallbjørn Storruste
- * Siste versjon: 09-04-2014
+ * Siste versjon: 30-04-2014
  * @author Hallbjørn
  */
 import Model.*;
@@ -38,6 +38,21 @@ public class Reseptregister implements Serializable {
             return false;
         return reseptregister.add(ny);
     }
+    //Finner og returnerer en String med respeter som ikke er utlevert.
+    public String finnNyeResepterString()
+    {
+        TreeSet<Resept> liste = finnNyeResepter();
+        Iterator<Resept> iterator = liste.iterator();
+        StringBuilder resepter = new StringBuilder();
+        Resept runner;
+        while(iterator.hasNext())
+        {
+            runner = iterator.next();
+            resepter.append(runner.toString());
+            resepter.append("\n");
+        }
+        return resepter.toString();
+    }
     //Finner og returnerer et array med respeter som ikke er utlevert.
     public TreeSet<Resept> finnNyeResepter()
     {
@@ -53,6 +68,22 @@ public class Reseptregister implements Serializable {
             }
         }
         return liste;
+    }
+    
+     //Finner og returnerer en String med respeter som er utlevert.
+    public String finnGamleResepterString()
+    {
+        TreeSet<Resept> liste = finnGamleResepter();
+        Iterator<Resept> iterator = liste.iterator();
+        StringBuilder resepter = new StringBuilder();
+        Resept runner;
+        while(iterator.hasNext())
+        {
+            runner = iterator.next();
+            resepter.append(runner.toString());
+            resepter.append("\n");
+        }
+        return resepter.toString();
     }
      //Finner og returnerer et array med respeter som er utlevert.
     public TreeSet<Resept> finnGamleResepter()
