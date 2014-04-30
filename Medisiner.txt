@@ -1,0 +1,4 @@
+Gruppe: C
+Kategori: Antibiotikum
+Medisin: Apocillin
+ATC-nr: J01C E02
