@@ -33,22 +33,19 @@ public class LegekontorVindu extends LegeRegSuper
         private Medisinregister medisinregister;
         private final int BREDDE = 800;
         private final int HOYDE = 600;
+        private final String tittel = "Legekontor";
 
 	public LegekontorVindu()
 	{
 		super("Legekontor");
 
 		setLayout(new GridLayout(0, 1));
-
-                GUI = new LegekontorLogin(this);
-                
-                add(GUI);
+                tegnLoginGUI();
                 
                 opprettTommeLister();
                 
                 lesFil();
                 
-                Komponent.endreFont(this);
                 Komponent.bilde(this);
                 setSize(BREDDE, HOYDE);
 		setVisible(true);
@@ -177,16 +174,24 @@ public class LegekontorVindu extends LegeRegSuper
         {
            return pasient.settInnResept(medisin, d, lege, reit, beskrivelse);
         }
-        /*Skriver medisinregister, legeregister og pasientregister til fil.*/
+        
+        public void tegnLoginGUI()
+        {
+            if(GUI != null)
+                remove(GUI);
+            GUI = new LegekontorLogin(this);
+            add(GUI);
+            setTitle(tittel);
+            Komponent.endreFont(this);
+        }
+        /*Skriver lmedisinregister, legeregister og pasientregister til fil.*/
         public void skrivTilFil()
         {
-            try(ObjectOutputStream pasientfil = new ObjectOutputStream( new FileOutputStream(Komponent.pasientFil));
-                    ObjectOutputStream legefil = new ObjectOutputStream( new FileOutputStream(Komponent.legeFil));
-                    ObjectOutputStream medisinfil = new ObjectOutputStream( new FileOutputStream(Komponent.medisinFil)))
+            try(ObjectOutputStream utfil = new ObjectOutputStream( new FileOutputStream(Komponent.dataFil)))
             {
-                medisinfil.writeObject(medisinregister);
-                legefil.writeObject(legeregister);
-                pasientfil.writeObject(pasientregister);
+                utfil.writeObject(medisinregister);
+                utfil.writeObject(legeregister);
+                utfil.writeObject(pasientregister);
             }
             catch( NotSerializableException nse)
             {
@@ -203,29 +208,24 @@ public class LegekontorVindu extends LegeRegSuper
         /*Leser medisinregister, legeregister og pasientregister fra fil.*/
         public void lesFil()
         {
-            try(ObjectInputStream medisinfil = new ObjectInputStream( new FileInputStream(Komponent.medisinFil));
-                    ObjectInputStream legefil = new ObjectInputStream( new FileInputStream(Komponent.legeFil));
-                    ObjectInputStream pasientfil = new ObjectInputStream( new FileInputStream(Komponent.pasientFil)))
+            try(ObjectInputStream innfil = new ObjectInputStream( new FileInputStream(Komponent.dataFil)))
             {
-                medisinregister = (Medisinregister)medisinfil.readObject();
-                legeregister = (Legeregister)legefil.readObject();
-                pasientregister = (Pasientregister)pasientfil.readObject();
+                medisinregister = (Medisinregister)innfil.readObject();
+                legeregister = (Legeregister)innfil.readObject();
+                pasientregister = (Pasientregister)innfil.readObject();
             }
             catch(ClassNotFoundException cnfe)
             {
                 System.out.println("Oppretter tom liste");
-                opprettTommeLister();
             }
             catch(FileNotFoundException fnfe)
             {
                 System.out.println("Finner ikke fil. Oppretter tom liste");
-                opprettTommeLister();
             }
             catch(IOException ioe)
             {
                 System.out.println("Leseproblemer. Oppretter tom liste");
                 System.out.println(ioe.getMessage());
-                opprettTommeLister();
             }
         }
         //Opretter tomme lister
