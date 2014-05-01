@@ -1,9 +1,19 @@
-Gruppe: C
+Grupp: C
 Kategori: Antibiotikum
-Medisin: Apocillin
+Medisin: Apocillin 330 mg Tablett
 ATC-nr: J01C E02
 
-Gruppe: A
+Grupp: C
+Kategori: Antibiotikum
+Medisin: Apocillin 660 mg Tablett
+ATC-nr: J01C E02
+
+Grupp: A
 Kategori: Analgetikum
-Medisin: Morfin
+Medisin: Morfin 10 mg Tablett
 ATC-nr: N02A A01
+
+Grupp: B
+Kategori: Analgetikum
+Medisin: Paralgin forte 400 mg/ 30 mg Tablett
+ATC-nr: N02A A59
