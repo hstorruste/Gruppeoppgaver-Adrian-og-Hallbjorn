@@ -65,21 +65,33 @@ public class Resept implements Serializable
         }
 	public String toString()
 	{
-		String ut = "Reseptnr: " + reseptNr + "\nDato: ";
-                
-                DateFormat datoformat = DateFormat.getDateInstance();
-                ut += datoformat.format(dato.getTime());
-                
-                ut += "\nPreparat: " + medisin.toString()
-                        + "\nBeskrivelse: " + beskrivelse + "\nLege: " + lege.toString()
-                        + "\nReit: " + reit + "\nUtlevert: ";
-                
-                if(utlevert)
-                    ut += "Ja";
-                else
-                    ut += "Nei";
-                ut += "\n";
-                
-                return ut;
+            StringBuilder ut = new StringBuilder();
+            ut.append("Reseptnr: ");
+            ut.append(reseptNr);
+            ut.append("\nDato: ");
+
+            DateFormat datoformat = DateFormat.getDateInstance();
+            ut.append(datoformat.format(dato.getTime()));
+            if(medisin == null)
+                ut.append("\nMedisinen finnes ikke!");
+            else if(lege == null)
+                ut.append("\nFinner ikke den forskrivende lege");
+            else
+            {
+                ut.append("\nPreparat: ");
+                ut.append(medisin.toString());
+                ut.append("\nBeskrivelse: ");
+                ut.append(beskrivelse);
+                ut.append("\nLege: ");
+                ut.append(lege.toString());
+                ut.append("\nReit: ");
+                ut.append(reit);
+            }
+            if(utlevert)
+                ut.append("\nUtlevert: Ja\n");
+            else
+                ut.append("\nUtlevert: Nei\n");
+ 
+            return ut.toString();
 	}
 }
