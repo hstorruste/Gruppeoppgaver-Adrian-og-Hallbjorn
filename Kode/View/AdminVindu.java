@@ -76,11 +76,13 @@ public class AdminVindu extends LegeRegSuper {
     /*Skriver medisinregister, legeregister og pasientregister til fil.*/
 
     public void skrivTilFil() {
-        try (ObjectOutputStream legefil = new ObjectOutputStream(new FileOutputStream(Komponent.legeFil));
-                ObjectOutputStream medisinfil = new ObjectOutputStream(new FileOutputStream(Komponent.medisinFil))) {
-            medisinfil.writeObject(medisinregister);
-            legefil.writeObject(legeregister);
-        } catch (NotSerializableException nse) {
+        try(ObjectOutputStream utfil = new ObjectOutputStream( new FileOutputStream(Komponent.dataFil)))
+        {
+            utfil.writeObject(medisinregister);
+            utfil.writeObject(legeregister);
+            //utfil.writeObject(pasientregister);
+        }
+        catch (NotSerializableException nse) {
             System.out.println("Objektet er ikke serialisert!");
             System.out.println(nse.getMessage());
         } catch (IOException ioe) {
@@ -91,11 +93,12 @@ public class AdminVindu extends LegeRegSuper {
     /*Leser medisinregister, legeregister og pasientregister fra fil.*/
 
     public void lesFil() {
-        try (ObjectInputStream medisinfil = new ObjectInputStream(new FileInputStream(Komponent.medisinFil));
-                ObjectInputStream legefil = new ObjectInputStream(new FileInputStream(Komponent.legeFil));) {
-            medisinregister = (Medisinregister) medisinfil.readObject();
-            legeregister = (Legeregister) legefil.readObject();
-        } catch (ClassNotFoundException cnfe) {
+         try(ObjectInputStream innfil = new ObjectInputStream( new FileInputStream(Komponent.dataFil)))
+        {
+            medisinregister = (Medisinregister)innfil.readObject();
+            legeregister = (Legeregister)innfil.readObject();
+            //pasientregister = (Pasientregister)innfil.readObject();
+        }catch (ClassNotFoundException cnfe) {
             System.out.println("Oppretter tom liste");
             opprettTommeLister();
         } catch (FileNotFoundException fnfe) {
