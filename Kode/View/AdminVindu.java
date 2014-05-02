@@ -14,13 +14,15 @@ import javax.swing.*;
 public class AdminVindu extends LegeRegSuper {
 
     private JTabbedPane legeGUI, medisinGUI;
-    private Legeregister legeregister;
     private Medisinregister medisinregister;
+    private Legeregister legeregister;
+    private Pasientregister pasientregister;
 
     public AdminVindu() {
         super("Admin");
 
         setLayout(new GridLayout(0, 1, 5, 5));
+        opprettTommeLister();
         lesFil();
         
         legeGUI = new AdminLege(this);
@@ -44,6 +46,7 @@ public class AdminVindu extends LegeRegSuper {
     }
 
     //Registrerer lege med Legeregister sin settInn metode.
+    @Override
     public boolean registrerLege(String fornavn, String etternavn, String ep,
             String gadresse, int pNr, String psted, String as, char[] pass) {
 
@@ -75,12 +78,13 @@ public class AdminVindu extends LegeRegSuper {
     }
     /*Skriver medisinregister, legeregister og pasientregister til fil.*/
 
+    @Override
     public void skrivTilFil() {
         try(ObjectOutputStream utfil = new ObjectOutputStream( new FileOutputStream(Komponent.dataFil)))
         {
             utfil.writeObject(medisinregister);
             utfil.writeObject(legeregister);
-            //utfil.writeObject(pasientregister);
+            utfil.writeObject(pasientregister);
         }
         catch (NotSerializableException nse) {
             System.out.println("Objektet er ikke serialisert!");
@@ -92,22 +96,20 @@ public class AdminVindu extends LegeRegSuper {
     }
     /*Leser medisinregister, legeregister og pasientregister fra fil.*/
 
+    @Override
     public void lesFil() {
-         try(ObjectInputStream innfil = new ObjectInputStream( new FileInputStream(Komponent.dataFil)))
+        try(ObjectInputStream innfil = new ObjectInputStream( new FileInputStream(Komponent.dataFil)))
         {
             medisinregister = (Medisinregister)innfil.readObject();
             legeregister = (Legeregister)innfil.readObject();
-            //pasientregister = (Pasientregister)innfil.readObject();
+            pasientregister = (Pasientregister)innfil.readObject();
         }catch (ClassNotFoundException cnfe) {
-            System.out.println("Oppretter tom liste");
-            opprettTommeLister();
+            System.out.println("Oppretter tom liste");      
         } catch (FileNotFoundException fnfe) {
             System.out.println("Finner ikke fil. Oppretter tom liste");
-            opprettTommeLister();
         } catch (IOException ioe) {
             System.out.println("Leseproblemer. Oppretter tom liste");
             System.out.println(ioe.getMessage());
-            opprettTommeLister();
         }
     }
 
