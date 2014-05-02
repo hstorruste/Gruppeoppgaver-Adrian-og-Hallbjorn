@@ -51,3 +51,9 @@ ATC-nr: S02B A07
 Grupp: C
 Kategori: Antihistamin
 Medisin: Vallergan 5 mg/ml Mikstur
+ATC-nr: R06A D01
+
+Grupp: C
+Kategori: Antiandrogen
+Medisin: Diane Tablett
+ATC-nr: G03H B01
