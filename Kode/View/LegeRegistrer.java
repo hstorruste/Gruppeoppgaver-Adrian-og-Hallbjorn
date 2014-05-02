@@ -122,6 +122,7 @@ public class LegeRegistrer extends JPanel {
                 boolean registrert = parentFrame.registrerLege(fornavn, etternavn,
                         epost, gateadresse, postnr, poststed, arbeidssted, passord);
                 if (registrert) {
+                    parentFrame.skrivTilFil();
                     String melding = "Du er registrert!";
                     Komponent.popup(parentFrame, melding);
                     fornavnFelt.setText("");
