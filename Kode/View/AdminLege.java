@@ -245,7 +245,7 @@ public class AdminLege extends JTabbedPane {
     private class KnappeLytter implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == finnLegeKnapp) {
+            if (e.getSource() == finnLegeKnapp || e.getSource() == finnLegeFelt) {
                 finnLege();
             } else if (e.getSource() == seLegeListeKnapp) {
                 skrivListe();

@@ -1,74 +1,119 @@
 package View;
 /*  Denne klassen er et GUI til apotek.
-    Laget av Adrian Westlund s198571.
-    Siste versjon 22-04-2014*/
+ Laget av Adrian Westlund s198571.
+ Siste versjon 22-04-2014*/
 
+import Controller.Legeregister;
+import Controller.Medisinregister;
+import Controller.Pasientregister;
+import Model.Pasient;
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 import java.net.URL;
 
-public class ApotekVindu extends JFrame
-{
-	Font font = new Font("SansSerif", Font.PLAIN, 16);
+public class ApotekVindu extends JFrame {
 
-    public ApotekVindu()
-    {
+    private JComponent GUI;
+    private Pasient kund;
+
+    private Legeregister legeregister;
+    private Pasientregister pasientregister;
+    private Medisinregister medisinregister;
+
+    private final int BREDDE = 700;
+    private final int HØYDE = 500;
+
+    public ApotekVindu() {
         super("Apotek");
 
-		setLayout(new GridLayout(0, 1, 40, 40));
+        setLayout(new GridLayout(0, 1));
 
-		JPanel apotekFinn = new JPanel(new GridLayout(0, 1, 5, 5));
-		apotekFinn.add(apotekLoggInnGUI());
+        GUI = new ApotekFinnPasient(this);
 
-		add(apotekFinn);
-      	bilde();
+        add(GUI);
 
-		endreFont(this, font);
-		pack();
-		setVisible(true);
+        lesFil();
+
+        Komponent.endreFont(this);
+        Komponent.bilde(this);
+        setSize(BREDDE, HØYDE);
+        setVisible(true);
     }
-    private void bilde()
-    {
-		String bildefil = "Handprint.png";
-		URL kilde = AdminVindu.class.getResource(bildefil);
 
-		if (kilde != null)
-		{
-			ImageIcon bilde = new ImageIcon(kilde);
-			Image ikon = bilde.getImage();
-			setIconImage(ikon);
-		}
-	}
-    /*	Metoden endrer font genom at alle komponenter av Container
-    	blir kallet på og setter bestemd font.
-    */
-    public static void endreFont( Component komponent, Font font )
-	{
-	    komponent.setFont( font );
-	    if ( komponent instanceof Container )
-	    {
-	        for ( Component child : (( Container ) komponent ).getComponents ())
-	        {
-	            endreFont( child, font );
-	        }
-	    }
-	}
-	public JPanel apotekLoggInnGUI()
-	{
-		JPanel apotekFinn = new JPanel(new GridLayout(0, 1, 5, 5));
+    //Returnerer pasientobjektet.
+    public Pasient getKund() {
+        return kund;
+    }
 
-		JTextField finnPasient = new JTextField(5);
-		JComponent kompFinnPasient = Komponent.labelFieldRow("Fødselsnummer", finnPasient);
-		apotekFinn.add(kompFinnPasient);
+    public Pasient hittad(String fnr) {
+        Pasient hittad = pasientregister.finnPasientFnr(fnr);
+        if (hittad == null) {
+            return null;
+        } else {
+            return hittad;
+        }
+    }
 
+    public void tegnApotekPasientGUI(Pasient kund) {
 
-		JButton finnPasientKnapp = new JButton("Finn");
-		finnPasientKnapp.setPreferredSize(new Dimension(113, 20));
-		//finnPasientKnapp.addActionListener( actionLytter );
-		JPanel finnPasientKnappPanel = new JPanel(new BorderLayout());
-		finnPasientKnappPanel.add(finnPasientKnapp, BorderLayout.LINE_END);
-		apotekFinn.add(finnPasientKnappPanel);
+        this.kund = kund;
+        String kundNavn = this.kund.getNavn();
 
-		return apotekFinn;
-	}
+        String nyTittel = getTitle() + " - " + kundNavn;
+        setTitle(nyTittel);
+
+        remove(GUI);
+
+        GUI = new ApotekPasient(this);
+
+        add(GUI);
+        Komponent.endreFont(this);
+        repaint();
+    }
+    /*Skriver medisinregister, legeregister og pasientregister til fil.*/
+
+    public void skrivTilFil() {
+        try (ObjectOutputStream pasientfil = new ObjectOutputStream(new FileOutputStream(Komponent.pasientFil));
+                ObjectOutputStream legefil = new ObjectOutputStream(new FileOutputStream(Komponent.legeFil));
+                ObjectOutputStream medisinfil = new ObjectOutputStream(new FileOutputStream(Komponent.medisinFil))) {
+            medisinfil.writeObject(medisinregister);
+            legefil.writeObject(legeregister);
+            pasientfil.writeObject(pasientregister);
+        } catch (NotSerializableException nse) {
+            System.out.println("Objektet er ikke serialisert!");
+            System.out.println(nse.getMessage());
+        } catch (IOException ioe) {
+            System.out.println("Problemer med utskrift til fil");
+            System.out.println(ioe.getMessage());
+        }
+    }
+
+    /*Leser medisinregister, legeregister og pasientregister fra fil.*/
+    public void lesFil() {
+        try (ObjectInputStream medisinfil = new ObjectInputStream(new FileInputStream(Komponent.medisinFil));
+                ObjectInputStream legefil = new ObjectInputStream(new FileInputStream(Komponent.legeFil));
+                ObjectInputStream pasientfil = new ObjectInputStream(new FileInputStream(Komponent.pasientFil))) {
+            medisinregister = (Medisinregister) medisinfil.readObject();
+            legeregister = (Legeregister) legefil.readObject();
+            pasientregister = (Pasientregister) pasientfil.readObject();
+        } catch (ClassNotFoundException cnfe) {
+            System.out.println("Oppretter tom liste");
+            opprettTommeLister();
+        } catch (FileNotFoundException fnfe) {
+            System.out.println("Finner ikke fil. Oppretter tom liste");
+            opprettTommeLister();
+        } catch (IOException ioe) {
+            System.out.println("Leseproblemer. Oppretter tom liste");
+            System.out.println(ioe.getMessage());
+            opprettTommeLister();
+        }
+    }
+
+    //Opretter tomme lister
+    private void opprettTommeLister() {
+        medisinregister = new Medisinregister();
+        legeregister = new Legeregister();
+        pasientregister = new Pasientregister();
+    }
 }

@@ -188,7 +188,7 @@ public class AdminMedisin extends JTabbedPane {
             atc.setText("");
         }
     }
-
+    // Metoden registrerar en pasient om alla felt är ifyllda
     private void registrerMedisin() {
         String grupp = (String) regGruppVelger.getSelectedItem();
         String kategori = (String) regKategoriVelger.getSelectedItem();
@@ -218,13 +218,13 @@ public class AdminMedisin extends JTabbedPane {
     private class KnappeLytterMedisin implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == finnMedisinKnapp) {
+            if (e.getSource() == finnMedisinKnapp || e.getSource() == medisinNavn) {
                 finnMedisin();
             } else if (e.getSource() == seMedisinListeKnapp) {
                 skrivListe();
-            } else if (e.getSource() == medisinSpareKnapp) {
+            } else if (e.getSource() == medisinSpareKnapp || e.getSource() == atc) {
                 updateMedisin();
-            } else if (e.getSource() == regMedisinSpareKnapp) {
+            } else if (e.getSource() == regMedisinSpareKnapp || e.getSource() == regATC) {
                 registrerMedisin();
             }
         }
