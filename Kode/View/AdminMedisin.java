@@ -180,6 +180,7 @@ public class AdminMedisin extends JTabbedPane {
             medisin.setNavn(navn);
             medisin.setATCNr(atcNr);
 
+            parentFrame.skrivTilFil();
             String melding = "Vellykket oppdatering";
             Komponent.popup(parentFrame, melding);
             gruppVelger.setSelectedIndex(-1);

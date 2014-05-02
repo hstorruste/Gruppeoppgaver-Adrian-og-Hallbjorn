@@ -219,6 +219,7 @@ public class AdminLege extends JTabbedPane {
                     } else {
                         lege.setC(false);
                     }
+                    parentFrame.skrivTilFil();
                     String melding = "Vellykket oppdatering";
                     Komponent.popup(parentFrame, melding);
                     fornavnFelt.setText("");
