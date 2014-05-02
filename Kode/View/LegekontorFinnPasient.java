@@ -27,7 +27,7 @@ public class LegekontorFinnPasient extends JTabbedPane{
     LegekontorVindu parentFrame;
     
     private JTextField fodselsnrFinnFelt, fornavnFelt, etternavnFelt, fodselsnrFelt;
-    private JButton finnKnapp, registrerKnapp;
+    private JButton finnKnapp, registrerKnapp, logutFinnKnapp, logutRegistrerKnapp;
     private String[] labeltekst = {"Fødslesnummer","Fornavn","Etternavn", "Fødselsnummer"};
     
     private KnappeLytter knappeLytter;
@@ -64,9 +64,14 @@ public class LegekontorFinnPasient extends JTabbedPane{
         
         finnKnapp = new JButton("Finn");
         finnKnapp.addActionListener(knappeLytter);
+        logutFinnKnapp = new JButton("Log ut");
+        logutFinnKnapp.addActionListener(knappeLytter);
         
+        JPanel knappePanel = new JPanel( new GridLayout(1,0,5,5));
+        knappePanel.add(finnKnapp);
+        knappePanel.add(logutFinnKnapp);
         JPanel finnKnappPanel = new JPanel(new BorderLayout());
-        finnKnappPanel.add(finnKnapp, BorderLayout.LINE_END);
+        finnKnappPanel.add(knappePanel, BorderLayout.LINE_END);
         
         JPanel finn = new JPanel(new GridLayout(0, 1, 5, 5));
         finn.add(fodselsnrFinn);
@@ -127,6 +132,7 @@ public class LegekontorFinnPasient extends JTabbedPane{
         boolean registrert = parentFrame.registrerPasient(fornavn, etternavn, fodselsnr);
         if(registrert)
         {
+            parentFrame.skrivTilFil();
             Pasient funnet = parentFrame.finnPasient(fodselsnr);
             parentFrame.tegnSkrivReseptGUI(funnet);
         }
@@ -137,6 +143,11 @@ public class LegekontorFinnPasient extends JTabbedPane{
             Komponent.popup(parentFrame, melding);
         }
     }
+    //Logger ut av lege.
+    private void logut()
+    {
+        parentFrame.tegnLoginGUI();
+    }
     
      private class KnappeLytter implements ActionListener
     {
@@ -145,8 +156,10 @@ public class LegekontorFinnPasient extends JTabbedPane{
         {
             if(e.getSource() == finnKnapp || e.getSource() == fodselsnrFinnFelt)
                 finn();
+            else if(e.getSource() == registrerKnapp)
+                registrer();
             else
-              registrer();
+                logut();
         }
     }
 }

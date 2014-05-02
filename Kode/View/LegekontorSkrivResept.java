@@ -209,6 +209,7 @@ public class LegekontorSkrivResept extends JTabbedPane{
         if(sendt){
             String melding = "Resepten er sendt";
             Komponent.popup(parentFrame, melding);
+            parentFrame.skrivTilFil();
             parentFrame.tegnSkrivReseptGUI(parentFrame.getPasient());
         }
     }

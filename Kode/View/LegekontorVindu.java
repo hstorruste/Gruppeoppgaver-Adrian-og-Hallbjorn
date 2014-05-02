@@ -131,7 +131,10 @@ public class LegekontorVindu extends LegeRegSuper
             Pasient alleredePasient = egen.finnPasientFnr(pasient.getFnr());
             
             if(alleredePasient == null) //Sjekker om pasienten er kunde hos legen
+            {
                 egen.settInn(pasient);
+                skrivTilFil();
+            }
 
             
             remove(GUI);
