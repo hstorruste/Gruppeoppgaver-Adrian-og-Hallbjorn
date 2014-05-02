@@ -17,3 +17,37 @@ Grupp: B
 Kategori: Analgetikum
 Medisin: Paralgin forte 400 mg/ 30 mg Tablett
 ATC-nr: N02A A59
+
+Grupp: C
+Kategori: Antibiotikum
+Medisin: Kloramfenikol 1 % Øyesalve
+ATC-nr: S01A A01
+
+Grupp: C
+Kategori: Antikoagulasjonsmiddel
+Medisin: Marevan 2,5 mg Tablett
+ATC-nr: B01A A03
+
+Grupp: A
+Kategori: Substitusjonsbehandling ved opiatavhengighet
+Medisin: Subutex 2 mg Sublingvaltablett
+ATC-nr: N07B C01
+
+Grupp: C
+Kategori: Antihistamin
+Medisin: Aerius 5 mg Tablett
+ATC-nr: R06A X27
+
+Grupp: C
+Kategori: Kortikosteroid
+Medisin; Avamys 27,5 µg Nesespray
+ATC-nr: R01A D12
+
+Grupp: C
+Kategori: Kostikosteroid
+Medisin: Diproderm 0,05 % Øredråper
+ATC-nr: S02B A07
+
+Grupp: C
+Kategori: Antihistamin
+Medisin: Vallergan 5 mg/ml Mikstur
