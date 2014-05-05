@@ -20,15 +20,11 @@ public class Legeregister implements Serializable{
     private static final long serialVersionUID = 1008L;
     private Comparator komp;
     private SortedSet<Lege> legeregister;
-    private final String riktigPostNr;
-    private final String riktigEpost;
 
     public Legeregister()
     {
             komp = new PersonComparator();
             legeregister = new TreeSet<>(komp);
-            riktigPostNr = "\\d{4}";
-            riktigEpost = "[\\w\\-]+\\@[\\w\\-]+\\.[\\w\\-]+";
     }
     
     /*Oppretter en ny lege og setter den inn i registeret.

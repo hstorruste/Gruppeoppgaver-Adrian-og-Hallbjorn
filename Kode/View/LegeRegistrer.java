@@ -10,8 +10,14 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Arrays;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -29,6 +35,7 @@ public class LegeRegistrer extends JPanel {
     private JTextField fornavnFelt, etternavnFelt, epostFelt, epostigjenFelt,
             gtadrFelt, postnrFelt, poststedFelt, arbstedFelt;
     private JPasswordField passordFelt, passordigjenFelt;
+    private JLabel error;
     private JButton registrerKnapp;
     private String[] labeltekst = {"Fornavn", "Etternavn",
         "E-post", "E-post igjen", "Passord", "Passord igjen", "Gateadresse",
@@ -36,12 +43,14 @@ public class LegeRegistrer extends JPanel {
     private final int TEKSTFELTLENGDE = 20;
 
     private KnappeLytter knappeLytter;
+    private FeltLytter feltLytter;
 
     public LegeRegistrer(LegeRegSuper p) {
         super(new GridLayout(0, 1, 5, 5));
 
         parentFrame = p;
         knappeLytter = new KnappeLytter();
+        feltLytter = new FeltLytter();
 
         fornavnFelt = new JTextField(TEKSTFELTLENGDE);
         JPanel fornavnPanel = (JPanel) Komponent.labelFieldRow(labeltekst[0], fornavnFelt);
@@ -50,9 +59,11 @@ public class LegeRegistrer extends JPanel {
         JPanel etternavnPanel = (JPanel) Komponent.labelFieldRow(labeltekst[1], etternavnFelt);
 
         epostFelt = new JTextField(TEKSTFELTLENGDE);
+        epostFelt.addFocusListener(feltLytter);
         JPanel epostPanel = (JPanel) Komponent.labelFieldRow(labeltekst[2], epostFelt);
 
         epostigjenFelt = new JTextField(TEKSTFELTLENGDE);
+        epostigjenFelt.addFocusListener(feltLytter);
         JPanel epostigjenPanel = (JPanel) Komponent.labelFieldRow(labeltekst[3], epostigjenFelt);
 
         passordFelt = new JPasswordField(TEKSTFELTLENGDE);
@@ -65,6 +76,7 @@ public class LegeRegistrer extends JPanel {
         JPanel gtadrPanel = (JPanel) Komponent.labelFieldRow(labeltekst[6], gtadrFelt);
 
         postnrFelt = new JTextField(TEKSTFELTLENGDE);
+        postnrFelt.addFocusListener(feltLytter);
         JPanel postnrPanel = (JPanel) Komponent.labelFieldRow(labeltekst[7], postnrFelt);
 
         poststedFelt = new JTextField(TEKSTFELTLENGDE);
@@ -73,10 +85,14 @@ public class LegeRegistrer extends JPanel {
         arbstedFelt = new JTextField(TEKSTFELTLENGDE);
         JPanel arbstedPanel = (JPanel) Komponent.labelFieldRow(labeltekst[9], arbstedFelt);
 
+        error = new JLabel("");
+        error.setForeground(Komponent.feilTekst);
+        
         registrerKnapp = new JButton("Registrer");
         registrerKnapp.addActionListener(knappeLytter);
 
         JPanel registrerKnappPanel = new JPanel(new BorderLayout());
+        registrerKnappPanel.add(error, BorderLayout.LINE_START);
         registrerKnappPanel.add(registrerKnapp, BorderLayout.LINE_END);
 
         add(fornavnPanel);
@@ -107,49 +123,51 @@ public class LegeRegistrer extends JPanel {
         String poststed = poststedFelt.getText();
         String arbeidssted = arbstedFelt.getText();
         
-        if (!epost.equals(epostigjen)) {
-            String melding = "Epost stemmer ikke!";
+        if(!Komponent.riktigEpost(epost) || !Komponent.riktigEpost(epostigjen)){
+            String melding = "Epost er ikke på formen noen@eksempel.no!";
+            Komponent.popup(parentFrame, melding);
+        } else if(!Komponent.riktigPostNr(postnr)){
+            String melding = "Postnummer må inneholde fire siffer (0-9)!";
+            Komponent.popup(parentFrame, melding);
+        } else if (!epost.equals(epostigjen)) {
+            String melding = "Epostene er ikke like!";
+            Komponent.popup(parentFrame, melding);
+        } else if (!Arrays.equals(passord, passordigjen)) {
+            String melding = "Passordene er ikke identiske";
             Komponent.popup(parentFrame, melding);
         } else {
-            if (Arrays.equals(passord, passordigjen)) {
-                boolean registrert = parentFrame.registrerLege(fornavn, etternavn,
-                        epost, gateadresse, postnr, poststed, arbeidssted, passord);
-                if (registrert) {
-                    parentFrame.skrivTilFil();
-                    String melding = "Du er registrert!";
-                    Komponent.popup(parentFrame, melding);
-                    fornavnFelt.setText("");
-                    etternavnFelt.setText("");
-                    epostFelt.setText("");
-                    epostigjenFelt.setText("");
-                    passordFelt.setText("");
-                    passordigjenFelt.setText("");
-                    gtadrFelt.setText("");
-                    postnrFelt.setText("");
-                    poststedFelt.setText("");
-                    arbstedFelt.setText("");
-                    if (parentFrame instanceof LegekontorVindu) {
-                        LegekontorVindu vindu = (LegekontorVindu) parentFrame;
-                        Lege innlogget = vindu.login(epost, passord);
+            boolean registrert = parentFrame.registrerLege(fornavn, etternavn,
+                    epost, gateadresse, postnr, poststed, arbeidssted, passord);
+            if (registrert) {
+                parentFrame.skrivTilFil();
+                String melding = "Du er registrert!";
+                Komponent.popup(parentFrame, melding);
+                fornavnFelt.setText("");
+                etternavnFelt.setText("");
+                epostFelt.setText("");
+                epostigjenFelt.setText("");
+                passordFelt.setText("");
+                passordigjenFelt.setText("");
+                gtadrFelt.setText("");
+                postnrFelt.setText("");
+                poststedFelt.setText("");
+                arbstedFelt.setText("");
+                if (parentFrame instanceof LegekontorVindu) {
+                    LegekontorVindu vindu = (LegekontorVindu) parentFrame;
+                    Lege innlogget = vindu.login(epost, passord);
 
-                        if (innlogget == null) {
-                            melding = "Feil epost eller passord!";
-                            Komponent.popup(parentFrame, melding);
-                        } else {
-
-                            vindu.tegnFinnPasientGUI(innlogget);
-                        }
+                    if (innlogget == null) {
+                        melding = "Feil epost eller passord!";
+                        Komponent.popup(parentFrame, melding);
+                    } else {
+                        vindu.tegnFinnPasientGUI(innlogget);
                     }
-                } else {
-                    String melding = "Du ble ikke registrert!";
-                    Komponent.popup(parentFrame, melding);
                 }
             } else {
-                String melding = "Passordene er ikke identiske";
+                String melding = "Du ble ikke registrert!";
                 Komponent.popup(parentFrame, melding);
             }
         }
-
     }
 
     private class KnappeLytter implements ActionListener {
@@ -159,6 +177,38 @@ public class LegeRegistrer extends JPanel {
             if (e.getSource() == registrerKnapp) {
                 registrer();
             }
+        }
+    }
+    
+    private class FeltLytter extends FocusAdapter {
+
+        @Override
+        public void focusLost(FocusEvent e) {
+            if(e.getSource() == epostFelt || e.getSource() == epostigjenFelt)
+            {
+                JTextField felt = (JTextField)e.getSource();
+                if(Komponent.riktigEpost(felt.getText())){
+                    felt.setForeground(Komponent.rettTekst);
+                    error.setText("");
+                }
+                else{
+                     felt.setForeground(Komponent.feilTekst);
+                     error.setText("Vennligst skriv epost på formen noen@eksempel.no.");
+                }
+            }
+            
+            else if(e.getSource() == postnrFelt)
+            {
+                if(Komponent.riktigPostNr(postnrFelt.getText())){
+                    postnrFelt.setForeground(Komponent.rettTekst);
+                    error.setText("");
+                }
+                else{
+                    postnrFelt.setForeground(Komponent.feilTekst);
+                    error.setText("Vennligst skriv postnummer med fire siffer (0-9).");
+                }
+            }
+            
         }
     }
 

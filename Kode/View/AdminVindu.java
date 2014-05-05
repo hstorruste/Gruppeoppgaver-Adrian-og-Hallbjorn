@@ -97,22 +97,4 @@ public class AdminVindu extends LegeRegSuper {
             System.out.println(ioe.getMessage());
         }
     }
-    /*Leser medisinregister, legeregister og pasientregister fra fil.*/
-
-   /* @Override
-    public void lesFil() {
-        try(ObjectInputStream innfil = new ObjectInputStream( new FileInputStream(Komponent.dataFil)))
-        {
-            medisinregister = (Medisinregister)innfil.readObject();
-            legeregister = (Legeregister)innfil.readObject();
-            pasientregister = (Pasientregister)innfil.readObject();
-        }catch (ClassNotFoundException cnfe) {
-            System.out.println("Oppretter tom liste");      
-        } catch (FileNotFoundException fnfe) {
-            System.out.println("Finner ikke fil. Oppretter tom liste");
-        } catch (IOException ioe) {
-            System.out.println("Leseproblemer. Oppretter tom liste");
-            System.out.println(ioe.getMessage());
-        }
-    }*/
 }

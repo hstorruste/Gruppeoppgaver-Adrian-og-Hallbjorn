@@ -11,11 +11,33 @@ import java.net.URL;
 public class Komponent
 {
     private static Font font = new Font("SansSerif", Font.PLAIN, 16);
-    /*protected static final String medisinFil = "medisiner.dat";
-    protected static final String legeFil = "leger.dat";
-    protected static final String pasientFil = "pasienter.dat";*/
+    private static final String riktigPostNr = "\\d{4}";
+    private static final String riktigEpost = "\\w+\\@\\w+\\.\\w+";
+    private static final String korrektFnr = "[0-3]\\d[01]\\d{8}";
     public static final String dataFil = "data.dat";
+    protected static Color rettTekst = Color.black;
+    protected static Color feilTekst = Color.red;
 
+   
+    
+    //Sjekker om Postnummer er riktig
+    protected static boolean riktigPostNr(String postNr)
+    {
+        return postNr.matches(riktigPostNr);
+    }
+    
+    //Sjekker om Epost er riktig
+    protected static boolean riktigEpost(String epost)
+    {
+        return epost.matches(riktigEpost);
+    }
+    
+    //Sjekker om Fødselsnummer er riktig
+    protected static boolean riktigFNr(String Fnr)
+    {
+        return Fnr.matches(korrektFnr);
+    }
+    
     //	Lager en komponent med en label og en textField på samme rad
     protected static JPanel labelFieldRow(String text, JTextField field)
     {

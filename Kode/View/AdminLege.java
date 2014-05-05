@@ -9,7 +9,7 @@ import javax.swing.*;
 
 /*Denne klassen upprättar alla komponenter till lege fanan.
  Laget av Adrian Westlund s198571.
- Siste versjon 29-04-2014*/
+ Siste versjon 05-05-2014*/
 public class AdminLege extends JTabbedPane {
 
     private AdminVindu parentFrame;
@@ -17,6 +17,7 @@ public class AdminLege extends JTabbedPane {
             gateadresseFelt, postNrFelt, poststedFelt, arbetsstedFelt;
     private JPasswordField passordFelt, passordIgenFelt;
     private JButton finnLegeKnapp, seLegeListeKnapp, redigerKnapp;
+    private JLabel error;
     private JTextArea legeTextArea;
     private String[] labeltekst = {"E-post", "Fornavn", "Etternavn", "E-post", "E-post igjen",
         "Passord", "Passord igjen", "Gateadresse", "Postnummer",
@@ -26,12 +27,14 @@ public class AdminLege extends JTabbedPane {
     private final int TEKSTFELTLENGDE = 10;
 
     private KnappeLytter knappeLytter;
+    private FeltLytter feltLytter;
 
     public AdminLege(AdminVindu a) {
 
         super();
         parentFrame = a;
         knappeLytter = new KnappeLytter();
+        feltLytter = new FeltLytter();
 
         JPanel rediger = new JPanel(new FlowLayout());
         rediger.add(redigerGUI());
@@ -76,10 +79,12 @@ public class AdminLege extends JTabbedPane {
         rediger.add(kompEtternavn);
 
         ePostFelt = new JTextField(TEKSTFELTLENGDE);
+        ePostFelt.addFocusListener(feltLytter);
         JPanel kompEPost = Komponent.labelFieldRow(labeltekst[3], ePostFelt);
         rediger.add(kompEPost);
 
         ePostIgenFelt = new JTextField(TEKSTFELTLENGDE);
+        ePostIgenFelt.addFocusListener(feltLytter);
         JPanel kompEPostIgen = Komponent.labelFieldRow(labeltekst[4], ePostIgenFelt);
         rediger.add(kompEPostIgen);
 
@@ -96,6 +101,7 @@ public class AdminLege extends JTabbedPane {
         rediger.add(kompGate);
 
         postNrFelt = new JTextField(TEKSTFELTLENGDE);
+        postNrFelt.addFocusListener(feltLytter);
         JComponent kompPostNr = Komponent.labelFieldRow(labeltekst[8], postNrFelt);
         rediger.add(kompPostNr);
 
@@ -116,10 +122,12 @@ public class AdminLege extends JTabbedPane {
         checkbox.add(c);
         rediger.add(checkbox);
 
+        
         redigerKnapp = new JButton("Spare");
         redigerKnapp.addActionListener(knappeLytter);
 
         JPanel redigerKnappPanel = new JPanel(new BorderLayout());
+       
         redigerKnappPanel.add(redigerKnapp, BorderLayout.LINE_END);
         rediger.add(redigerKnappPanel);
 
@@ -133,9 +141,13 @@ public class AdminLege extends JTabbedPane {
         JPanel legeTextfeltPanel = new JPanel(new FlowLayout());
         legeTextfeltPanel.add(legeTextArea);
 
+        error = new JLabel("");
+        error.setForeground(Komponent.feilTekst);   
+        
         JPanel toPanel = new JPanel(new BorderLayout());
         toPanel.add(legeInnFelt, BorderLayout.LINE_START);
         toPanel.add(legeTextfeltPanel, BorderLayout.LINE_END);
+        toPanel.add(error,BorderLayout.PAGE_END);
 
         JPanel legeRedigerTilFane = new JPanel(new FlowLayout());
         legeRedigerTilFane.add(toPanel);
@@ -192,55 +204,60 @@ public class AdminLege extends JTabbedPane {
             String poststed = poststedFelt.getText();
             String arbeidssted = arbetsstedFelt.getText();
             
-            if (!epost.equals(epostigjen)) {
-                String melding = "Epost stemmer ikke!";
+            if(!Komponent.riktigEpost(epost) || !Komponent.riktigEpost(epostigjen)){
+                String melding = "Epost er ikke på formen noen@eksempel.no!";
                 Komponent.popup(parentFrame, melding);
+            } else if(!Komponent.riktigPostNr(postnr)){
+                String melding = "Postnummer må inneholde fire siffer (0-9)!";
+                Komponent.popup(parentFrame, melding);
+            } else if (!epost.equals(epostigjen)) {
+                String melding = "Epostene er ikke like!";
+                Komponent.popup(parentFrame, melding);
+            } else if (!Arrays.equals(passord, passordigjen)) {
+                    String melding = "Passordene er ikke like!";
+                    Komponent.popup(parentFrame, melding);
             } else {
-                if (Arrays.equals(passord, passordigjen)) {
 
-                    lege.setFornavn(fornavn);
-                    lege.setEtternavn(etternavn);
-                    lege.setEPost(epost);
-                    lege.setPassord(passord);
-                    lege.setGateadresse(gateadresse);
-                    lege.setPostnummer(postnr);
-                    lege.setPoststed(poststed);
-                    lege.setArbetssted(arbeidssted);
-                    if (a.isSelected()) {
-                        lege.setA(true);
-                    } else {
-                        lege.setA(false);
-                    }
-                    if (b.isSelected()) {
-                        lege.setB(true);
-                    } else {
-                        lege.setB(false);
-                    }
-                    if (c.isSelected()) {
-                        lege.setC(true);
-                    } else {
-                        lege.setC(false);
-                    }
-                    parentFrame.skrivTilFil();
-                    String melding = "Vellykket oppdatering";
-                    Komponent.popup(parentFrame, melding);
-                    fornavnFelt.setText("");
-                    etternavnFelt.setText("");
-                    ePostFelt.setText("");
-                    ePostIgenFelt.setText("");
-                    passordFelt.setText("");
-                    passordIgenFelt.setText("");
-                    gateadresseFelt.setText("");
-                    postNrFelt.setText("");
-                    poststedFelt.setText("");
-                    arbetsstedFelt.setText("");
-                    a.setSelected(false);
-                    b.setSelected(false);
-                    c.setSelected(false);
+                lege.setFornavn(fornavn);
+                lege.setEtternavn(etternavn);
+                lege.setEPost(epost);
+                lege.setPassord(passord);
+                lege.setGateadresse(gateadresse);
+                lege.setPostnummer(postnr);
+                lege.setPoststed(poststed);
+                lege.setArbetssted(arbeidssted);
+                if (a.isSelected()) {
+                    lege.setA(true);
                 } else {
-                    String melding = "Mislykket oppdatering!";
-                    Komponent.popup(parentFrame, melding);
+                    lege.setA(false);
                 }
+                if (b.isSelected()) {
+                    lege.setB(true);
+                } else {
+                    lege.setB(false);
+                }
+                if (c.isSelected()) {
+                    lege.setC(true);
+                } else {
+                    lege.setC(false);
+                }
+                parentFrame.skrivTilFil();
+                String melding = "Vellykket oppdatering";
+                Komponent.popup(parentFrame, melding);
+                fornavnFelt.setText("");
+                etternavnFelt.setText("");
+                ePostFelt.setText("");
+                ePostIgenFelt.setText("");
+                passordFelt.setText("");
+                passordIgenFelt.setText("");
+                gateadresseFelt.setText("");
+                postNrFelt.setText("");
+                poststedFelt.setText("");
+                arbetsstedFelt.setText("");
+                a.setSelected(false);
+                b.setSelected(false);
+                c.setSelected(false);
+
             }
         }
     }
@@ -255,6 +272,38 @@ public class AdminLege extends JTabbedPane {
             } else if (e.getSource() == redigerKnapp) {
                 updateLege();
             }
+        }
+    }
+    
+    private class FeltLytter extends FocusAdapter {
+
+        @Override
+        public void focusLost(FocusEvent e) {
+            if(e.getSource() == ePostFelt || e.getSource() == ePostIgenFelt)
+            {
+                JTextField felt = (JTextField)e.getSource();
+                if(Komponent.riktigEpost(felt.getText())){
+                    felt.setForeground(Komponent.rettTekst);
+                    error.setText("");
+                }
+                else{
+                     felt.setForeground(Komponent.feilTekst);
+                     error.setText("Vennligst skriv epost på formen noen@eksempel.no.");
+                }
+            }
+            
+            else if(e.getSource() == postNrFelt)
+            {
+                if(Komponent.riktigPostNr(postNrFelt.getText())){
+                    postNrFelt.setForeground(Komponent.rettTekst);
+                    error.setText("");
+                }
+                else{
+                    postNrFelt.setForeground(Komponent.feilTekst);
+                    error.setText("Vennligst skriv postnummer med fire siffer (0-9).");       
+                }
+            }
+            
         }
     }
 }
