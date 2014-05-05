@@ -61,7 +61,10 @@ public class Resept implements Serializable
         
         public void setUtlevert()
         {
-            utlevert = true;
+            if(reit == 0)
+                utlevert = true;
+            else
+                reit--;
         }
 	public String toString()
 	{
