@@ -71,15 +71,13 @@ public class ApotekVindu extends JFrame {
         Komponent.endreFont(this);
         repaint();
     }
-    /*Skriver medisinregister, legeregister og pasientregister til fil.*/
-
+    
+    /*Skriver lmedisinregister, legeregister og pasientregister til fil.*/
     public void skrivTilFil() {
-        try (ObjectOutputStream pasientfil = new ObjectOutputStream(new FileOutputStream(Komponent.pasientFil));
-                ObjectOutputStream legefil = new ObjectOutputStream(new FileOutputStream(Komponent.legeFil));
-                ObjectOutputStream medisinfil = new ObjectOutputStream(new FileOutputStream(Komponent.medisinFil))) {
-            medisinfil.writeObject(medisinregister);
-            legefil.writeObject(legeregister);
-            pasientfil.writeObject(pasientregister);
+        try (ObjectOutputStream utfil = new ObjectOutputStream(new FileOutputStream(Komponent.dataFil))) {
+            utfil.writeObject(medisinregister);
+            utfil.writeObject(legeregister);
+            utfil.writeObject(pasientregister);
         } catch (NotSerializableException nse) {
             System.out.println("Objektet er ikke serialisert!");
             System.out.println(nse.getMessage());
@@ -88,25 +86,20 @@ public class ApotekVindu extends JFrame {
             System.out.println(ioe.getMessage());
         }
     }
-
+    
     /*Leser medisinregister, legeregister og pasientregister fra fil.*/
     public void lesFil() {
-        try (ObjectInputStream medisinfil = new ObjectInputStream(new FileInputStream(Komponent.medisinFil));
-                ObjectInputStream legefil = new ObjectInputStream(new FileInputStream(Komponent.legeFil));
-                ObjectInputStream pasientfil = new ObjectInputStream(new FileInputStream(Komponent.pasientFil))) {
-            medisinregister = (Medisinregister) medisinfil.readObject();
-            legeregister = (Legeregister) legefil.readObject();
-            pasientregister = (Pasientregister) pasientfil.readObject();
+        try (ObjectInputStream innfil = new ObjectInputStream(new FileInputStream(Komponent.dataFil))) {
+            medisinregister = (Medisinregister) innfil.readObject();
+            legeregister = (Legeregister) innfil.readObject();
+            pasientregister = (Pasientregister) innfil.readObject();
         } catch (ClassNotFoundException cnfe) {
             System.out.println("Oppretter tom liste");
-            opprettTommeLister();
         } catch (FileNotFoundException fnfe) {
             System.out.println("Finner ikke fil. Oppretter tom liste");
-            opprettTommeLister();
         } catch (IOException ioe) {
             System.out.println("Leseproblemer. Oppretter tom liste");
             System.out.println(ioe.getMessage());
-            opprettTommeLister();
         }
     }
 

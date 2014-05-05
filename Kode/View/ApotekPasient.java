@@ -91,6 +91,7 @@ public class ApotekPasient extends JTabbedPane {
 
     public void reseptUtlevert() {
         parentFrame.getKund().getReseptliste().finnResept(Integer.parseInt(reseptNummerFelt.getText())).setUtlevert();
+        parentFrame.skrivTilFil();
     }
 
     private class KnappeLytter implements ActionListener {

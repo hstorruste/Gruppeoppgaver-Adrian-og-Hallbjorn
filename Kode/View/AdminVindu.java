@@ -24,7 +24,7 @@ public class AdminVindu extends LegeRegSuper {
         setLayout(new GridLayout(0, 1, 5, 5));
         opprettTommeLister();
         lesFil();
-        
+
         legeGUI = new AdminLege(this);
         medisinGUI = new AdminMedisin(this);
 
@@ -33,7 +33,7 @@ public class AdminVindu extends LegeRegSuper {
         gruppFane.addTab("Medisin", medisinGUI);
 
         add(gruppFane);
-        
+
         Komponent.endreFont(this);
         Komponent.bilde(this);
         pack();
@@ -68,7 +68,8 @@ public class AdminVindu extends LegeRegSuper {
 
         return medisinregister.settInn(navn, kat, gruppe, atcNr);
     }
-    public String[] skrivKatArray(){
+
+    public String[] skrivKatArray() {
         return medisinregister.getAlleKategorier();
     }
 
@@ -78,15 +79,13 @@ public class AdminVindu extends LegeRegSuper {
     }
     /*Skriver medisinregister, legeregister og pasientregister til fil.*/
 
-    @Override
+     /*Skriver lmedisinregister, legeregister og pasientregister til fil.*/
     public void skrivTilFil() {
-        try(ObjectOutputStream utfil = new ObjectOutputStream( new FileOutputStream(Komponent.dataFil)))
-        {
+        try (ObjectOutputStream utfil = new ObjectOutputStream(new FileOutputStream(Komponent.dataFil))) {
             utfil.writeObject(medisinregister);
             utfil.writeObject(legeregister);
             utfil.writeObject(pasientregister);
-        }
-        catch (NotSerializableException nse) {
+        } catch (NotSerializableException nse) {
             System.out.println("Objektet er ikke serialisert!");
             System.out.println(nse.getMessage());
         } catch (IOException ioe) {
@@ -98,13 +97,12 @@ public class AdminVindu extends LegeRegSuper {
 
     @Override
     public void lesFil() {
-        try(ObjectInputStream innfil = new ObjectInputStream( new FileInputStream(Komponent.dataFil)))
-        {
-            medisinregister = (Medisinregister)innfil.readObject();
-            legeregister = (Legeregister)innfil.readObject();
-            pasientregister = (Pasientregister)innfil.readObject();
-        }catch (ClassNotFoundException cnfe) {
-            System.out.println("Oppretter tom liste");      
+        try (ObjectInputStream innfil = new ObjectInputStream(new FileInputStream(Komponent.dataFil))) {
+            medisinregister = (Medisinregister) innfil.readObject();
+            legeregister = (Legeregister) innfil.readObject();
+            pasientregister = (Pasientregister) innfil.readObject();
+        } catch (ClassNotFoundException cnfe) {
+            System.out.println("Oppretter tom liste");
         } catch (FileNotFoundException fnfe) {
             System.out.println("Finner ikke fil. Oppretter tom liste");
         } catch (IOException ioe) {
@@ -117,5 +115,6 @@ public class AdminVindu extends LegeRegSuper {
     private void opprettTommeLister() {
         medisinregister = new Medisinregister();
         legeregister = new Legeregister();
+        pasientregister = new Pasientregister();
     }
 }
