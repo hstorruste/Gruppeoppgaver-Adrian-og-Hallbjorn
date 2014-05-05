@@ -13,11 +13,9 @@ public class Pasientregister implements Serializable
     private static final long serialVersionUID = 1007L;
     private Comparator komp;
     private SortedSet<Pasient> pasientregister;
-    private final String korrektFnr;
 
     public Pasientregister()
     {
-        korrektFnr = "[0-3]\\d[01]\\d{8}";
         komp = new PersonComparator();
         pasientregister = new TreeSet<>(komp);
     }
@@ -26,10 +24,7 @@ public class Pasientregister implements Serializable
 /*Oppretter en ny pasient og setter den inn i registeret.
 	Returnerer true hvis det er vellykket.*/
 	public boolean settInn(String fornavn, String etternavn, String fødselsnr)
-	{
-		if(!fødselsnr.matches(korrektFnr))
-                    return false;
-            
+	{            
                 Pasient ny = new Pasient(fornavn, etternavn, fødselsnr);
 
 		return settInn(ny);

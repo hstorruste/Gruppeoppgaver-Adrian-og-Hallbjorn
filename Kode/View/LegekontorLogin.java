@@ -12,6 +12,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.util.Arrays;
 import javax.swing.*;
 
@@ -29,10 +31,12 @@ public class LegekontorLogin extends JTabbedPane{
     private JTextField epostLoginFelt;
     private JPasswordField passordLoginFelt;
     private JButton loginKnapp;
+    private JLabel error;
     private String[] labeltekst = {"E-post", "Passord"};
     private final int TEKSTFELTLENGDE = 20;
     
     private KnappeLytter knappeLytter;
+    private FeltLytter feltLytter;
     
     /*Konstruktøren tar imot LegekontorVindu, dvs vindusklassen som oppretter
     objektet av denne klassen. Dette gjøres for å kunne benytte seg av metodene
@@ -45,6 +49,7 @@ public class LegekontorLogin extends JTabbedPane{
         parentFrame = p;
         
         knappeLytter = new KnappeLytter();
+        feltLytter = new FeltLytter();
         
         JPanel login = new JPanel(new FlowLayout());
         login.add(loginGUI());
@@ -61,16 +66,21 @@ public class LegekontorLogin extends JTabbedPane{
     private JPanel loginGUI()
     {
         epostLoginFelt = new JTextField(TEKSTFELTLENGDE);
+        epostLoginFelt.addFocusListener(feltLytter);
         JPanel epostLogin = (JPanel) Komponent.labelFieldRow(labeltekst[0], epostLoginFelt);
         
         passordLoginFelt = new JPasswordField(TEKSTFELTLENGDE);
         passordLoginFelt.addActionListener(knappeLytter);
         JPanel passordLogin = (JPanel) Komponent.labelFieldRow(labeltekst[1], passordLoginFelt);
         
+        error = new JLabel("");
+        error.setForeground(Komponent.feilTekst);
+        
         loginKnapp = new JButton("Logg inn");
         loginKnapp.addActionListener(knappeLytter);
         
         JPanel loginKnappPanel = new JPanel(new BorderLayout());
+        loginKnappPanel.add(error, BorderLayout.LINE_START);
         loginKnappPanel.add(loginKnapp, BorderLayout.LINE_END);
         
         JPanel login = new JPanel(new GridLayout(0, 1, 5, 5));
@@ -106,6 +116,27 @@ public class LegekontorLogin extends JTabbedPane{
         {
             if(e.getSource() == loginKnapp || e.getSource() ==passordLoginFelt)
                 login();
+        }
+    }
+    
+     private class FeltLytter extends FocusAdapter {
+
+        @Override
+        public void focusLost(FocusEvent e) {
+            if(e.getSource() == epostLoginFelt )
+            {
+                if(Komponent.riktigEpost(epostLoginFelt.getText())){
+                    epostLoginFelt.setForeground(Komponent.rettTekst);
+                    error.setText("");
+                }
+                else{
+                     epostLoginFelt.setForeground(Komponent.feilTekst);
+                     error.setText("Vennligst skriv epost på formen noen@eksempel.no.");
+                }
+            }
+            
+           
+            
         }
     }
 }
