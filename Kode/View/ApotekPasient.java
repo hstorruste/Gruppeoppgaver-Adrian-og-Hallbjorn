@@ -39,10 +39,11 @@ public class ApotekPasient extends JTabbedPane {
         JPanel nyeResepterFelt = new JPanel(new GridLayout(0, 1, 5, 5));
 
         reseptNummerFelt = new JTextField(5);
+        reseptNummerFelt.addActionListener(knappeLytter);
         JComponent kompRegistrerResepter = Komponent.labelFieldRow("Reseptnummer", reseptNummerFelt);
         nyeResepterFelt.add(kompRegistrerResepter);
 
-        registrerKnapp = new JButton("Registrer utlevert");
+        registrerKnapp = new JButton("Utlever");
         registrerKnapp.setPreferredSize(new Dimension(113, 20));
         registrerKnapp.addActionListener(knappeLytter);
         JPanel registrerKnappPanel = new JPanel(new BorderLayout());
