@@ -14,7 +14,7 @@ public class Komponent
     /*protected static final String medisinFil = "medisiner.dat";
     protected static final String legeFil = "leger.dat";
     protected static final String pasientFil = "pasienter.dat";*/
-    protected static final String dataFil = "data.dat";
+    public static final String dataFil = "data.dat";
 
     //	Lager en komponent med en label og en textField på samme rad
     protected static JPanel labelFieldRow(String text, JTextField field)

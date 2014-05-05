@@ -30,6 +30,6 @@ public abstract class LegeRegSuper extends JFrame{
     
     public abstract void skrivTilFil();
     
-    public abstract void lesFil();
+    //public abstract void lesFil();
 
 }

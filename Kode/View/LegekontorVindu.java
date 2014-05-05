@@ -35,16 +35,17 @@ public class LegekontorVindu extends LegeRegSuper
         private final int HOYDE = 600;
         private final String tittel = "Legekontor";
 
-	public LegekontorVindu()
+	public LegekontorVindu(Legeregister lreg, Pasientregister preg, Medisinregister mreg)
 	{
 		super("Legekontor");
 
 		setLayout(new GridLayout(0, 1));
                 tegnLoginGUI();
                 
-                opprettTommeLister();
-                
-                lesFil();
+                legeregister = lreg;
+                pasientregister = preg;
+                medisinregister = mreg;
+                //lesFil();
                 
                 Komponent.bilde(this);
                 setSize(BREDDE, HOYDE);
@@ -209,7 +210,7 @@ public class LegekontorVindu extends LegeRegSuper
         }
         
         /*Leser medisinregister, legeregister og pasientregister fra fil.*/
-        public void lesFil()
+        /*public void lesFil()
         {
             try(ObjectInputStream innfil = new ObjectInputStream( new FileInputStream(Komponent.dataFil)))
             {
@@ -230,11 +231,5 @@ public class LegekontorVindu extends LegeRegSuper
                 System.out.println("Leseproblemer. Oppretter tom liste");
                 System.out.println(ioe.getMessage());
             }
-        }
-        //Opretter tomme lister
-        private void opprettTommeLister(){
-            medisinregister = new Medisinregister();
-            legeregister = new Legeregister();
-            pasientregister = new Pasientregister();
-        }
+        }*/
 }

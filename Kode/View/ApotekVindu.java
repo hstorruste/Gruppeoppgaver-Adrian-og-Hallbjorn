@@ -24,7 +24,7 @@ public class ApotekVindu extends JFrame {
     private final int BREDDE = 700;
     private final int HØYDE = 500;
 
-    public ApotekVindu() {
+    public ApotekVindu(Legeregister lreg, Pasientregister preg, Medisinregister mreg) {
         super("Apotek");
 
         setLayout(new GridLayout(0, 1));
@@ -33,7 +33,11 @@ public class ApotekVindu extends JFrame {
 
         add(GUI);
 
-        lesFil();
+        legeregister = lreg;
+        pasientregister = preg;
+        medisinregister = mreg;
+        
+        //lesFil();
 
         Komponent.endreFont(this);
         Komponent.bilde(this);
@@ -71,14 +75,15 @@ public class ApotekVindu extends JFrame {
         Komponent.endreFont(this);
         repaint();
     }
-    
-    /*Skriver lmedisinregister, legeregister og pasientregister til fil.*/
+    /*Skriver medisinregister, legeregister og pasientregister til fil.*/
     public void skrivTilFil() {
-        try (ObjectOutputStream utfil = new ObjectOutputStream(new FileOutputStream(Komponent.dataFil))) {
+        try(ObjectOutputStream utfil = new ObjectOutputStream( new FileOutputStream(Komponent.dataFil)))
+        {
             utfil.writeObject(medisinregister);
             utfil.writeObject(legeregister);
             utfil.writeObject(pasientregister);
-        } catch (NotSerializableException nse) {
+        }
+        catch (NotSerializableException nse) {
             System.out.println("Objektet er ikke serialisert!");
             System.out.println(nse.getMessage());
         } catch (IOException ioe) {
@@ -86,27 +91,20 @@ public class ApotekVindu extends JFrame {
             System.out.println(ioe.getMessage());
         }
     }
-    
     /*Leser medisinregister, legeregister og pasientregister fra fil.*/
-    public void lesFil() {
-        try (ObjectInputStream innfil = new ObjectInputStream(new FileInputStream(Komponent.dataFil))) {
-            medisinregister = (Medisinregister) innfil.readObject();
-            legeregister = (Legeregister) innfil.readObject();
-            pasientregister = (Pasientregister) innfil.readObject();
-        } catch (ClassNotFoundException cnfe) {
-            System.out.println("Oppretter tom liste");
+    /*public void lesFil() {
+        try(ObjectInputStream innfil = new ObjectInputStream( new FileInputStream(Komponent.dataFil)))
+        {
+            medisinregister = (Medisinregister)innfil.readObject();
+            legeregister = (Legeregister)innfil.readObject();
+            pasientregister = (Pasientregister)innfil.readObject();
+        }catch (ClassNotFoundException cnfe) {
+            System.out.println("Oppretter tom liste");      
         } catch (FileNotFoundException fnfe) {
             System.out.println("Finner ikke fil. Oppretter tom liste");
         } catch (IOException ioe) {
             System.out.println("Leseproblemer. Oppretter tom liste");
             System.out.println(ioe.getMessage());
         }
-    }
-
-    //Opretter tomme lister
-    private void opprettTommeLister() {
-        medisinregister = new Medisinregister();
-        legeregister = new Legeregister();
-        pasientregister = new Pasientregister();
-    }
+    }*/
 }
