@@ -151,8 +151,12 @@ public class AdminLege extends JTabbedPane {
             etternavnFelt.setText(lege.getEtternavn());
             ePostFelt.setText(lege.getEPost());
             ePostIgenFelt.setText(lege.getEPost());
-            passordFelt.setText(lege.getPassord().toString());
-            passordIgenFelt.setText(lege.getPassord().toString());
+            char[] pass = lege.getPassord();
+            String passord = "";
+            for(char i:pass)
+                passord += i;
+            passordFelt.setText(passord);
+            passordIgenFelt.setText(passord);
             gateadresseFelt.setText(lege.getGateadresse());
             postNrFelt.setText(Integer.toString(lege.getPostnummer()));
             poststedFelt.setText(lege.getPoststed());
