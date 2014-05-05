@@ -43,6 +43,7 @@ public class AdminMedisin extends JTabbedPane {
         JPanel medisinRediger = new JPanel(new GridLayout(0, 1, 5, 5));
 
         finnMedisin = new JTextField(TEKSTFELTLENGDE);
+        finnMedisin.addActionListener(knappeLytter);
         JComponent kompFinnMedisin = Komponent.labelFieldRow("Navn", finnMedisin);
         medisinRediger.add(kompFinnMedisin);
 
@@ -76,6 +77,7 @@ public class AdminMedisin extends JTabbedPane {
         medisinRediger.add(kompNavn);
 
         atc = new JTextField(TEKSTFELTLENGDE);
+        atc.addActionListener(knappeLytter);
         JComponent kompATC = Komponent.labelFieldRow("ATC-nr", atc);
         medisinRediger.add(kompATC);
 
@@ -125,6 +127,7 @@ public class AdminMedisin extends JTabbedPane {
         medisinRegistrer.add(kompNavn);
 
         regATC = new JTextField(TEKSTFELTLENGDE);
+        regATC.addActionListener(knappeLytter);
         JPanel kompATC = Komponent.labelFieldRow("ATC-nr", regATC);
         medisinRegistrer.add(kompATC);
 

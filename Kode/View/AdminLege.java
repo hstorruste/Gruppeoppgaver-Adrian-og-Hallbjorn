@@ -49,6 +49,7 @@ public class AdminLege extends JTabbedPane {
         JPanel rediger = new JPanel(new GridLayout(0, 1, 5, 5));
 
         finnLegeFelt = new JTextField(TEKSTFELTLENGDE);
+        finnLegeFelt.addActionListener(knappeLytter);
         JPanel kompFinnLege = Komponent.labelFieldRow(labeltekst[0], finnLegeFelt);
         rediger.add(kompFinnLege);
 
