@@ -103,17 +103,10 @@ public class LegeRegistrer extends JPanel {
         char[] passord = passordFelt.getPassword();
         char[] passordigjen = passordigjenFelt.getPassword();
         String gateadresse = gtadrFelt.getText();
-        int postnr;
+        String postnr = postnrFelt.getText();
         String poststed = poststedFelt.getText();
         String arbeidssted = arbstedFelt.getText();
-        try {
-            postnr = Integer.parseInt(postnrFelt.getText());
-        } catch (NumberFormatException nfe) {
-            String melding = "Ulovlig postnummer!";
-            Komponent.popup(parentFrame, melding);
-            return;
-        }
-
+        
         if (!epost.equals(epostigjen)) {
             String melding = "Epost stemmer ikke!";
             Komponent.popup(parentFrame, melding);

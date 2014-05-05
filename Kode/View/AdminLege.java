@@ -161,7 +161,7 @@ public class AdminLege extends JTabbedPane {
             passordFelt.setText(passord);
             passordIgenFelt.setText(passord);
             gateadresseFelt.setText(lege.getGateadresse());
-            postNrFelt.setText(Integer.toString(lege.getPostnummer()));
+            postNrFelt.setText(lege.getPostnummer());
             poststedFelt.setText(lege.getPoststed());
             arbetsstedFelt.setText(lege.getArbetssted());
             a.setSelected(lege.getA());
@@ -188,17 +188,10 @@ public class AdminLege extends JTabbedPane {
             char[] passord = passordFelt.getPassword();
             char[] passordigjen = passordIgenFelt.getPassword();
             String gateadresse = gateadresseFelt.getText();
-            int postnr;
+            String postnr = postNrFelt.getText();
             String poststed = poststedFelt.getText();
             String arbeidssted = arbetsstedFelt.getText();
-            try {
-                postnr = Integer.parseInt(postNrFelt.getText());
-            } catch (NumberFormatException nfe) {
-                String melding = "Ulovlig postnummer!";
-                Komponent.popup(parentFrame, melding);
-                return;
-            }
-
+            
             if (!epost.equals(epostigjen)) {
                 String melding = "Epost stemmer ikke!";
                 Komponent.popup(parentFrame, melding);

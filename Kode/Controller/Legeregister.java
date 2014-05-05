@@ -20,21 +20,26 @@ public class Legeregister implements Serializable{
     private static final long serialVersionUID = 1008L;
     private Comparator komp;
     private SortedSet<Lege> legeregister;
+    private final String riktigPostNr;
+    private final String riktigEpost;
 
     public Legeregister()
     {
             komp = new PersonComparator();
             legeregister = new TreeSet<>(komp);
+            riktigPostNr = "\\d{4}";
+            riktigEpost = "[\\w\\-]+\\@[\\w\\-]+\\.[\\w\\-]+";
     }
     
     /*Oppretter en ny lege og setter den inn i registeret.
     Returnerer true hvis det er vellykket.*/
     public boolean settInn(String fornavn, String etternavn, String ep, 
-                String gadresse, int pNr, String psted, String as, char[] pass)
+                String gadresse, String pNr, String psted, String as, char[] pass)
     {
-            Lege ny = new Lege(fornavn, etternavn, ep, gadresse, pNr, psted, as, pass);
+        
+        Lege ny = new Lege(fornavn, etternavn, ep, gadresse, pNr, psted, as, pass);
 
-            return settInn(ny);
+        return settInn(ny);
     }
     /*Setter inn ny lege i registeret. Returnerer true hvis vellykket*/
     public boolean settInn(Lege ny)

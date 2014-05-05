@@ -72,7 +72,7 @@ public class LegekontorVindu extends LegeRegSuper
         /*Setter inn en ny lege i registeret. 
         Returnerer true hvis det er vellykket*/
         public boolean registrerLege(String fornavn, String etternavn, String ep, 
-                String gadresse, int pNr, String psted, String as, char[] pass)
+                String gadresse, String pNr, String psted, String as, char[] pass)
         {
             return legeregister.settInn(fornavn, etternavn, ep, 
                     gadresse, pNr, psted, as, pass);

@@ -12,12 +12,12 @@ public class Lege extends Person implements Serializable
 	private static final long serialVersionUID = 1003L;
 
 	String gateadresse, poststed, arbetssted, ePost;
-	int postnummer;
+	String postnummer;
 	boolean a,b,c;
 	char[] passord;
 	Pasientregister pasientliste;
 
-	public Lege(String fnavn, String enavn, String ep, String g, int pNr,
+	public Lege(String fnavn, String enavn, String ep, String g, String pNr,
                         String ps, String as, char[] pass)
 	{
 		super(fnavn, enavn);
@@ -53,7 +53,7 @@ public class Lege extends Person implements Serializable
 	{
 		return ePost;
 	}
-	public int getPostnummer()
+	public String getPostnummer()
 	{
 		return postnummer;
 	}
@@ -94,7 +94,7 @@ public class Lege extends Person implements Serializable
 	{
 		ePost = e;
 	}
-	public void setPostnummer(int pNr)
+	public void setPostnummer(String pNr)
 	{
 		postnummer = pNr;
 	}
