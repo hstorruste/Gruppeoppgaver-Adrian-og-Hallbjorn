@@ -142,6 +142,7 @@ public class AdminLege extends JTabbedPane {
         return legeRedigerTilFane;
     }
 
+    //Metoden skal finner en lege på e-post
     public void finnLege() {
         Lege lege = parentFrame.finnLege(finnLegeFelt.getText());
         if (lege == null) {
@@ -153,8 +154,9 @@ public class AdminLege extends JTabbedPane {
             ePostIgenFelt.setText(lege.getEPost());
             char[] pass = lege.getPassord();
             String passord = "";
-            for(char i:pass)
+            for (char i : pass) {
                 passord += i;
+            }
             passordFelt.setText(passord);
             passordIgenFelt.setText(passord);
             gateadresseFelt.setText(lege.getGateadresse());
@@ -167,10 +169,12 @@ public class AdminLege extends JTabbedPane {
         }
     }
 
+    //Metoden skriver legeregister.toString()
     public void skrivListe() {
         legeTextArea.setText(parentFrame.skrivLegeListe());
     }
 
+    //Metoden uppdaterar en lege.
     public void updateLege() {
         Lege lege = parentFrame.finnLege(finnLegeFelt.getText());
         if (lege == null) {

@@ -1,7 +1,7 @@
 package View;
 /*  Denne klassen er et GUI til apotek.
  Laget av Adrian Westlund s198571.
- Siste versjon 22-04-2014*/
+ Siste versjon 05-05-2014*/
 
 import Controller.Legeregister;
 import Controller.Medisinregister;
@@ -21,8 +21,9 @@ public class ApotekVindu extends JFrame {
     private Pasientregister pasientregister;
     private Medisinregister medisinregister;
 
-    private final int BREDDE = 700;
-    private final int HØYDE = 500;
+    private final int BREDDE = 800;
+    private final int HØYDE = 600;
+    private final String tittel = "Apotek";
 
     public ApotekVindu(Legeregister lreg, Pasientregister preg, Medisinregister mreg) {
         super("Apotek");
@@ -31,15 +32,12 @@ public class ApotekVindu extends JFrame {
 
         GUI = new ApotekFinnPasient(this);
 
-        add(GUI);
+        tegnFinnPasientGUI();
 
         legeregister = lreg;
         pasientregister = preg;
         medisinregister = mreg;
         
-        //lesFil();
-
-        Komponent.endreFont(this);
         Komponent.bilde(this);
         setSize(BREDDE, HØYDE);
         setVisible(true);
@@ -58,7 +56,15 @@ public class ApotekVindu extends JFrame {
             return hittad;
         }
     }
-
+     public void tegnFinnPasientGUI()
+        {
+            if(GUI != null)
+                remove(GUI);
+            GUI = new ApotekFinnPasient(this);
+            add(GUI);
+            setTitle(tittel);
+            Komponent.endreFont(this);
+        }
     public void tegnApotekPasientGUI(Pasient kund) {
 
         this.kund = kund;
@@ -91,20 +97,4 @@ public class ApotekVindu extends JFrame {
             System.out.println(ioe.getMessage());
         }
     }
-    /*Leser medisinregister, legeregister og pasientregister fra fil.*/
-    /*public void lesFil() {
-        try(ObjectInputStream innfil = new ObjectInputStream( new FileInputStream(Komponent.dataFil)))
-        {
-            medisinregister = (Medisinregister)innfil.readObject();
-            legeregister = (Legeregister)innfil.readObject();
-            pasientregister = (Pasientregister)innfil.readObject();
-        }catch (ClassNotFoundException cnfe) {
-            System.out.println("Oppretter tom liste");      
-        } catch (FileNotFoundException fnfe) {
-            System.out.println("Finner ikke fil. Oppretter tom liste");
-        } catch (IOException ioe) {
-            System.out.println("Leseproblemer. Oppretter tom liste");
-            System.out.println(ioe.getMessage());
-        }
-    }*/
 }

@@ -1,5 +1,9 @@
 package View;
 
+/**
+ * Detta är GUI för finn pasient. Den är en del av AdminVindu. Laget av Adrian
+ * Westlund s198571 Siste versjon 05-05-2014
+ */
 import Model.Pasient;
 import java.awt.*;
 import java.awt.event.*;
@@ -29,6 +33,7 @@ public class ApotekFinnPasient extends JPanel {
         JPanel apotekFinnPasient = new JPanel(new GridLayout(0, 1, 5, 5));
 
         finnPasient = new JTextField(5);
+        finnPasient.addActionListener(knappeLytter);
         JComponent kompFinnPasient = Komponent.labelFieldRow("Fødselsnummer", finnPasient);
         apotekFinnPasient.add(kompFinnPasient);
 
@@ -42,10 +47,11 @@ public class ApotekFinnPasient extends JPanel {
         return apotekFinnPasient;
     }
 
+    //Metoden skal finner en pasient på fødselsnummer
     public void hittadPasient() {
         String fnr = finnPasient.getText();
         Pasient hittad = parentFrame.hittad(fnr);
-        
+
         if (hittad == null) {
             String melding = "Feil fødselsnummer!";
             Komponent.popup(parentFrame, melding);
