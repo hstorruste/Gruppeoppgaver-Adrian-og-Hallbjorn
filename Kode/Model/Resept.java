@@ -3,7 +3,7 @@ package Model;
 	Klassen har en Medisinpeker som peker på medisinen for reseptet.
 	Legepeker som peker på den lege som har skrivit reseptet.
 	Laget av Adrian Westlund
-	Siste versjon 03-04-2014*/
+	Siste versjon 06-05-2014*/
 
 import java.io.*;
 import java.util.Calendar;
@@ -52,11 +52,11 @@ public class Resept implements Serializable
 	}
 	public String getBeskrivelse()
 	{
-			return beskrivelse;
+                return beskrivelse;
 	}
 	public boolean getUtlevert()
 	{
-			return utlevert;
+                return utlevert;
 	}
         
         public void setUtlevert()
@@ -82,10 +82,16 @@ public class Resept implements Serializable
             else
             {
                 ut.append("\nPreparat: ");
-                ut.append(medisin.toString());
+                ut.append(medisin.getNavn());
+                ut.append(" ");
+                ut.append(medisin.getStyrke());
+                ut.append(", ");
+                ut.append(medisin.getForm());
+                ut.append("\nPakning: ");
+                ut.append(medisin.getPakning());
                 ut.append("\nBeskrivelse: ");
                 ut.append(beskrivelse);
-                ut.append("\nLege: ");
+                ut.append("\nLege:\n");
                 ut.append(lege.toString());
                 ut.append("\nReit: ");
                 ut.append(reit);

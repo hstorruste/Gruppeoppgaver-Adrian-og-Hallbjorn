@@ -103,18 +103,12 @@ public class LegekontorVindu extends LegeRegSuper
             return pasientregister.finnPasientFnr(fnr);
         }
         
-        /*Setter inn en pasient i pasientregisteret. Hvis dette er vellykket 
-        settes en peker til objektet inn i legen sitt eget pasientregister. 
-        Returnerer false hvis en av innsettingene mislykkes.*/
+        /*Setter inn en pasient i pasientregisteret.
+        Returnerer false hvis innsettingen mislykkes.*/
         public boolean registrerPasient(String fornavn, String etternavn, String fnr)
         {
             boolean registrert = pasientregister.settInn(fornavn, etternavn, fnr);
-            if(registrert)
-            {
-                Pasientregister egen = innlogget.getPasientliste();
-                Pasient ny = pasientregister.finnPasientFnr(fnr);
-                registrert = egen.settInn(ny);
-            }
+           
             return registrert;
         }
         
@@ -123,21 +117,10 @@ public class LegekontorVindu extends LegeRegSuper
             return pasient;
         }
         /*Denne metoden tar imot objektet til pasienten som det skal skrives ut
-        resept til og repainter vinduet med skrivReseptGUI. Den sørger også for 
-        at pasienten finnes i legens eget register.*/
+        resept til og repainter vinduet med skrivReseptGUI. */
         public void tegnSkrivReseptGUI(Pasient pasient){
             this.pasient = pasient;
-            
-            Pasientregister egen = innlogget.getPasientliste();
-            Pasient alleredePasient = egen.finnPasientFnr(pasient.getFnr());
-            
-            if(alleredePasient == null) //Sjekker om pasienten er kunde hos legen
-            {
-                egen.settInn(pasient);
-                skrivTilFil();
-            }
-
-            
+    
             remove(GUI);
             
             GUI = new LegekontorSkrivResept(this);
@@ -167,16 +150,43 @@ public class LegekontorVindu extends LegeRegSuper
             return innlogget;
         }
         
-        //Finner og returnerer et medisinobjekt
-        public Medisin finnMedisin(String navn)
+        /*Finner og returnerer en Stringarray med alle pakninger for en medisin 
+        med en gitt styrke og en gitt legemiddelform*/
+        public String[] getAlleMedisinPakninger(String navn, String styrke, String form)
         {
-            Medisin funnet = medisinregister.finnMedisinNavn(navn);
+            return medisinregister.getAlleMedisinPakninger(navn, styrke, form);
+        }
+        /*Finner og returnerer en Stringarray med alle legemiddelformer for 
+        en medisin med en gitt styrke*/
+        public String[] getAlleMedisinFormer(String navn, String styrke)
+        {
+            return medisinregister.getAlleMedisinFormer(navn, styrke);
+        }
+        //Finner og returnerer en Stringarray med alle styrker for en medisin
+        public String[] getAlleMedisinStyrker(String navn)
+        {
+            return medisinregister.getAlleMedisinStyrker(navn);
+        }
+        //Finner og returnerer et medisinobjekt
+        public Medisin finnMedisin(String navn, String styrke, String form, String pakning)
+        {
+            Medisin funnet = medisinregister.finnMedisin(navn, styrke, form, pakning);
             return funnet;
         }
-        //Registrerer en resept på pasienten
+        /*Registrerer en resept på pasienten.Den sørger også for 
+        at pasienten finnes i legens eget register.*/
         public boolean registrerResept(Medisin medisin, Calendar d, Lege lege, int reit, String beskrivelse)
         {
-           return pasient.settInnResept(medisin, d, lege, reit, beskrivelse);
+            Pasientregister egen = innlogget.getPasientliste();
+            Pasient alleredePasient = egen.finnPasientFnr(pasient.getFnr());
+
+            if(alleredePasient == null) //Sjekker om pasienten er kunde hos legen
+            {
+                egen.settInn(pasient);
+                skrivTilFil();
+            }
+
+            return pasient.settInnResept(medisin, d, lege, reit, beskrivelse);
         }
         
         public void tegnLoginGUI()
@@ -208,28 +218,4 @@ public class LegekontorVindu extends LegeRegSuper
                 System.out.println(ioe.getMessage());
             }
         }
-        
-        /*Leser medisinregister, legeregister og pasientregister fra fil.*/
-        /*public void lesFil()
-        {
-            try(ObjectInputStream innfil = new ObjectInputStream( new FileInputStream(Komponent.dataFil)))
-            {
-                medisinregister = (Medisinregister)innfil.readObject();
-                legeregister = (Legeregister)innfil.readObject();
-                pasientregister = (Pasientregister)innfil.readObject();
-            }
-            catch(ClassNotFoundException cnfe)
-            {
-                System.out.println("Oppretter tom liste");
-            }
-            catch(FileNotFoundException fnfe)
-            {
-                System.out.println("Finner ikke fil. Oppretter tom liste");
-            }
-            catch(IOException ioe)
-            {
-                System.out.println("Leseproblemer. Oppretter tom liste");
-                System.out.println(ioe.getMessage());
-            }
-        }*/
 }

@@ -7,7 +7,8 @@ package Controller;
 
 /**
  * Denne klassen legger medisiner inn i et register og gjør operasjoner mot den.
- * Laget av Hallbjørn Storruste Siste versjon: 29-04-2014
+ * Laget av Hallbjørn Storruste 
+ * Siste versjon: 06-05-2014
  *
  * @author Hallbjørn
  */
@@ -30,6 +31,22 @@ public class Medisinregister implements Serializable {
     public SortedSet<Medisin> getMedisinregister()
     {
         return medisinregister;
+    }
+    
+    /*Oppretter og setter inn et Medisin-objekt. Returnerer true hvis vellykket.*/
+    public boolean settInn(String navn, String kat, String gruppe,
+            String styrke, String form, String pakning, String actNr) {
+        Medisin ny = new Medisin(navn, kat, gruppe, styrke, form, pakning, actNr);
+
+        return settInn(ny);
+    }
+    /*Setter inn et nytt Medisin-objekt i medisinregisteret.*/
+
+    public boolean settInn(Medisin ny) {
+        if (ny == null) {
+            return false;
+        }
+        return medisinregister.add(ny);
     }
     
     //Returnerer et Stringarray med alle medisinnavn.
@@ -92,9 +109,75 @@ public class Medisinregister implements Serializable {
         
         return navn;
     }
-    
+    //Returnerer en Stringarray med alle pakninger innen en medisin, styrke og legemiddelform.
+    public String[] getAlleMedisinPakninger(String navn, String styrke, String form)
+    {
+        TreeSet<Medisin> navnSett = finnMedisin(navn);
+        
+        int size = navnSett.size();
+        
+        String[] pakning = new String[size];
+        int i =0;
+        
+        Iterator<Medisin> iterator = navnSett.iterator();
+        Medisin runner = null;
+        while (iterator.hasNext()) {
+            runner = iterator.next();
+            if(runner.getStyrke().equals(styrke) 
+                    && runner.getForm().equals(form)){ 
+                String runnerPakning = runner.getPakning();
+                for(int j = 0; j <= i; j++)
+                {
+                    if(pakning[j] == null)
+                    {
+                        pakning[i] = runnerPakning;
+                        i++;
+                        break;
+                    }
+                    else
+                        if(pakning[j].equals(runnerPakning))
+                            break;   
+                } 
+            }
+        }
+        pakning = Arrays.copyOfRange(pakning, 0, i);
+        return pakning;
+    }
+    //Returnerer en Stringarray med alle legemiddelformer innen en medisin og styrke.
+    public String[] getAlleMedisinFormer(String navn, String styrke)
+    {
+        TreeSet<Medisin> navnSett = finnMedisin(navn);
+        
+        int size = navnSett.size();
+        
+        String[] form = new String[size];
+        int i =0;
+        
+        Iterator<Medisin> iterator = navnSett.iterator();
+        Medisin runner = null;
+        while (iterator.hasNext()) {
+            runner = iterator.next();
+            if(runner.getStyrke().equals(styrke)){ 
+                String runnerForm = runner.getForm();
+                for(int j = 0; j <= i; j++)
+                {
+                    if(form[j] == null)
+                    {
+                        form[i] = runnerForm;
+                        i++;
+                        break;
+                    }
+                    else
+                        if(form[j].equals(runnerForm))
+                            break;   
+                } 
+            }
+        }
+        form = Arrays.copyOfRange(form, 0, i);
+        return form;
+    }
      //Returnerer et Stringarray med alle styrker innen en medisin.
-    public String[] getAlleMedisinstyrker(String navn)
+    public String[] getAlleMedisinStyrker(String navn)
     {
         TreeSet<Medisin> navnSett = finnMedisin(navn);
         
@@ -107,17 +190,17 @@ public class Medisinregister implements Serializable {
         Medisin runner = null;
         while (iterator.hasNext()) {
             runner = iterator.next();
-            String runnerNavn = runner.getNavn();
+            String runnerStyrke = runner.getStyrke();
             for(int j = 0; j <= i; j++)
             {
                 if(styrke[j] == null)
                 {
-                    styrke[i] = runner.getNavn();
+                    styrke[i] = runnerStyrke;
                     i++;
                     break;
                 }
                 else
-                    if(styrke[j].equals(runnerNavn))
+                    if(styrke[j].equals(runnerStyrke))
                         break;   
             } 
         }
@@ -217,21 +300,7 @@ public class Medisinregister implements Serializable {
         navn = Arrays.copyOfRange(navn, 0, i);
         return navn;
     }
-     /*Oppretter og setter inn et Medisin-objekt. Returnerer true hvis vellykket.*/
-    public boolean settInn(String navn, String kat, String gruppe,
-            String styrke, String form, String pakning,String actNr) {
-        Medisin ny = new Medisin(navn, kat, gruppe, styrke, form, pakning, actNr);
-
-        return settInn(ny);
-    }
-    /*Setter inn et nytt Medisin-objekt i medisinregisteret.*/
-
-    public boolean settInn(Medisin ny) {
-        if (ny == null) {
-            return false;
-        }
-        return medisinregister.add(ny);
-    }
+   
     /*Finner og returnerer en medisin i registeret basert på navnet, styrken,
      legemiddelformen og pakningsstørrelsen.
      Returnerer 'null' hvis ikke den finnes. */

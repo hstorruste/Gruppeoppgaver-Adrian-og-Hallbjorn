@@ -115,11 +115,11 @@ public class ApotekPasient extends JTabbedPane {
                 historikkArea.setText(finnUtlevert());
             }
         }
-            catch(NumberFormatException nfe){
-                String melding = "Feil i feltet, må vare siffer";
-                Komponent.popup(parentFrame, melding);
-                return;
-            }
+        catch(NumberFormatException nfe){
+            String melding = "Feil i feltet, må vare siffer";
+            Komponent.popup(parentFrame, melding);
+            return;
+        }
     }
 
     private class KnappeLytter implements ActionListener {

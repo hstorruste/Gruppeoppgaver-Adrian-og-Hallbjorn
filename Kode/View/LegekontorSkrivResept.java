@@ -29,11 +29,11 @@ public class LegekontorSkrivResept extends JTabbedPane{
     
     private LegekontorVindu parentFrame;
     
-    private JComboBox<String> medisinFelt;
+    private JComboBox<String> medisinFelt, styrkeFelt, formFelt, pakningFelt;
     private JTextField gruppeFelt, kategoriFelt, atcFelt, reitFelt;
     private JTextArea bruksanvOmrade, historikkOmrade;
     private JButton sendKnapp, tilbakeKnapp, tilbakeHistKnapp;
-    private String[] labeltekst = {"Medisin", "Gruppe", "Kategori", "ATC-nr", 
+    private String[] labeltekst = {"Medisin", "Styrke", "Legemiddelform", "Pakningsstr", "Gruppe", "Kategori", "ATC-nr", 
         "Reit", "Dosering//Bruksanvisning", "Tidligere resepter"};
     private String[] medisiner;
     
@@ -72,30 +72,58 @@ public class LegekontorSkrivResept extends JTabbedPane{
         medisinFelt.addActionListener(lytter);
         JPanel medisinSkriv = (JPanel) Komponent.labelComboBoxColumb(labeltekst[0], medisinFelt);
         
+        styrkeFelt = new JComboBox<>();
+        styrkeFelt.setSelectedIndex(-1);
+        styrkeFelt.setEditable(false);
+        styrkeFelt.setVisible(false);
+        styrkeFelt.addActionListener(lytter);
+        JPanel styrkeSkriv = Komponent.labelComboBoxColumb(labeltekst[1], styrkeFelt);
+        
+        formFelt = new JComboBox<>();
+        formFelt.setSelectedIndex(-1);
+        formFelt.setEditable(false);
+        formFelt.setVisible(false);
+        formFelt.addActionListener(lytter);
+        JPanel formSkriv = Komponent.labelComboBoxColumb(labeltekst[2], formFelt);
+        
+        pakningFelt = new JComboBox<>();
+        pakningFelt.setSelectedIndex(-1);
+        pakningFelt.setEditable(false);
+        pakningFelt.setVisible(false);
+        pakningFelt.addActionListener(lytter);
+        JPanel pakningSkriv = Komponent.labelComboBoxColumb(labeltekst[3], pakningFelt);
+        
+        JPanel medisinPanel1 = new JPanel( new GridLayout(1,0));
+        medisinPanel1.add(medisinSkriv);
+        medisinPanel1.add(styrkeSkriv);
+        medisinPanel1.add(formSkriv);
+        medisinPanel1.add(pakningSkriv);
+        
+         
         gruppeFelt = new JTextField(TEKSTFELTLENGDE);
         gruppeFelt.setEditable(false);
-        JPanel gruppeSkriv = (JPanel) Komponent.labelFieldColumb(labeltekst[1], gruppeFelt);
+        JPanel gruppeSkriv = (JPanel) Komponent.labelFieldColumb(labeltekst[4], gruppeFelt);
         
         kategoriFelt = new JTextField(TEKSTFELTLENGDE);
         kategoriFelt.setEditable(false);
-        JPanel kategoriSkriv = (JPanel) Komponent.labelFieldColumb(labeltekst[2], kategoriFelt);
+        JPanel kategoriSkriv = (JPanel) Komponent.labelFieldColumb(labeltekst[5], kategoriFelt);
         
         atcFelt = new JTextField(TEKSTFELTLENGDE);
         atcFelt.setEditable(false);
-        JPanel atcSkriv = (JPanel) Komponent.labelFieldColumb(labeltekst[3], atcFelt);
+        JPanel atcSkriv = (JPanel) Komponent.labelFieldColumb(labeltekst[6], atcFelt);
         
         reitFelt = new JTextField(TEKSTFELTLENGDE);
-        JPanel reitSkriv = (JPanel) Komponent.labelFieldColumb(labeltekst[4], reitFelt);
+        JPanel reitSkriv = (JPanel) Komponent.labelFieldColumb(labeltekst[7], reitFelt);
         
-        JPanel medisinPanel = new JPanel( new GridLayout(1,0));
-        medisinPanel.add(medisinSkriv);
-        medisinPanel.add(gruppeSkriv);
-        medisinPanel.add(kategoriSkriv);
-        medisinPanel.add(atcSkriv);
-        medisinPanel.add(reitSkriv);
+        JPanel medisinPanel2 = new JPanel( new GridLayout(1,0));
+       
+        medisinPanel2.add(gruppeSkriv);
+        medisinPanel2.add(kategoriSkriv);
+        medisinPanel2.add(atcSkriv);
+        medisinPanel2.add(reitSkriv);
         
         JPanel labelPanel = new JPanel( new BorderLayout());
-        labelPanel.add(new JLabel(labeltekst[5]), BorderLayout.LINE_START);
+        labelPanel.add(new JLabel(labeltekst[8]), BorderLayout.LINE_START);
         
         bruksanvOmrade = new JTextArea(15,20);
         
@@ -113,7 +141,8 @@ public class LegekontorSkrivResept extends JTabbedPane{
         knappePanel.add(tilbakeKnapp, BorderLayout.LINE_END);
         
         JPanel medisinReseptPanel =  new JPanel( new GridLayout(0,1,5,5));
-        medisinReseptPanel.add(medisinPanel);
+        medisinReseptPanel.add(medisinPanel1);
+        medisinReseptPanel.add(medisinPanel2);
         medisinReseptPanel.add(labelPanel);
       
         JPanel skrivReseptPanel = new JPanel( new BorderLayout());
@@ -141,7 +170,7 @@ public class LegekontorSkrivResept extends JTabbedPane{
         knappePanel.add(tilbakeHistKnapp, BorderLayout.LINE_END);
         
         JPanel labelPanel = new JPanel( new BorderLayout());
-        labelPanel.add(new JLabel(labeltekst[6]), BorderLayout.LINE_START);
+        labelPanel.add(new JLabel(labeltekst[9]), BorderLayout.LINE_START);
         
         JPanel historikkGUI = new JPanel( new BorderLayout());
         historikkGUI.add(labelPanel,BorderLayout.PAGE_START);
@@ -150,12 +179,76 @@ public class LegekontorSkrivResept extends JTabbedPane{
         
         return historikkGUI;
     }
+    
+    /*Oppdaterer innhold i ComboBox for pakning og gjør dem synlig/usynlig.*/
+    private void oppdaterPakningComboBox()
+    {
+        if(styrkeFelt.getSelectedIndex() > -1)
+        {
+            pakningFelt.setVisible(true);
+            pakningFelt.removeAllItems();
+            String navn = (String)medisinFelt.getSelectedItem();
+            String styrke = (String)styrkeFelt.getSelectedItem();
+            String form = (String)formFelt.getSelectedItem();
+            String[] pakning = parentFrame.getAlleMedisinPakninger(navn, styrke, form);
+            for(int i = 0; i < pakning.length; i++)
+                pakningFelt.insertItemAt(pakning[i], i);
+        }
+        else
+        {
+            pakningFelt.setVisible(false);
+        }
+    }
+    
+    /*Oppdaterer innhold i ComboBox for form og gjør dem synlig/usynlig.*/
+    private void oppdaterFormComboBox()
+    {
+        if(styrkeFelt.getSelectedIndex() > -1)
+        {
+            formFelt.setVisible(true);
+            formFelt.removeAllItems();
+            String navn = (String)medisinFelt.getSelectedItem();
+            String styrke = (String)styrkeFelt.getSelectedItem();
+            String[] form = parentFrame.getAlleMedisinFormer(navn, styrke);
+            for(int i = 0; i < form.length; i++)
+                formFelt.insertItemAt(form[i], i);
+        }
+        else
+        {
+            formFelt.setVisible(false);
+            pakningFelt.setVisible(false);
+        }
+    }
+    /*Oppdaterer innhold i ComboBox for styrke og gjør dem synlig/usynlig.*/
+    private void oppdaterStyrkeComboBox()
+    {
+        if(medisinFelt.getSelectedIndex() > -1)
+        {
+            styrkeFelt.setVisible(true);
+            styrkeFelt.removeAllItems();
+            String navn = (String)medisinFelt.getSelectedItem();
+            String[] styrke = parentFrame.getAlleMedisinStyrker(navn);
+            for(int i = 0; i < styrke.length; i++)
+                styrkeFelt.insertItemAt(styrke[i], i);
+            
+        }
+        else
+        {
+            styrkeFelt.setVisible(false);
+            formFelt.setVisible(false);
+            pakningFelt.setVisible(false);
+        }
+    }
+    
     /*Setter gruppeFelt kategoriFelt og atcFelt til de respektive verdiene som
     medisinen som er valgt har.*/
     private void setMedisinFelt()
     {
-        String medisinNavn = (String)medisinFelt.getSelectedItem();
-        Medisin medisin = parentFrame.finnMedisin(medisinNavn);
+        String navn = (String)medisinFelt.getSelectedItem();
+        String styrke = (String)styrkeFelt.getSelectedItem();
+        String form = (String)formFelt.getSelectedItem();
+        String pakning = (String)pakningFelt.getSelectedItem();
+        Medisin medisin = parentFrame.finnMedisin(navn, styrke, form, pakning);
         if(medisin == null)
             return;
         
@@ -171,8 +264,17 @@ public class LegekontorSkrivResept extends JTabbedPane{
     {
         //registerer resept
         Lege lege = parentFrame.getLege();
-        String medisinNavn = (String)medisinFelt.getSelectedItem();
-        Medisin medisin = parentFrame.finnMedisin(medisinNavn);
+        String navn = (String)medisinFelt.getSelectedItem();
+        String styrke = (String)styrkeFelt.getSelectedItem();
+        String form = (String)formFelt.getSelectedItem();
+        String pakning = (String)pakningFelt.getSelectedItem();
+        Medisin medisin = parentFrame.finnMedisin(navn, styrke, form, pakning);
+        if(medisin == null)
+        {
+            String melding = "Finner ikke medisinen!";  
+            Komponent.popup(parentFrame, melding);
+            return;
+        }
         String gruppe = medisin.getGrupp();
         int reit = 0;
         String reitTekst = reitFelt.getText();
@@ -227,6 +329,12 @@ public class LegekontorSkrivResept extends JTabbedPane{
             if(e.getSource() == sendKnapp)
                 sendResept();            
             else if(e.getSource() == medisinFelt)
+                oppdaterStyrkeComboBox();
+            else if(e.getSource() == styrkeFelt)
+                oppdaterFormComboBox();
+            else if(e.getSource() == formFelt)
+                oppdaterPakningComboBox();
+            else if(e.getSource() == pakningFelt)
                 setMedisinFelt();
             else
                 tilbake();           

@@ -7,7 +7,7 @@ package Controller;
 
 /**Dette er en comporator for medisin-objekter.
  * Laget av Hallbjørn Storruste
- * Siste versjon: 08-04-2014
+ * Siste versjon: 06-05-2014
  * @author Hallbjørn
  */
 import Model.*;
@@ -48,6 +48,24 @@ public class MedisinComparator implements Comparator<Medisin>, Serializable {
         String med2 = m2.getNavn();
         
         int d = kollator.compare(med1, med2);
+        if(d == 0)
+        {
+            String styrke1 = m1.getStyrke();
+            String styrke2 = m2.getStyrke();
+            d = kollator.compare(styrke1, styrke2);
+            if(d == 0)
+            {
+                String form1 = m1.getForm();
+                String form2 = m2.getForm();
+                d = kollator.compare(form1, form2);
+                if(d == 0)
+                {
+                    String pakning1 = m1.getPakning();
+                    String pakning2 = m2.getPakning();
+                    d = kollator.compare(pakning1, pakning2);
+                }
+            }
+        }
         
         return d;
     }

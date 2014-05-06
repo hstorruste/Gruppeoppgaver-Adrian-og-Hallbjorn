@@ -8,11 +8,12 @@ import javax.swing.*;
 
 /*Denne klassen upprättar alla komponenter till medisin fanan.
  Laget av Adrian Westlund s198571.
- Siste versjon 29-04-2014*/
+ Siste versjon 06-05-2014*/
 public class AdminMedisin extends JTabbedPane {
 
     private AdminVindu parentFrame;
-    private JTextField finnMedisin, medisinNavn, atc, regMedisinNavn, regATC;
+    private JTextField finnMedisin, medisinNavn, medisinStyrke, medisinForm, medisinPakning, atc, 
+            regMedisinNavn, regMedisinStyrke, regMedisinForm, regMedisinPakning, regATC;
     private JButton finnMedisinKnapp, seMedisinListeKnapp, medisinSpareKnapp, regMedisinSpareKnapp;
     private JTextArea medisinTextArea;
     private JComboBox<String> gruppVelger, kategoriVelger, regGruppVelger, regKategoriVelger;
@@ -60,21 +61,33 @@ public class AdminMedisin extends JTabbedPane {
         JPanel seMedisinListeKnappPanel = new JPanel(new BorderLayout());
         seMedisinListeKnappPanel.add(seMedisinListeKnapp, BorderLayout.LINE_END);
         medisinRediger.add(seMedisinListeKnappPanel);
-
-        gruppVelger = new JComboBox<>(abc);
-        gruppVelger.setSelectedIndex(-1);
-        JComponent grupp = Komponent.labelComboBoxRow("Grupp", gruppVelger);
-        medisinRediger.add(grupp);
-
+        
+        medisinNavn = new JTextField(TEKSTFELTLENGDE);
+        JComponent kompNavn = Komponent.labelFieldRow("Navn", medisinNavn);
+        medisinRediger.add(kompNavn);
+                
         kategoriVelger = new JComboBox<>(kategoriArray);
         kategoriVelger.setSelectedIndex(-1);
         kategoriVelger.setEditable(true);
         JComponent kategori = Komponent.labelComboBoxRow("Kategori", kategoriVelger);
         medisinRediger.add(kategori);
 
-        medisinNavn = new JTextField(TEKSTFELTLENGDE);
-        JComponent kompNavn = Komponent.labelFieldRow("Navn", medisinNavn);
-        medisinRediger.add(kompNavn);
+        gruppVelger = new JComboBox<>(abc);
+        gruppVelger.setSelectedIndex(-1);
+        JComponent grupp = Komponent.labelComboBoxRow("Grupp", gruppVelger);
+        medisinRediger.add(grupp);
+        
+        medisinStyrke = new JTextField(TEKSTFELTLENGDE);
+        JComponent kompStyrke = Komponent.labelFieldRow("Styrke", medisinStyrke);
+        medisinRediger.add(kompStyrke);
+        
+        medisinForm = new JTextField(TEKSTFELTLENGDE);
+        JComponent kompForm = Komponent.labelFieldRow("Form", medisinForm);
+        medisinRediger.add(kompForm);
+        
+        medisinPakning = new JTextField(TEKSTFELTLENGDE);
+        JComponent kompPakning = Komponent.labelFieldRow("Pakning", medisinPakning);
+        medisinRediger.add(kompPakning);
 
         atc = new JTextField(TEKSTFELTLENGDE);
         atc.addActionListener(knappeLytter);
@@ -111,21 +124,33 @@ public class AdminMedisin extends JTabbedPane {
     private JPanel registrerGUI() {
         JPanel medisinRegistrer = new JPanel(new GridLayout(0, 1, 5, 5));
 
-        regGruppVelger = new JComboBox<>(abc);
-        regGruppVelger.setSelectedIndex(-1);
-        JPanel grupp = Komponent.labelComboBoxRow("Grupp", regGruppVelger);
-        medisinRegistrer.add(grupp);
-
+        regMedisinNavn = new JTextField(TEKSTFELTLENGDE);
+        JPanel kompNavn = Komponent.labelFieldRow("Navn", regMedisinNavn);
+        medisinRegistrer.add(kompNavn);
+        
         regKategoriVelger = new JComboBox<>(kategoriArray);
         regKategoriVelger.setSelectedIndex(-1);
         regKategoriVelger.setEditable(true);
         JPanel kategori = Komponent.labelComboBoxRow("Kategori", regKategoriVelger);
         medisinRegistrer.add(kategori);
 
-        regMedisinNavn = new JTextField(TEKSTFELTLENGDE);
-        JPanel kompNavn = Komponent.labelFieldRow("Navn", regMedisinNavn);
-        medisinRegistrer.add(kompNavn);
-
+        regGruppVelger = new JComboBox<>(abc);
+        regGruppVelger.setSelectedIndex(-1);
+        JPanel grupp = Komponent.labelComboBoxRow("Grupp", regGruppVelger);
+        medisinRegistrer.add(grupp);
+        
+        regMedisinStyrke = new JTextField(TEKSTFELTLENGDE);
+        JPanel kompStyrke = Komponent.labelFieldRow("Styrke", regMedisinStyrke);
+        medisinRegistrer.add(kompStyrke);
+        
+        regMedisinForm = new JTextField(TEKSTFELTLENGDE);
+        JPanel kompForm = Komponent.labelFieldRow("Legemiddelform", regMedisinForm);
+        medisinRegistrer.add(kompForm);
+        
+        regMedisinPakning = new JTextField(TEKSTFELTLENGDE);
+        JPanel kompPakning = Komponent.labelFieldRow("Pakning", regMedisinPakning);
+        medisinRegistrer.add(kompPakning);
+        
         regATC = new JTextField(TEKSTFELTLENGDE);
         regATC.addActionListener(knappeLytter);
         JPanel kompATC = Komponent.labelFieldRow("ATC-nr", regATC);
@@ -141,7 +166,12 @@ public class AdminMedisin extends JTabbedPane {
     }
 
     public void finnMedisin() {
-        Medisin medisin = parentFrame.finnMedisin(finnMedisin.getText());
+        String navn = medisinNavn.getText();
+        String styrke = medisinStyrke.getText();
+        String form = medisinForm.getText();
+        String pakning = medisinPakning.getText();
+        
+        Medisin medisin = parentFrame.finnMedisin(navn, styrke, form, pakning);
         if (medisin == null) {
             Komponent.popup(parentFrame, "Finner ikke medisinen");
         } else {
@@ -169,13 +199,17 @@ public class AdminMedisin extends JTabbedPane {
     }
 
     public void updateMedisin() {
-        Medisin medisin = parentFrame.finnMedisin(finnMedisin.getText());
+        String navn = medisinNavn.getText();
+        String styrke = medisinStyrke.getText();
+        String form = medisinForm.getText();
+        String pakning = medisinPakning.getText();
+        
+        Medisin medisin = parentFrame.finnMedisin(navn, styrke, form, pakning);
         if (medisin == null) {
             Komponent.popup(parentFrame, "Finner ikke medisinen");
         } else {
             String grupp = (String) gruppVelger.getSelectedItem();
             String kategori = (String) kategoriVelger.getSelectedItem();
-            String navn = medisinNavn.getText();
             String atcNr = atc.getText();
 
             medisin.setGrupp(grupp);
@@ -189,20 +223,26 @@ public class AdminMedisin extends JTabbedPane {
             gruppVelger.setSelectedIndex(-1);
             kategoriVelger.setSelectedIndex(-1);
             medisinNavn.setText("");
+            medisinStyrke.setText("");
+            medisinForm.setText("");
+            medisinPakning.setText("");
             atc.setText("");
         }
     }
     // Metoden registrerar en pasient om alla felt är ifyllda
     private void registrerMedisin() {
-        String grupp = (String) regGruppVelger.getSelectedItem();
-        String kategori = (String) regKategoriVelger.getSelectedItem();
         String navn = regMedisinNavn.getText();
+        String kategori = (String) regKategoriVelger.getSelectedItem();
+        String grupp = (String) regGruppVelger.getSelectedItem();
+        String styrke = regMedisinStyrke.getText();
+        String form = regMedisinForm.getText();
+        String pakning = regMedisinPakning.getText();
         String atcNr = regATC.getText();
         if (((grupp.equals("") || kategori.equals("")) || navn.equals("")) || atcNr.equals("")) {
             String melding = "Alle felt må vare utfyllt!";
             Komponent.popup(parentFrame, melding);
         } else {
-            boolean registrert = parentFrame.registrerMedisin(navn, kategori, grupp, atcNr);
+            boolean registrert = parentFrame.registrerMedisin(navn, kategori, grupp, styrke, form, pakning, atcNr);
             
             if (registrert) {
                 parentFrame.skrivTilFil();
@@ -211,6 +251,9 @@ public class AdminMedisin extends JTabbedPane {
                 regGruppVelger.setSelectedIndex(-1);
                 regKategoriVelger.setSelectedIndex(-1);
                 regMedisinNavn.setText("");
+                medisinStyrke.setText("");
+                medisinForm.setText("");
+                medisinPakning.setText("");
                 regATC.setText("");
             } else {
                 String melding = "Du ble ikke registrert!";

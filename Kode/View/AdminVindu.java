@@ -62,14 +62,14 @@ public class AdminVindu extends LegeRegSuper {
     }
 
     //Använder Medisinregister sin finnMedisin för att hitta en medisin
-    public Medisin finnMedisin(String navn) {
-        return medisinregister.finnMedisinNavn(navn);
+    public Medisin finnMedisin(String navn, String styrke, String form, String pakning) {
+        return medisinregister.finnMedisin(navn, styrke, form, pakning);
     }
 
     //Registrer medisin med Medisinregister sin settInn metode
-    public boolean registrerMedisin(String navn, String kat, String gruppe, String atcNr) {
+    public boolean registrerMedisin(String navn, String kat, String gruppe, String styrke, String form, String pakning, String atcNr) {
 
-        return medisinregister.settInn(navn, kat, gruppe, atcNr);
+        return medisinregister.settInn(navn, kat, gruppe, styrke, form, pakning, atcNr);
     }
     public String[] skrivKatArray(){
         return medisinregister.getAlleKategorier();
