@@ -137,15 +137,16 @@ public class LegekontorSkrivResept extends JTabbedPane{
         JPanel bruksanvPanel = new JPanel( new GridLayout(1,1));
         bruksanvPanel.add(new JScrollPane(bruksanvOmrade));
         
-        sendKnapp = new JButton("Send");
-        sendKnapp.addActionListener(lytter);
-        
         tilbakeKnapp = new JButton("Tilbake");
         tilbakeKnapp.addActionListener(lytter);
         
+        sendKnapp = new JButton("Send");
+        sendKnapp.addActionListener(lytter);
+        
         JPanel knappePanel = new JPanel( new BorderLayout());
-        knappePanel.add(sendKnapp, BorderLayout.LINE_START);
-        knappePanel.add(tilbakeKnapp, BorderLayout.LINE_END);
+        knappePanel.add(tilbakeKnapp, BorderLayout.LINE_START);
+        knappePanel.add(sendKnapp, BorderLayout.LINE_END);
+        
         
         JPanel medisinReseptPanel =  new JPanel( new GridLayout(0,1,5,5));
         medisinReseptPanel.add(medisinPanel1);
@@ -174,7 +175,7 @@ public class LegekontorSkrivResept extends JTabbedPane{
         tilbakeHistKnapp.addActionListener(lytter);
         
         JPanel knappePanel = new JPanel( new BorderLayout());
-        knappePanel.add(tilbakeHistKnapp, BorderLayout.LINE_END);
+        knappePanel.add(tilbakeHistKnapp, BorderLayout.LINE_START);
         
         JPanel labelPanel = new JPanel( new BorderLayout());
         labelPanel.add(new JLabel(labeltekst[9]), BorderLayout.LINE_START);

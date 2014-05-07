@@ -60,6 +60,29 @@ public class AdminVindu extends LegeRegSuper {
     public String skrivLegeListe() {
         return legeregister.toString();
     }
+    
+    //Returnerer medisinregisteret.
+    public String[] getAlleMedisinnavn()
+    {
+        return medisinregister.getAlleMedisinnavn();
+    }
+    /*Finner og returnerer en Stringarray med alle pakninger for en medisin 
+    med en gitt styrke og en gitt legemiddelform*/
+    public String[] getAlleMedisinPakninger(String navn, String styrke, String form)
+    {
+        return medisinregister.getAlleMedisinPakninger(navn, styrke, form);
+    }
+    /*Finner og returnerer en Stringarray med alle legemiddelformer for 
+    en medisin med en gitt styrke*/
+    public String[] getAlleMedisinFormer(String navn, String styrke)
+    {
+        return medisinregister.getAlleMedisinFormer(navn, styrke);
+    }
+    //Finner og returnerer en Stringarray med alle styrker for en medisin
+    public String[] getAlleMedisinStyrker(String navn)
+    {
+        return medisinregister.getAlleMedisinStyrker(navn);
+    }
 
     //Använder Medisinregister sin finnMedisin för att hitta en medisin
     public Medisin finnMedisin(String navn, String styrke, String form, String pakning) {
