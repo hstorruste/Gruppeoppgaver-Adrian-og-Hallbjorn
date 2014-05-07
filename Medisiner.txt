@@ -1,6 +1,9 @@
-Grupp: C
+Medisin: Apocillin
 Kategori: Antibiotikum
-Medisin: Apocillin 330 mg Tablett
+Grupp: C
+Styrke 330 mg
+Form: Tablett
+Pakning: 20 stk.
 ATC-nr: J01C E02
 
 Grupp: C
@@ -8,10 +11,39 @@ Kategori: Antibiotikum
 Medisin: Apocillin 660 mg Tablett
 ATC-nr: J01C E02
 
-Grupp: A
+Medisin: Morfin
 Kategori: Analgetikum
-Medisin: Morfin 10 mg Tablett
+Grupp: A
+Styrke: 10 mg
+Form: Tablett
+Pakning: 20 stk
 ATC-nr: N02A A01
+
+Medisin: Morfin
+Kategori: Analgetikum
+Grupp: A
+Styrke: 10 mg
+Form: Tablett
+Pakning: 100 stk
+ATC-nr: N02A A01
+
+Medisin: Morfin
+Kategori: Analgetikum
+Grupp: A
+Styrke: 30 mg
+Form: Tablett
+Pakning: 20 stk
+ATC-nr: N02A A01
+
+Medisin: Morfin
+Kategori: Analgetikum
+Grupp: A
+Styrke: 30 mg
+Form: Tablett
+Pakning: 100 stk
+ATC-nr: N02A A01
+
+
 
 Grupp: B
 Kategori: Analgetikum
