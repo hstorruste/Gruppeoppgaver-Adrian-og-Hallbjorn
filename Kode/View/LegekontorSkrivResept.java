@@ -75,21 +75,18 @@ public class LegekontorSkrivResept extends JTabbedPane{
         styrkeFelt = new JComboBox<>();
         styrkeFelt.setSelectedIndex(-1);
         styrkeFelt.setEditable(false);
-        styrkeFelt.setVisible(false);
         styrkeFelt.addActionListener(lytter);
         JPanel styrkeSkriv = Komponent.labelComboBoxColumb(labeltekst[1], styrkeFelt);
         
         formFelt = new JComboBox<>();
         formFelt.setSelectedIndex(-1);
         formFelt.setEditable(false);
-        formFelt.setVisible(false);
         formFelt.addActionListener(lytter);
         JPanel formSkriv = Komponent.labelComboBoxColumb(labeltekst[2], formFelt);
         
         pakningFelt = new JComboBox<>();
         pakningFelt.setSelectedIndex(-1);
         pakningFelt.setEditable(false);
-        pakningFelt.setVisible(false);
         pakningFelt.addActionListener(lytter);
         JPanel pakningSkriv = Komponent.labelComboBoxColumb(labeltekst[3], pakningFelt);
         
@@ -98,6 +95,16 @@ public class LegekontorSkrivResept extends JTabbedPane{
         medisinPanel1.add(styrkeSkriv);
         medisinPanel1.add(formSkriv);
         medisinPanel1.add(pakningSkriv);
+        
+        JComponent[] felt = new JComponent[]{styrkeFelt, formFelt, pakningFelt};
+
+        for(JComponent child: felt)
+        {
+            child.setVisible(false);
+            JLabel merkelapp = Komponent.finnLabelTilFelt(medisinPanel1, child);
+            if(merkelapp != null)
+                merkelapp.setVisible(false);
+        }
         
          
         gruppeFelt = new JTextField(TEKSTFELTLENGDE);
@@ -183,9 +190,11 @@ public class LegekontorSkrivResept extends JTabbedPane{
     /*Oppdaterer innhold i ComboBox for pakning og gjør dem synlig/usynlig.*/
     private void oppdaterPakningComboBox()
     {
-        if(styrkeFelt.getSelectedIndex() > -1)
+        if(formFelt.getSelectedIndex() > -1)
         {
             pakningFelt.setVisible(true);
+            JLabel merkelapp = Komponent.finnLabelTilFelt(this, pakningFelt);
+            merkelapp.setVisible(true);
             pakningFelt.removeAllItems();
             String navn = (String)medisinFelt.getSelectedItem();
             String styrke = (String)styrkeFelt.getSelectedItem();
@@ -197,6 +206,11 @@ public class LegekontorSkrivResept extends JTabbedPane{
         else
         {
             pakningFelt.setVisible(false);
+            JLabel merkelapp = Komponent.finnLabelTilFelt(this, pakningFelt);
+            merkelapp.setVisible(false);
+            gruppeFelt.setText("");
+            kategoriFelt.setText("");
+            atcFelt.setText("");
         }
     }
     
@@ -206,6 +220,8 @@ public class LegekontorSkrivResept extends JTabbedPane{
         if(styrkeFelt.getSelectedIndex() > -1)
         {
             formFelt.setVisible(true);
+            JLabel merkelapp = Komponent.finnLabelTilFelt(this, formFelt);
+            merkelapp.setVisible(true);
             formFelt.removeAllItems();
             String navn = (String)medisinFelt.getSelectedItem();
             String styrke = (String)styrkeFelt.getSelectedItem();
@@ -215,8 +231,19 @@ public class LegekontorSkrivResept extends JTabbedPane{
         }
         else
         {
-            formFelt.setVisible(false);
-            pakningFelt.setVisible(false);
+            JComponent[] felt = new JComponent[]{formFelt, pakningFelt};
+        
+            for(JComponent child: felt)
+            {
+                child.setVisible(false);
+                JLabel merkelapp = Komponent.finnLabelTilFelt(this, child);
+                if(merkelapp != null)
+                    merkelapp.setVisible(false);
+            }
+            gruppeFelt.setText("");
+            kategoriFelt.setText("");
+            atcFelt.setText("");
+
         }
     }
     /*Oppdaterer innhold i ComboBox for styrke og gjør dem synlig/usynlig.*/
@@ -225,6 +252,8 @@ public class LegekontorSkrivResept extends JTabbedPane{
         if(medisinFelt.getSelectedIndex() > -1)
         {
             styrkeFelt.setVisible(true);
+            JLabel merkelapp = Komponent.finnLabelTilFelt(this, styrkeFelt);
+            merkelapp.setVisible(true);
             styrkeFelt.removeAllItems();
             String navn = (String)medisinFelt.getSelectedItem();
             String[] styrke = parentFrame.getAlleMedisinStyrker(navn);
@@ -234,9 +263,18 @@ public class LegekontorSkrivResept extends JTabbedPane{
         }
         else
         {
-            styrkeFelt.setVisible(false);
-            formFelt.setVisible(false);
-            pakningFelt.setVisible(false);
+            JComponent[] felt = new JComponent[]{styrkeFelt, formFelt, pakningFelt};
+        
+            for(JComponent child: felt)
+            {
+                child.setVisible(false);
+                JLabel merkelapp = Komponent.finnLabelTilFelt(this, child);
+                if(merkelapp != null)
+                    merkelapp.setVisible(false);
+            }
+            gruppeFelt.setText("");
+            kategoriFelt.setText("");
+            atcFelt.setText("");
         }
     }
     

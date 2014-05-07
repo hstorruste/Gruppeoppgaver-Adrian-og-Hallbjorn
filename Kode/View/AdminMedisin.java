@@ -19,6 +19,7 @@ public class AdminMedisin extends JTabbedPane {
     private JComboBox<String> gruppVelger, kategoriVelger, regGruppVelger, regKategoriVelger;
     private String[] abc = {"A", "B", "C"};
     private String[] kategoriArray;
+    private Medisin funnet;
     private final int TEKSTFELTLENGDE = 10;
 
     private KnappeLytterMedisin knappeLytter;
@@ -28,6 +29,7 @@ public class AdminMedisin extends JTabbedPane {
         super();
         parentFrame = a;
         kategoriArray = parentFrame.skrivKatArray();
+        funnet = null;
         knappeLytter = new KnappeLytterMedisin();
         JPanel rediger = new JPanel(new FlowLayout());
         rediger.add(redigerGUI());
@@ -74,7 +76,7 @@ public class AdminMedisin extends JTabbedPane {
 
         gruppVelger = new JComboBox<>(abc);
         gruppVelger.setSelectedIndex(-1);
-        JComponent grupp = Komponent.labelComboBoxRow("Grupp", gruppVelger);
+        JComponent grupp = Komponent.labelComboBoxRow("Gruppe", gruppVelger);
         medisinRediger.add(grupp);
         
         medisinStyrke = new JTextField(TEKSTFELTLENGDE);
@@ -94,7 +96,7 @@ public class AdminMedisin extends JTabbedPane {
         JComponent kompATC = Komponent.labelFieldRow("ATC-nr", atc);
         medisinRediger.add(kompATC);
 
-        medisinSpareKnapp = new JButton("Spare");
+        medisinSpareKnapp = new JButton("Lagre");
         medisinSpareKnapp.addActionListener(knappeLytter);
         JPanel medisinSpareKnappPanel = new JPanel(new BorderLayout());
         medisinSpareKnappPanel.add(medisinSpareKnapp, BorderLayout.LINE_END);
@@ -108,7 +110,7 @@ public class AdminMedisin extends JTabbedPane {
         medisinTextArea.setEditable(false);
 
         JPanel medisinTextfeltPanel = new JPanel(new FlowLayout());
-        medisinTextfeltPanel.add(medisinTextArea);
+        medisinTextfeltPanel.add(scrollPane);
 
         JPanel toPanel = new JPanel(new BorderLayout());
         toPanel.add(medisinInnFelt, BorderLayout.LINE_START);
@@ -116,7 +118,20 @@ public class AdminMedisin extends JTabbedPane {
 
         JPanel medisinRedigerTilFane = new JPanel(new FlowLayout());
         medisinRedigerTilFane.add(toPanel);
-
+        
+        JComponent[] felt = new JComponent[]{gruppVelger, kategoriVelger, 
+            medisinNavn, medisinStyrke, medisinForm, medisinPakning, atc};
+        
+        for(JComponent child: felt)
+        {
+            child.setVisible(false);
+            JLabel merkelapp = Komponent.finnLabelTilFelt(medisinRedigerTilFane, child);
+            if(merkelapp != null)
+                merkelapp.setVisible(false);
+        }
+        
+        medisinSpareKnapp.setVisible(false);
+            
         return medisinRedigerTilFane;
     }
 
@@ -136,7 +151,7 @@ public class AdminMedisin extends JTabbedPane {
 
         regGruppVelger = new JComboBox<>(abc);
         regGruppVelger.setSelectedIndex(-1);
-        JPanel grupp = Komponent.labelComboBoxRow("Grupp", regGruppVelger);
+        JPanel grupp = Komponent.labelComboBoxRow("Gruppe", regGruppVelger);
         medisinRegistrer.add(grupp);
         
         regMedisinStyrke = new JTextField(TEKSTFELTLENGDE);
@@ -171,26 +186,41 @@ public class AdminMedisin extends JTabbedPane {
         String form = medisinForm.getText();
         String pakning = medisinPakning.getText();
         
-        Medisin medisin = parentFrame.finnMedisin(navn, styrke, form, pakning);
-        if (medisin == null) {
+        funnet = parentFrame.finnMedisin(navn, styrke, form, pakning);
+        if (funnet == null) {
             Komponent.popup(parentFrame, "Finner ikke medisinen");
         } else {
+            JComponent[] felt = new JComponent[]{gruppVelger, kategoriVelger, 
+            medisinNavn, medisinStyrke, medisinForm, medisinPakning, atc};
+        
+            for(JComponent child: felt)
+            {
+                child.setVisible(false);
+                JLabel merkelapp = Komponent.finnLabelTilFelt(this, child);
+                if(merkelapp != null)
+                    merkelapp.setVisible(false);
+            }
+
+            medisinSpareKnapp.setVisible(false);
             int j = -1;
             for (int i = 0; i < abc.length; i++) {
-                if (abc[i].equals(medisin.getGrupp())) {
+                if (abc[i].equals(funnet.getGrupp())) {
                     j = i;
                 }
             }
             int k = -1;
             for (int i = 0; i < kategoriArray.length; i++) {
-                if (kategoriArray[i].equals(medisin.getKategori())) {
+                if (kategoriArray[i].equals(funnet.getKategori())) {
                     k = i;
                 }
             }
             gruppVelger.setSelectedIndex(j);
             kategoriVelger.setSelectedIndex(k);
-            medisinNavn.setText(medisin.getNavn());
-            atc.setText(medisin.getATCNr());
+            medisinNavn.setText(funnet.getNavn());
+            medisinStyrke.setText(styrke);
+            medisinForm.setText(form);
+            medisinPakning.setText(pakning);
+            atc.setText(funnet.getATCNr());
         }
     }
 
@@ -199,23 +229,25 @@ public class AdminMedisin extends JTabbedPane {
     }
 
     public void updateMedisin() {
-        String navn = medisinNavn.getText();
-        String styrke = medisinStyrke.getText();
-        String form = medisinForm.getText();
-        String pakning = medisinPakning.getText();
         
-        Medisin medisin = parentFrame.finnMedisin(navn, styrke, form, pakning);
-        if (medisin == null) {
-            Komponent.popup(parentFrame, "Finner ikke medisinen");
+        if (funnet == null) {
+            Komponent.popup(parentFrame, "Ingen medisin funnet");
         } else {
             String grupp = (String) gruppVelger.getSelectedItem();
             String kategori = (String) kategoriVelger.getSelectedItem();
             String atcNr = atc.getText();
-
-            medisin.setGrupp(grupp);
-            medisin.setKategori(kategori);
-            medisin.setNavn(navn);
-            medisin.setATCNr(atcNr);
+            String navn = medisinNavn.getText();
+            String styrke = medisinStyrke.getText();
+            String form = medisinForm.getText();
+            String pakning = medisinPakning.getText();
+            
+            funnet.setGrupp(grupp);
+            funnet.setKategori(kategori);
+            funnet.setNavn(navn);
+            funnet.setStyrke(styrke);
+            funnet.setForm(form);
+            funnet.setPakning(pakning);
+            funnet.setATCNr(atcNr);
 
             parentFrame.skrivTilFil();
             String melding = "Vellykket oppdatering";
@@ -227,6 +259,19 @@ public class AdminMedisin extends JTabbedPane {
             medisinForm.setText("");
             medisinPakning.setText("");
             atc.setText("");
+            
+            JComponent[] felt = new JComponent[]{gruppVelger, kategoriVelger, 
+            medisinNavn, medisinStyrke, medisinForm, medisinPakning, atc};
+        
+            for(JComponent child: felt)
+            {
+                child.setVisible(false);
+                JLabel merkelapp = Komponent.finnLabelTilFelt(this, child);
+                if(merkelapp != null)
+                    merkelapp.setVisible(false);
+            }
+
+            medisinSpareKnapp.setVisible(false);
         }
     }
     // Metoden registrerar en pasient om alla felt är ifyllda
@@ -261,6 +306,8 @@ public class AdminMedisin extends JTabbedPane {
             }
         }
     }
+    
+   
 
     private class KnappeLytterMedisin implements ActionListener {
 

@@ -81,6 +81,33 @@ public class Komponent
 
         return panel;
     }
+    
+    /*Finner og returnerer JLabel som er knyttet til et JTextField eller JComboBox
+    metoden tar imot en conatiner som skal søkes i og det feltet som 
+    JLabel'en er knyttet til*/
+     public static JLabel finnLabelTilFelt(Container komponent, Component felt)
+    {
+        
+        Component[] element = ((Container)komponent).getComponents();
+        for(int i = 0; i < element.length; i++)
+        {
+            if(element[i] == felt)
+            {
+                if(element[i-1] instanceof JLabel)
+                    return (JLabel)element[i-1];
+            }
+
+            if(element[i] instanceof Container)
+            {
+                JLabel funnet = finnLabelTilFelt( (Container)element[i], felt);
+                if(funnet != null)
+                    return funnet;
+            }
+        }
+        return null;
+    }
+    
+    
     /*	Metoden ändrar font genom att alla komponenter av Container
     	blir kallade på och sätter den bestämda fonten på dessa.*/
     protected static void endreFont( Component komponent )

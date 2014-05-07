@@ -139,7 +139,7 @@ public class AdminLege extends JTabbedPane {
         legeTextArea.setEditable(false);
 
         JPanel legeTextfeltPanel = new JPanel(new FlowLayout());
-        legeTextfeltPanel.add(legeTextArea);
+        legeTextfeltPanel.add(scrollPane);
 
         error = new JLabel("");
         error.setForeground(Komponent.feilTekst);   
