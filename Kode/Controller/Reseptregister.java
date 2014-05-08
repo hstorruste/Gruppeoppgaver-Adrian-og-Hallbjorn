@@ -120,7 +120,8 @@ public class Reseptregister implements Serializable {
         if(lege != null)
             funnetResepter = finnReseptAvLege(lege, funnetResepter);
         
-        return (Resept[]) funnetResepter.toArray();
+        Resept[] resepter = new Resept[funnetResepter.size()];
+        return funnetResepter.toArray(resepter);
             
     }
     
