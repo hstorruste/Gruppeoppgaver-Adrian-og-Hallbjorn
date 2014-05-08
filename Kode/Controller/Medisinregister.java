@@ -318,8 +318,14 @@ public class Medisinregister implements Serializable {
         }
         return null;
     }
+    
+     /*Finner en eller flere medisiner som begynner med det aktuelle navnet.*/
+    public Medisin[] finnMedisinNavn(String navn) {
+        TreeSet<Medisin> medisinSet = finnMedisin(navn);
+        return (Medisin[]) medisinSet.toArray();
+        
+    }
     /*Finner en eller flere medisiner som begynner med det aktuelle navnet.*/
-
     public TreeSet<Medisin> finnMedisin(String navn) {
         Iterator<Medisin> iterator = medisinregister.iterator();
         TreeSet<Medisin> medisinSet = new TreeSet<>(komp);
@@ -335,9 +341,16 @@ public class Medisinregister implements Serializable {
         }
         return medisinSet;
     }
+    
     /*Finner og returnerer alle medisiner i den eller de gruppene 
      som passer med det aktuelle regulære uttrykket.*/
-
+    public Medisin[] finnMedisinGruppe(String gruppe) {
+        TreeSet<Medisin> medisinSet = finnMedisiniGruppe(gruppe);     
+        return (Medisin[]) medisinSet.toArray();
+        
+    }
+    /*Finner og returnerer alle medisiner i den eller de gruppene 
+     som passer med det aktuelle regulære uttrykket.*/
     public TreeSet<Medisin> finnMedisiniGruppe(String regex) {
         Iterator<Medisin> iterator = medisinregister.iterator();
         TreeSet<Medisin> medisinSet = new TreeSet<>(komp);
@@ -353,6 +366,13 @@ public class Medisinregister implements Serializable {
         return medisinSet;
     }
     
+    /*Finner og returnerer alle medisiner innen den eller de kategorier
+     som passer med det aktuelle regulære uttrykket.*/
+   public Medisin[] finnMedisinKategori(String kategori) {
+        TreeSet<Medisin> medisinSet = finnMedisiniKategori(kategori);
+        
+        return (Medisin[]) medisinSet.toArray();
+    }
     /*Finner og returnerer alle medisiner innen den eller de kategorier
      som passer med det aktuelle regulære uttrykket i det TreeSet som sendes med*/
 
