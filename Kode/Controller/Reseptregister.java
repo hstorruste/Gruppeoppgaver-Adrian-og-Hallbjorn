@@ -111,11 +111,31 @@ public class Reseptregister implements Serializable {
         }
         return liste;
     }
-    //Finner og returnerer et array av resepter forskrevet av den aktuelle legen.
-    public TreeSet<Resept> finnReseptAvLege(Lege lege)
+    /*Finner og returnerer et array av resepter skrevet ut på den aktuelle 
+    medisinen og for den aktuelle legen. Hvis lege objektet ikke eksisterer,
+    er 'null', så returnerers alle resepter med den gitte medisinen.*/
+    public Resept[] finnReseptMedisin(Medisin med, Lege lege)
+    {
+        TreeSet<Resept> funnetResepter = finnReseptAvMedisin(med);
+        if(lege != null)
+            funnetResepter = finnReseptAvLege(lege, funnetResepter);
+        
+        return (Resept[]) funnetResepter.toArray();
+            
+    }
+    
+    /*Finner og returnerer et array av resepter forskrevet av den aktuelle legen
+    Hvis det sendes med ett TreeSet<Resepter>, så er det denne reseptlisten som 
+    gjennomgås, er dette TreeSet'et 'null', så returneres alle resepter av denne 
+    legen */
+    public TreeSet<Resept> finnReseptAvLege(Lege lege, TreeSet<Resept> resepter)
     {
         TreeSet<Resept> liste = new TreeSet<>(komp);
-        Iterator<Resept> iterator = reseptregister.iterator();
+        Iterator<Resept> iterator;
+        if(resepter == null)
+            iterator = reseptregister.iterator();
+        else
+            iterator = resepter.iterator();
         Resept runner;
         while(iterator.hasNext())
         {
