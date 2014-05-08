@@ -131,6 +131,12 @@ public class Legeregister implements Serializable{
         return riktig;
     }
 
+    //Returner legeregisteret som et array.
+    public Lege[] getAlleLeger()
+    {
+        return (Lege[]) legeregister.toArray();
+    }
+    
     //Returnerer legeregisteret
     public SortedSet<Lege> getRegister()
     {
