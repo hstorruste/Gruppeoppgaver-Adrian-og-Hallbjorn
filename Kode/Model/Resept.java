@@ -69,7 +69,7 @@ public class Resept implements Serializable
 	public String toString()
 	{
             StringBuilder ut = new StringBuilder();
-            ut.append("Reseptnr: ");
+            ut.append("RESEPTNUMMER: ");
             ut.append(reseptNr);
             ut.append("\nDato: ");
 

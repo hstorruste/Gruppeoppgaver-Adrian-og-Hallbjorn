@@ -123,7 +123,7 @@ public class AdminLege extends JTabbedPane {
         rediger.add(checkbox);
 
         
-        redigerKnapp = new JButton("Spare");
+        redigerKnapp = new JButton("Lagre");
         redigerKnapp.addActionListener(knappeLytter);
 
         JPanel redigerKnappPanel = new JPanel(new BorderLayout());

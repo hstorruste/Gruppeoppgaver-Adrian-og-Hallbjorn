@@ -116,7 +116,7 @@ public class ApotekPasient extends JTabbedPane {
             }
         }
         catch(NumberFormatException nfe){
-            String melding = "Feil i feltet, må vare siffer";
+            String melding = "Feil resptnummer, må være siffer";
             Komponent.popup(parentFrame, melding);
             return;
         }

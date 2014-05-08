@@ -18,16 +18,23 @@ public class Reseptregister implements Serializable {
     
     private static final long serialVersionUID = 1011L;
     private Comparator komp;
+    private int antallResepter;
     private SortedSet<Resept> reseptregister;
     
     public Reseptregister()
     {
         komp = new ReseptComparator();
+        antallResepter = 0;
         reseptregister = new TreeSet<>(komp);
     }
-    /*Oppretter og setter inn et Medisin-objekt. Returnerer true hvis vellykket.*/ 
-    public boolean settInn(Medisin m, Calendar d, Lege l, int reit, int reseptNr, String beskrivelse)
+    public int getAntallResepter()
     {
+        return antallResepter;
+    }
+    /*Oppretter og setter inn et Medisin-objekt. Returnerer true hvis vellykket.*/ 
+    public boolean settInn(Medisin m, Calendar d, Lege l, int reit, String beskrivelse)
+    {
+        int reseptNr = ++antallResepter;
         Resept ny = new Resept(m, d, l, reit, reseptNr, beskrivelse);
         return settInn(ny);
     }
@@ -36,7 +43,10 @@ public class Reseptregister implements Serializable {
     {
         if(ny == null)
             return false;
-        return reseptregister.add(ny);
+        boolean vellykket = reseptregister.add(ny);
+        if(!vellykket)
+             antallResepter--;
+        return vellykket;
     }
     //Finner og returnerer en String med respeter som ikke er utlevert.
     public String finnNyeResepterString()

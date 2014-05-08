@@ -16,7 +16,7 @@ public class Pasient extends Person implements Serializable
 	private static final long serialVersionUID = 1002L;
 
 	private String fnr;
-        private int antallResepter;
+        
 	private Reseptregister reseptliste;
         
 	public Pasient(String fnavn, String enavn, String f)
@@ -24,7 +24,7 @@ public class Pasient extends Person implements Serializable
 		super(fnavn, enavn);
 
 		fnr = f;
-                antallResepter = 0;
+                
 		reseptliste = new Reseptregister();
 	}
 
@@ -34,7 +34,7 @@ public class Pasient extends Person implements Serializable
 	}
         public int getAntallResepter()
         {
-            return antallResepter;
+            return reseptliste.getAntallResepter();
         }
         
         //Returnerer pasienten sitt reseptregister.
@@ -46,8 +46,7 @@ public class Pasient extends Person implements Serializable
         //Registrerer en resept på pasienten. Returnerer true hvis vellykket.
         public boolean settInnResept(Medisin m,  Calendar d, Lege l, int reit, String beskrivelse)
         {
-            int reseptNr = ++antallResepter;
-            return reseptliste.settInn(m, d, l, reit, reseptNr, beskrivelse);
+            return reseptliste.settInn(m, d, l, reit, beskrivelse);
         }
 
         @Override
