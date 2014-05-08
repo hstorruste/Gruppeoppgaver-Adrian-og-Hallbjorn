@@ -134,7 +134,8 @@ public class Legeregister implements Serializable{
     //Returner legeregisteret som et array.
     public Lege[] getAlleLeger()
     {
-        return (Lege[]) legeregister.toArray();
+        Lege[] leger = new Lege[legeregister.size()];
+        return legeregister.toArray(leger);
     }
     
     //Returnerer legeregisteret
