@@ -130,6 +130,90 @@ public class Legeregister implements Serializable{
         
         return riktig;
     }
+     /*Finner alle leger som har foreskrevet minst ett av
+    medisinene som sendes med som parameter.*/
+    public Lege[] finnLegeMedisin(Medisin[] medisin)
+    {
+        
+        Iterator<Lege> iterator = legeregister.iterator();
+        TreeSet<Lege> leger = new TreeSet<>(komp);
+        Lege runner;
+
+        while(iterator.hasNext())
+        {
+            runner = iterator.next();
+            TreeSet<Pasient> pasienter = (TreeSet<Pasient>) runner.getPasientliste().getRegister();
+            Iterator<Pasient> iterator2 = pasienter.iterator();
+            Pasient runner2;
+            while(iterator2.hasNext())
+            {
+                runner2 = iterator2.next();
+                boolean funnet = false;
+                Reseptregister tempRegister = runner2.getReseptliste();
+                for(int i = 0; i < medisin.length; i++){
+                    Resept[] resepter = tempRegister.finnReseptMedisin(medisin[i], runner);
+                    if(resepter.length > 0){
+                        leger.add(runner);
+                        funnet = true;
+                        break;
+                    }
+                }
+                if(funnet)
+                    break;
+            }
+        }
+
+
+        Lege[] legeListe = new Lege[leger.size()];
+        return leger.toArray(legeListe);          
+    }
+    /*Finner en eller flere leger basert på etternavn og fornavn og som
+    har foreskrevet et av medisinene som sendes med som parameter.*/
+    public Lege[] finnLegeNavn(String etternavn, String fornavn, Medisin[] medisin)
+    {
+
+        TreeSet<Lege> pasientSet = finnLege(etternavn, fornavn);
+
+        Iterator<Lege> iterator = pasientSet.iterator();
+        TreeSet<Lege> leger = new TreeSet<>(komp);
+        Lege runner;
+
+        while(iterator.hasNext())
+        {
+            runner = iterator.next();
+            TreeSet<Pasient> pasienter = (TreeSet<Pasient>) runner.getPasientliste().getRegister();
+            Iterator<Pasient> iterator2 = pasienter.iterator();
+            Pasient runner2;
+            while(iterator2.hasNext())
+            {
+                runner2 = iterator2.next();
+                boolean funnet = false;
+                Reseptregister tempRegister = runner2.getReseptliste();
+                for(int i = 0; i < medisin.length; i++){
+                    Resept[] resepter = tempRegister.finnReseptMedisin(medisin[i], runner);
+                    if(resepter.length > 0){
+                        leger.add(runner);
+                        funnet = true;
+                        break;
+                    }
+                }
+                if(funnet)
+                    break;
+            }
+        }
+
+
+        Lege[] legeListe = new Lege[leger.size()];
+        return leger.toArray(legeListe);         
+    }
+
+    //Finner en eller flere pasienter basert på etternavn og fornavn.
+    public Lege[] finnLegeNavn(String etternavn, String fornavn)
+    {
+        TreeSet<Lege> legeSet = finnLege(etternavn, fornavn);
+        Lege[] pasienter = new Lege[legeSet.size()];
+        return legeSet.toArray(pasienter);          
+    }
 
     //Returner legeregisteret som et array.
     public Lege[] getAlleLeger()
