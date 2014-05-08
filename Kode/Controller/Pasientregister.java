@@ -4,7 +4,7 @@ package Controller;
 	Laget av Hallbjørn Storruste, s165519
 	Siste versjon: 06-04-2014*/
 
-import Model.Pasient;
+import Model.*;
 import java.io.*;
 import java.util.*;
 
@@ -88,7 +88,72 @@ public class Pasientregister implements Serializable
 		}
 		return null;
 	}
-
+        
+         /*Finner alle pasienter basert som har blitt foreskrevet minst et av
+        medisinene som sendes med som parameter.*/
+        public Pasient[] finnPasientMedisin(Medisin[] medisin)
+        {
+            Iterator<Pasient> iterator = pasientregister.iterator();
+            TreeSet<Pasient> pasienter = new TreeSet<>(komp);
+            Pasient runner;
+            
+            while(iterator.hasNext())
+            {
+                runner = iterator.next();
+                Reseptregister tempRegister = runner.getReseptliste();
+                for(int i = 0; i < medisin.length; i++){
+                    Resept[] resepter = tempRegister.finnReseptMedisin(medisin[i], null);
+                    if(resepter.length > 0){
+                        pasienter.add(runner);
+                        break;
+                    }
+                }
+            }
+           
+            
+            Pasient[] pasientListe = new Pasient[pasienter.size()];
+            return pasienter.toArray(pasientListe);          
+        }
+        /*Finner en eller flere pasienter basert på etternavn og fornavn og som
+        har blitt foreskrevet et av medisinene som sendes med som parameter.*/
+        public Pasient[] finnPasientNavn(String etternavn, String fornavn, Medisin[] medisin)
+        {
+            
+            TreeSet<Pasient> pasientSet = finnPasient(etternavn, fornavn);
+            
+            Iterator<Pasient> iterator = pasientSet.iterator();
+            TreeSet<Pasient> pasienter = new TreeSet<>(komp);
+            Pasient runner;
+            
+            while(iterator.hasNext())
+            {
+                runner = iterator.next();
+                Reseptregister tempRegister = runner.getReseptliste();
+                for(int i = 0; i < medisin.length; i++){
+                    Resept[] resepter = tempRegister.finnReseptMedisin(medisin[i], null);
+                    if(resepter.length > 0){
+                        pasienter.add(runner);
+                        break;
+                    }
+                }
+            }       
+            Pasient[] pasientListe = new Pasient[pasienter.size()];
+            return pasienter.toArray(pasientListe);          
+        }
+        
+        //Finner en eller flere pasienter basert på etternavn og fornavn.
+        public Pasient[] finnPasientNavn(String etternavn, String fornavn)
+        {
+            TreeSet<Pasient> pasientSet = finnPasient(etternavn, fornavn);
+            Pasient[] pasienter = new Pasient[pasientSet.size()];
+            return pasientSet.toArray(pasienter);          
+        }
+//Returnerer pasientregisteret som et array
+        public Pasient[] getAllePasienter()
+        {
+            Pasient[] pasienter = new Pasient[pasientregister.size()];
+            return pasientregister.toArray(pasienter);
+        }
 //Returnerer pasientregisteret
 	public SortedSet<Pasient> getRegister()
 	{
