@@ -120,25 +120,31 @@ public class Lege extends Person implements Serializable
             return pasientliste.settInn(ny);
         }
 
-	public String toString()
+	public String toStringResept()
+        {
+            String ut = super.toString() + "E-post: " + ePost + "\n";
+            if(!gateadresse.equals(""))
+                    ut += "Gateadresse: " + gateadresse + "\n" + postnummer + " " + poststed + "\n";
+            if(!arbetssted.equals(""))
+                    ut += "Arbetssted: " + arbetssted + "\n";
+            return ut;
+        }
+        
+        public String toString()
 	{
-		String ut = super.toString() + "E-post: " + ePost + "\n";
-					if(!gateadresse.equals(""))
-						ut += "Gateadresse: " + gateadresse + "\n" + postnummer + " " + poststed + "\n";
-					if(!arbetssted.equals(""))
-		   				ut += "Arbetssted: " + arbetssted + "\n";
-		   			ut += "Bevilning: ";
-		   			if(a && (b || c))
-		   				ut += "A, ";
-		   			if(a && !(b || c))
-		   				ut += "A.";
-		   			if(b && c)
-		   				ut += "B, ";
-		   			if(b && !c)
-		   				ut += "B.";
-		   			if(c)
-		   				ut += "C.";
-                                        ut += "\n";
+		String ut = toStringResept();
+                ut += "Bevilning: ";
+                if(a && (b || c))
+                        ut += "A, ";
+                if(a && !(b || c))
+                        ut += "A.";
+                if(b && c)
+                        ut += "B, ";
+                if(b && !c)
+                        ut += "B.";
+                if(c)
+                        ut += "C.";
+                ut += "\n";
 		return ut;
 	}
 }

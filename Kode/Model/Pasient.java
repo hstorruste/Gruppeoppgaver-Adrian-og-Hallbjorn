@@ -41,12 +41,6 @@ public class Pasient extends Person implements Serializable
 	public Reseptregister getReseptliste()
 	{
 		return reseptliste;
-	}
-	
-        //Registrerer en resept på pasienten. Returnerer true hvis vellykket.
-        public boolean settInnResept(Medisin m,  Calendar d, Lege l, int reit, String beskrivelse)
-        {
-            return reseptliste.settInn(m, d, l, reit, beskrivelse);
         }
 
         @Override

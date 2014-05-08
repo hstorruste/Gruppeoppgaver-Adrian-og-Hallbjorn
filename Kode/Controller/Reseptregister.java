@@ -32,10 +32,10 @@ public class Reseptregister implements Serializable {
         return antallResepter;
     }
     /*Oppretter og setter inn et Medisin-objekt. Returnerer true hvis vellykket.*/ 
-    public boolean settInn(Medisin m, Calendar d, Lege l, int reit, String beskrivelse)
+    public boolean settInn(Medisin m, Calendar d, Lege l, Pasient p, int reit, String beskrivelse)
     {
         int reseptNr = ++antallResepter;
-        Resept ny = new Resept(m, d, l, reit, reseptNr, beskrivelse);
+        Resept ny = new Resept(m, d, l, p, reit, reseptNr, beskrivelse);
         return settInn(ny);
     }
     /*Setter inn et nytt Medisin-objekt i medisinregisteret.*/

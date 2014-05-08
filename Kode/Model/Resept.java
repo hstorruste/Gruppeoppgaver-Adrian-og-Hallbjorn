@@ -17,14 +17,16 @@ public class Resept implements Serializable
 	private int reseptNr, reit;
         private Calendar dato;
 	private Lege lege;	
+        private Pasient pasient;
 	private String beskrivelse;
 	private boolean utlevert;
 
-	public Resept(Medisin m, Calendar d, Lege l, int r, int rNr, String b)
+	public Resept(Medisin m, Calendar d, Lege l, Pasient p, int r, int rNr, String b)
 	{
 		medisin = m;
 		dato = d;
 		lege = l;
+                pasient = p;
 		reit = r;
 		reseptNr = rNr;
 		beskrivelse = b;
@@ -46,6 +48,10 @@ public class Resept implements Serializable
 	{
                 return lege;
 	}
+        public Pasient getPasient()
+        {
+            return pasient;
+        }
 	public int getReit()
 	{
                 return reit;
@@ -58,7 +64,6 @@ public class Resept implements Serializable
 	{
                 return utlevert;
 	}
-        
         public void setUtlevert()
         {
             if(reit == 0)
@@ -71,6 +76,10 @@ public class Resept implements Serializable
             StringBuilder ut = new StringBuilder();
             ut.append("RESEPTNUMMER: ");
             ut.append(reseptNr);
+            ut.append("\nFor: ");
+            ut.append(pasient.getNavn());
+            ut.append("\t");
+            ut.append(pasient.getFnr());
             ut.append("\nDato: ");
 
             DateFormat datoformat = DateFormat.getDateInstance();
@@ -92,7 +101,7 @@ public class Resept implements Serializable
                 ut.append("\nBeskrivelse: ");
                 ut.append(beskrivelse);
                 ut.append("\nLege:\n");
-                ut.append(lege.toString());
+                ut.append(lege.toStringResept());
                 ut.append("\nReit: ");
                 ut.append(reit);
             }

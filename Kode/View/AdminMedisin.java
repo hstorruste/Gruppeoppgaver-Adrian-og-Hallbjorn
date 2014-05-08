@@ -144,18 +144,9 @@ public class AdminMedisin extends JTabbedPane {
         JPanel medisinRedigerTilFane = new JPanel(new FlowLayout());
         medisinRedigerTilFane.add(toPanel);
         
-        JComponent[] felt = new JComponent[]{gruppVelger, kategoriVelger, 
-            medisinNavn, medisinStyrke, medisinForm, medisinPakning, atc};
         
-        for(JComponent child: felt)
-        {
-            child.setVisible(false);
-            JLabel merkelapp = Komponent.finnLabelTilFelt(medisinRedigerTilFane, child);
-            if(merkelapp != null)
-                merkelapp.setVisible(false);
-        }
+        skjulFelt(medisinRedigerTilFane);
         
-        medisinSpareKnapp.setVisible(false);
             
         return medisinRedigerTilFane;
     }
@@ -285,18 +276,9 @@ public class AdminMedisin extends JTabbedPane {
             medisinPakning.setText("");
             atc.setText("");
             
-            JComponent[] felt = new JComponent[]{gruppVelger, kategoriVelger, 
-            medisinNavn, medisinStyrke, medisinForm, medisinPakning, atc};
-        
-            for(JComponent child: felt)
-            {
-                child.setVisible(false);
-                JLabel merkelapp = Komponent.finnLabelTilFelt(this, child);
-                if(merkelapp != null)
-                    merkelapp.setVisible(false);
-            }
-
-            medisinSpareKnapp.setVisible(false);
+            funnet = null;
+            skjulFelt(this);
+            
             oppdaterMedisiner();
         }
     }
@@ -439,7 +421,24 @@ public class AdminMedisin extends JTabbedPane {
             kategoriVelger.insertItemAt(kategoriArray[i], i);
             regKategoriVelger.insertItemAt(kategoriArray[i], i);
         }
+    }
+    /*Skjuler felt for editering av medisin, tar imot en container som alle 
+    komponentene ligger i.*/
+    private void skjulFelt(Container cont)
+    {
+        JComponent[] felt = new JComponent[]{gruppVelger, kategoriVelger, 
+            medisinNavn, medisinStyrke, medisinForm, medisinPakning, atc};
+        
+            for(JComponent child: felt)
+            {
+                child.setVisible(false);
+                JLabel merkelapp = Komponent.finnLabelTilFelt(cont, child);
+                if(merkelapp != null)
+                    merkelapp.setVisible(false);
             }
+
+            medisinSpareKnapp.setVisible(false);
+    }
     private class KnappeLytterMedisin implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {

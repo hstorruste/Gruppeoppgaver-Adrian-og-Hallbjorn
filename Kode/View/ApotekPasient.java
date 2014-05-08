@@ -51,9 +51,9 @@ public class ApotekPasient extends JTabbedPane {
         nyeResepterFelt.add(registrerKnappPanel);
         
         reseptArea = new JTextArea(20, 20);
-        JScrollPane scrollPane = new JScrollPane(reseptArea);
         reseptArea.setEditable(false);
         reseptArea.setText(finnIkkeUtlevert());
+        JScrollPane scrollPane = new JScrollPane(reseptArea);
 
         tillbakaKnappNye = new JButton("Tilbake");
         tillbakaKnappNye.setPreferredSize(new Dimension(113, 20));
@@ -64,7 +64,7 @@ public class ApotekPasient extends JTabbedPane {
         JPanel nyeResepter = new JPanel(new BorderLayout());
         
         nyeResepter.add(nyeResepterFelt, BorderLayout.PAGE_START);
-        nyeResepter.add(reseptArea, BorderLayout.CENTER);
+        nyeResepter.add(scrollPane, BorderLayout.CENTER);
         nyeResepter.add(tillbakaKnappNyePanel, BorderLayout.PAGE_END);
 
         return nyeResepter;
@@ -73,9 +73,9 @@ public class ApotekPasient extends JTabbedPane {
     public JPanel pasientHistorikGUI() {
 
         historikkArea = new JTextArea(20, 20);
-        JScrollPane scrollPane = new JScrollPane(historikkArea);
         historikkArea.setEditable(false);
         historikkArea.setText(finnUtlevert());
+        JScrollPane scrollPane = new JScrollPane(historikkArea);
         
 
         tillbakaKnappHis = new JButton("Tilbake");
@@ -85,7 +85,7 @@ public class ApotekPasient extends JTabbedPane {
         tillbakaKnappHisPanel.add(tillbakaKnappHis, BorderLayout.LINE_END);
         
         JPanel historik = new JPanel(new BorderLayout());
-        historik.add(historikkArea, BorderLayout.CENTER);
+        historik.add(scrollPane, BorderLayout.CENTER);
         historik.add(tillbakaKnappHisPanel, BorderLayout.PAGE_END);
 
         return historik;
@@ -103,12 +103,12 @@ public class ApotekPasient extends JTabbedPane {
         {
             Resept resept = parentFrame.getKund().getReseptliste().finnResept(Integer.parseInt(reseptNummerFelt.getText()));
             if (resept == null) {
-                String melding = "Finner ikke reseptet";
+                String melding = "Finner ikke resepten";
                 Komponent.popup(parentFrame, melding);
             } else {
                 resept.setUtlevert(); 
                 parentFrame.skrivTilFil();
-                String melding = "Reseptet er utlevert";
+                String melding = "Resepten er utlevert";
                 Komponent.popup(parentFrame, melding);
                 reseptNummerFelt.setText("");
                 reseptArea.setText(finnIkkeUtlevert());

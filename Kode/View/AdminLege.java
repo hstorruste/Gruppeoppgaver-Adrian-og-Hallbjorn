@@ -26,6 +26,7 @@ public class AdminLege extends JTabbedPane {
 
     private final int TEKSTFELTLENGDE = 10;
 
+    private Lege lege;
     private KnappeLytter knappeLytter;
     private FeltLytter feltLytter;
 
@@ -121,7 +122,6 @@ public class AdminLege extends JTabbedPane {
         checkbox.add(b);
         checkbox.add(c);
         rediger.add(checkbox);
-
         
         redigerKnapp = new JButton("Lagre");
         redigerKnapp.addActionListener(knappeLytter);
@@ -130,6 +130,8 @@ public class AdminLege extends JTabbedPane {
        
         redigerKnappPanel.add(redigerKnapp, BorderLayout.LINE_END);
         rediger.add(redigerKnappPanel);
+        
+        skjulFelt(rediger);
 
         JPanel legeInnFelt = new JPanel(new FlowLayout());
         legeInnFelt.add(rediger);
@@ -141,7 +143,7 @@ public class AdminLege extends JTabbedPane {
         JPanel legeTextfeltPanel = new JPanel(new FlowLayout());
         legeTextfeltPanel.add(scrollPane);
 
-        error = new JLabel("");
+        error = new JLabel("\t");
         error.setForeground(Komponent.feilTekst);   
         
         JPanel toPanel = new JPanel(new BorderLayout());
@@ -156,8 +158,8 @@ public class AdminLege extends JTabbedPane {
     }
 
     //Metoden skal finner en lege på e-post
-    public void finnLege() {
-        Lege lege = parentFrame.finnLege(finnLegeFelt.getText());
+    private void finnLege() {
+        lege = parentFrame.finnLege(finnLegeFelt.getText());
         if (lege == null) {
             Komponent.popup(parentFrame, "Finner ikke legen");
         } else {
@@ -179,19 +181,55 @@ public class AdminLege extends JTabbedPane {
             a.setSelected(lege.getA());
             b.setSelected(lege.getB());
             c.setSelected(lege.getC());
+            
+            JComponent[] felt = new JComponent[]{fornavnFelt, etternavnFelt, 
+            ePostFelt, ePostIgenFelt, passordFelt, passordIgenFelt, gateadresseFelt,
+            postNrFelt, poststedFelt, arbetsstedFelt};
+        
+        for(JComponent child: felt)
+        {
+            child.setVisible(true);
+            JLabel merkelapp = Komponent.finnLabelTilFelt(this, child);
+            if(merkelapp != null)
+                merkelapp.setVisible(true);
+        }
+        
+        redigerKnapp.setVisible(true);
+        a.setVisible(true);
+        b.setVisible(true);
+        c.setVisible(true);
         }
     }
-
+    /*Skjuler felt for editering av lege, tar imot en container som alle 
+    komponentene ligger i.*/
+    private void skjulFelt(Container cont)
+    {
+        JComponent[] felt = new JComponent[]{fornavnFelt, etternavnFelt, 
+            ePostFelt, ePostIgenFelt, passordFelt, passordIgenFelt, gateadresseFelt,
+            postNrFelt, poststedFelt, arbetsstedFelt};
+        
+        for(JComponent child: felt)
+        {
+            child.setVisible(false);
+            JLabel merkelapp = Komponent.finnLabelTilFelt(cont, child);
+            if(merkelapp != null)
+                merkelapp.setVisible(false);
+        }
+        
+        redigerKnapp.setVisible(false);
+        a.setVisible(false);
+        b.setVisible(false);
+        c.setVisible(false);
+    }
     //Metoden skriver legeregister.toString()
-    public void skrivListe() {
+    private void skrivListe() {
         legeTextArea.setText(parentFrame.skrivLegeListe());
     }
 
     //Metoden uppdaterar en lege.
-    public void updateLege() {
-        Lege lege = parentFrame.finnLege(finnLegeFelt.getText());
+    private void updateLege() {
         if (lege == null) {
-            Komponent.popup(parentFrame, "Finner ikke legen");
+            Komponent.popup(parentFrame, "Ingen lege er funnet");
         } else {
             String fornavn = fornavnFelt.getText();
             String etternavn = etternavnFelt.getText();
@@ -257,6 +295,8 @@ public class AdminLege extends JTabbedPane {
                 a.setSelected(false);
                 b.setSelected(false);
                 c.setSelected(false);
+                lege = null;
+                skjulFelt(this);
 
             }
         }

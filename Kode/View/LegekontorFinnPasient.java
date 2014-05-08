@@ -101,6 +101,7 @@ public class LegekontorFinnPasient extends JTabbedPane{
         
         fodselsnrFelt = new JTextField(TEKSTFELTLENGDE);
         fodselsnrFelt.addFocusListener(feltLytter);
+        fodselsnrFelt.addActionListener(knappeLytter);
         JPanel fodselsnrRegistrer = (JPanel) Komponent.labelFieldRow(labeltekst[3], fodselsnrFelt);
         
         error = new JLabel("");
@@ -109,9 +110,16 @@ public class LegekontorFinnPasient extends JTabbedPane{
         registrerKnapp = new JButton("Registrer");
         registrerKnapp.addActionListener(knappeLytter);
         
+        logutRegistrerKnapp = new JButton("Log ut");
+        logutRegistrerKnapp.addActionListener(knappeLytter);
+        
+        JPanel knappePanel = new JPanel( new GridLayout(1,0,5,5));
+        knappePanel.add(registrerKnapp);
+        knappePanel.add(logutRegistrerKnapp);
+        
         JPanel registrerKnappPanel = new JPanel(new BorderLayout());
-        registrerKnappPanel.add(error);
-        registrerKnappPanel.add(registrerKnapp, BorderLayout.LINE_END);
+        registrerKnappPanel.add(error, BorderLayout.LINE_START);
+        registrerKnappPanel.add(knappePanel, BorderLayout.LINE_END);
         
         JPanel registrer = new JPanel(new GridLayout(0, 1, 5, 5));
         registrer.add(fornavnRegistrer);
@@ -180,9 +188,9 @@ public class LegekontorFinnPasient extends JTabbedPane{
         {
             if(e.getSource() == finnKnapp || e.getSource() == fodselsnrFinnFelt)
                 finn();
-            else if(e.getSource() == registrerKnapp)
+            else if(e.getSource() == registrerKnapp || e.getSource() == fodselsnrFelt)
                 registrer();
-            else
+            else if(e.getSource() == logutRegistrerKnapp || e.getSource() == logutFinnKnapp)
                 logut();
         }
     }

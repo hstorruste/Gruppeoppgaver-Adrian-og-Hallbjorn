@@ -186,7 +186,7 @@ public class LegekontorVindu extends LegeRegSuper
                 skrivTilFil();
             }
 
-            return pasient.settInnResept(medisin, d, lege, reit, beskrivelse);
+            return pasient.getReseptliste().settInn(medisin, d, lege, pasient, reit, beskrivelse);
         }
         
         public void tegnLoginGUI()
