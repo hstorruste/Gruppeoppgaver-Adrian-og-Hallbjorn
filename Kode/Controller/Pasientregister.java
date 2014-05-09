@@ -93,6 +93,9 @@ public class Pasientregister implements Serializable
         medisinene som sendes med som parameter.*/
         public Pasient[] finnPasientMedisin(Medisin[] medisin)
         {
+            if(medisin == null)
+                return this.getAllePasienter();
+            
             Iterator<Pasient> iterator = pasientregister.iterator();
             TreeSet<Pasient> pasienter = new TreeSet<>(komp);
             Pasient runner;
@@ -101,13 +104,13 @@ public class Pasientregister implements Serializable
             {
                 runner = iterator.next();
                 Reseptregister tempRegister = runner.getReseptliste();
-                for(int i = 0; i < medisin.length; i++){
-                    Resept[] resepter = tempRegister.finnReseptMedisin(medisin[i], null);
-                    if(resepter.length > 0){
-                        pasienter.add(runner);
-                        break;
-                    }
+                
+                Resept[] resepter = tempRegister.finnReseptMedisin(medisin, null);
+                if(resepter.length > 0){
+                    pasienter.add(runner);
+                    break;
                 }
+                
             }
            
             
@@ -129,13 +132,13 @@ public class Pasientregister implements Serializable
             {
                 runner = iterator.next();
                 Reseptregister tempRegister = runner.getReseptliste();
-                for(int i = 0; i < medisin.length; i++){
-                    Resept[] resepter = tempRegister.finnReseptMedisin(medisin[i], null);
-                    if(resepter.length > 0){
-                        pasienter.add(runner);
-                        break;
-                    }
+                
+                Resept[] resepter = tempRegister.finnReseptMedisin(medisin, null);
+                if(resepter.length > 0){
+                    pasienter.add(runner);
+                    break;
                 }
+                
             }       
             Pasient[] pasientListe = new Pasient[pasienter.size()];
             return pasienter.toArray(pasientListe);          

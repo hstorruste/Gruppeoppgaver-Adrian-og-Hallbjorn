@@ -150,14 +150,14 @@ public class Legeregister implements Serializable{
                 runner2 = iterator2.next();
                 boolean funnet = false;
                 Reseptregister tempRegister = runner2.getReseptliste();
-                for(int i = 0; i < medisin.length; i++){
-                    Resept[] resepter = tempRegister.finnReseptMedisin(medisin[i], runner);
-                    if(resepter.length > 0){
-                        leger.add(runner);
-                        funnet = true;
-                        break;
-                    }
+
+                Resept[] resepter = tempRegister.finnReseptMedisin(medisin, runner);
+                if(resepter.length > 0){
+                    leger.add(runner);
+                    funnet = true;
+                    break;
                 }
+
                 if(funnet)
                     break;
             }
@@ -189,14 +189,14 @@ public class Legeregister implements Serializable{
                 runner2 = iterator2.next();
                 boolean funnet = false;
                 Reseptregister tempRegister = runner2.getReseptliste();
-                for(int i = 0; i < medisin.length; i++){
-                    Resept[] resepter = tempRegister.finnReseptMedisin(medisin[i], runner);
-                    if(resepter.length > 0){
-                        leger.add(runner);
-                        funnet = true;
-                        break;
-                    }
+
+                Resept[] resepter = tempRegister.finnReseptMedisin(medisin, runner);
+                if(resepter.length > 0){
+                    leger.add(runner);
+                    funnet = true;
+                    break;
                 }
+
                 if(funnet)
                     break;
             }

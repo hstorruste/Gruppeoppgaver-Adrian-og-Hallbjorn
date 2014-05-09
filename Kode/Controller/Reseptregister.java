@@ -114,9 +114,16 @@ public class Reseptregister implements Serializable {
     /*Finner og returnerer et array av resepter skrevet ut på den aktuelle 
     medisinen og for den aktuelle legen. Hvis lege objektet ikke eksisterer,
     er 'null', så returnerers alle resepter med den gitte medisinen.*/
-    public Resept[] finnReseptMedisin(Medisin med, Lege lege)
+    public Resept[] finnReseptMedisin(Medisin[] medisiner, Lege lege)
     {
-        TreeSet<Resept> funnetResepter = finnReseptAvMedisin(med);
+        if(medisiner == null){
+            Resept[] resepter = new Resept[reseptregister.size()];
+            return reseptregister.toArray(resepter);
+            
+        }
+        TreeSet<Resept> funnetResepter = new TreeSet<>();
+        for(Medisin med: medisiner)
+            funnetResepter.addAll(finnReseptAvMedisin(med));
         if(lege != null)
             funnetResepter = finnReseptAvLege(lege, funnetResepter);
         
