@@ -385,7 +385,7 @@ public class Medisinregister implements Serializable {
 
         while (iterator.hasNext()) {
             runner = iterator.next();
-            if (runner.getKategori().matches(regex)) {
+            if (runner.getKategori().equals(regex)) {
                 medisinSet.add(runner);
             }
 
@@ -403,7 +403,7 @@ public class Medisinregister implements Serializable {
 
         while (iterator.hasNext()) {
             runner = iterator.next();
-            if (runner.getKategori().matches(regex)) {
+            if (runner.getKategori().equals(regex)) {
                 medisinSet.add(runner);
             }
 

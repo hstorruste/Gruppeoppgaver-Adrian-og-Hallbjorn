@@ -2,6 +2,7 @@ package View;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Calendar;
 import javax.swing.*;
 
 public class Statistikk extends JPanel {
@@ -11,7 +12,8 @@ public class Statistikk extends JPanel {
     private JRadioButton gruppeRadio, kategoriRadio, medisinNavnRadio, enMedisinRadio;
     private JList medisinList, leggTilMedisinList;
     private JButton leggTilKnapp, taBortKnapp, statistikkKnapp;
-    private JComboBox<String> aarstall;
+    private Calendar kalender;
+    private JSpinner aarsspinner;
     private JTable tabell;
     private String[] navnString = {"Gruppe", "Kategori", "Medisin navn", "En medisin"};
     private String[] kolonnenavn = {"Type", "Jan", "Feb", "Mars", "April"};
@@ -65,6 +67,8 @@ public class Statistikk extends JPanel {
         super();
         parentFrame = a;
         knappeLytter = new KnappeLytter();
+        
+        kalender = Calendar.getInstance();
 
         setLayout(new FlowLayout());
 
@@ -114,13 +118,22 @@ public class Statistikk extends JPanel {
         listKnappPanel.add(knappPanel);
         listKnappPanel.add(new JScrollPane(leggTilMedisinList));
 
-        aarstall = new JComboBox<>(tall);
-        JPanel kompAarstall = Komponent.labelComboBoxRow("Årstall", aarstall);
+        JLabel navnSpinner = new JLabel("År:");
+        
+        int aarNu = kalender.get(Calendar.YEAR);
+        SpinnerModel aarModel = new SpinnerNumberModel(aarNu, aarNu - 100, aarNu, 1);
+        aarsspinner = new JSpinner(aarModel);
+        JSpinner.NumberEditor editor = new JSpinner.NumberEditor(aarsspinner, "#");
+        editor.getTextField().setEditable(false);
+        aarsspinner.setEditor(editor);
+        JPanel labelSpinnerPanel = new JPanel(new GridLayout(0,2, 5, 5));
+        labelSpinnerPanel.add(navnSpinner);
+        labelSpinnerPanel.add(aarsspinner);
 
         statistikkKnapp = new JButton("Statistikk");
 
         JPanel comboBoxKnappPanel = new JPanel(new BorderLayout());
-        comboBoxKnappPanel.add(kompAarstall, BorderLayout.LINE_START);
+        comboBoxKnappPanel.add(labelSpinnerPanel, BorderLayout.LINE_START);
         comboBoxKnappPanel.add(statistikkKnapp, BorderLayout.LINE_END);
 
         JPanel leggTilPanel = new JPanel(new BorderLayout());

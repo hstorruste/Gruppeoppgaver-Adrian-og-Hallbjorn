@@ -1,6 +1,7 @@
 package View;
 
 import Controller.*;
+import Model.*;
 import java.awt.*;
 import java.io.*;
 import javax.swing.*;
@@ -66,7 +67,34 @@ public class StatistikkVindu extends JFrame {
     public String[] getAlleMedisinnavnGruppeKategori(String gruppe, String kat) {
         return medisinregister.getAlleMedisinnavniGruppeKategori(gruppe, kat);
     }
-
+    //Retunerer alle medisiner med et bestemt navn.
+    public Medisin[] finnMedisinNavn(String medisinNavn){
+        return medisinregister.finnMedisinNavn(medisinNavn);
+    }
+    //Retunerer alle medisiner med et bestemt kategori.
+    public Medisin[] finnMedisinKategori(String kategoriNavn){
+        return medisinregister.finnMedisinKategori(kategoriNavn);
+    }
+    /*Retunerer alle leger som har skrivit ut resept på et bestemdt medisin array.
+    **Om man sender med null får man alle leger.
+    */
+    public Lege[] getLegeListe(Medisin[] medisiner){
+        if(medisiner == null){
+            return legeregister.getAlleLeger();
+        }
+        else {
+            return legeregister.finnLegeMedisin(medisiner);
+        }
+    }
+    public Pasient[] getPasientListe(Medisin[] medisiner){
+        if(medisiner == null){
+            return pasientregister.getAllePasienter();
+        }
+        else {
+            return pasientregister.finnPasientMedisin(medisiner);
+        }
+    }
+    
     public void skrivTilFil() {
         try (ObjectOutputStream utfil = new ObjectOutputStream(new FileOutputStream(Komponent.dataFil))) {
             utfil.writeObject(medisinregister);
