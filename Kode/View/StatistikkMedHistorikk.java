@@ -461,9 +461,9 @@ public class StatistikkMedHistorikk extends JPanel {
         public void actionPerformed(ActionEvent e) {
 
             if (sokRadio.isSelected()) {
-                visFelt(this);
+                visFelt(parentFrame);
             } else if (alleRadio.isSelected()) {
-                skjulFelt(this);
+                skjulFelt(parentFrame);
             }
         }
     }

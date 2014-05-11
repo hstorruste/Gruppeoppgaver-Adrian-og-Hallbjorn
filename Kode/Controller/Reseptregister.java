@@ -121,9 +121,11 @@ public class Reseptregister implements Serializable {
             return reseptregister.toArray(resepter);
             
         }
-        TreeSet<Resept> funnetResepter = new TreeSet<>();
+        TreeSet<Resept> funnetResepter = new TreeSet<>(komp);
         for(Medisin med: medisiner)
+        {
             funnetResepter.addAll(finnReseptAvMedisin(med));
+        }
         if(lege != null)
             funnetResepter = finnReseptAvLege(lege, funnetResepter);
         
