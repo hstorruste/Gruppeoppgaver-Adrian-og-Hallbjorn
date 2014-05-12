@@ -5,7 +5,7 @@
  */
 package View;
 
-import View.util.Komponent;
+import View.util.*;
 import Model.Lege;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -81,6 +81,7 @@ public class LegeRegistrer extends JPanel {
         JPanel postnrPanel = (JPanel) Komponent.labelFieldRow(labeltekst[7], postnrFelt);
 
         poststedFelt = new JTextField(TEKSTFELTLENGDE);
+        poststedFelt.setEditable(false);
         JPanel poststedPanel = (JPanel) Komponent.labelFieldRow(labeltekst[8], poststedFelt);
 
         arbstedFelt = new JTextField(TEKSTFELTLENGDE);
@@ -127,9 +128,14 @@ public class LegeRegistrer extends JPanel {
         if(!Komponent.riktigEpost(epost) || !Komponent.riktigEpost(epostigjen)){
             String melding = "Epost er ikke på formen noen@eksempel.no!";
             Komponent.popup(parentFrame, melding);
-        } else if(!Komponent.riktigPostNr(postnr)){
+        } else if(!Postnummer.riktigPostNr(postnr)){
             String melding = "Postnummer må inneholde fire siffer (0-9)!";
             Komponent.popup(parentFrame, melding);
+            poststedFelt.setText("");
+        } else if(Poststed.finnPoststed(postnr) == null){
+            String melding = "Postnummeret eksisterer ikke!";
+             Komponent.popup(parentFrame, melding);
+             poststedFelt.setText("");
         } else if (!epost.equals(epostigjen)) {
             String melding = "Epostene er ikke like!";
             Komponent.popup(parentFrame, melding);
@@ -200,13 +206,21 @@ public class LegeRegistrer extends JPanel {
             
             else if(e.getSource() == postnrFelt)
             {
-                if(Komponent.riktigPostNr(postnrFelt.getText())){
-                    postnrFelt.setForeground(Komponent.rettTekst);
-                    error.setText("");
-                }
-                else{
+                String postNr = postnrFelt.getText();
+                if(!Postnummer.riktigPostNr(postNr)){
                     postnrFelt.setForeground(Komponent.feilTekst);
                     error.setText("Vennligst skriv postnummer med fire siffer (0-9).");
+                    poststedFelt.setText("");
+                }
+                else if(Poststed.finnPoststed(postNr) == null){
+                    postnrFelt.setForeground(Komponent.feilTekst);
+                    error.setText("Postnummeret eksisterer ikke!");
+                    poststedFelt.setText("");
+                }
+                else{
+                    postnrFelt.setForeground(Komponent.rettTekst);
+                    error.setText("");
+                    poststedFelt.setText( Poststed.finnPoststed(postNr));
                 }
             }
             

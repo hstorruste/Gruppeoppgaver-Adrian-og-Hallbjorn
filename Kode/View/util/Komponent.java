@@ -11,21 +11,12 @@ import java.net.URL;
 public class Komponent
 {
     private static Font font = new Font("SansSerif", Font.PLAIN, 16);
-    private static final String riktigPostNr = "\\d{4}";
     private static final String riktigEpost = "\\w+\\@\\w+\\.\\w+";
     private static final String korrektFnr = "[0-3]\\d[01]\\d{8}";
     public static final String dataFil = "data.dat";
     public static Color rettTekst = Color.black;
     public static Color feilTekst = Color.red;
 
-   
-    
-    //Sjekker om Postnummer er riktig
-    public static boolean riktigPostNr(String postNr)
-    {
-        return postNr.matches(riktigPostNr);
-    }
-    
     //Sjekker om Epost er riktig
     public static boolean riktigEpost(String epost)
     {

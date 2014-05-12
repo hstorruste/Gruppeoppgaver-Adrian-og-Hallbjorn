@@ -802,8 +802,10 @@ public class Postnummer {
             "9950", "9951", "9960", "9980", "9981", "9982", 
             "9990", "9991"};
 
-    public Postnummer()
+    private static final String riktigPostNr = "\\d{4}";
+     //Sjekker om Postnummer er riktig
+    public static boolean riktigPostNr(String postNr)
     {
-        
+        return postNr.matches(riktigPostNr);
     }
 }

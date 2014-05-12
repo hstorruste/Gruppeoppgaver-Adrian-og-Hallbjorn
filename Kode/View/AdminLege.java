@@ -1,6 +1,6 @@
 package View;
 
-import View.util.Komponent;
+import View.util.*;
 import Controller.Legeregister;
 import Model.Lege;
 import java.awt.*;
@@ -108,6 +108,7 @@ public class AdminLege extends JTabbedPane {
         rediger.add(kompPostNr);
 
         poststedFelt = new JTextField(TEKSTFELTLENGDE);
+        poststedFelt.setEditable(false);
         JComponent kompPoststed = Komponent.labelFieldRow(labeltekst[9], poststedFelt);
         rediger.add(kompPoststed);
 
@@ -246,15 +247,20 @@ public class AdminLege extends JTabbedPane {
             if(!Komponent.riktigEpost(epost) || !Komponent.riktigEpost(epostigjen)){
                 String melding = "Epost er ikke på formen noen@eksempel.no!";
                 Komponent.popup(parentFrame, melding);
-            } else if(!Komponent.riktigPostNr(postnr)){
+            } else if(!Postnummer.riktigPostNr(postnr)){
                 String melding = "Postnummer må inneholde fire siffer (0-9)!";
                 Komponent.popup(parentFrame, melding);
+                poststedFelt.setText("");
+            } else if(Poststed.finnPoststed(postnr) == null){
+                String melding = "Postnummeret eksisterer ikke!";
+                Komponent.popup(parentFrame, melding);
+                poststedFelt.setText("");
             } else if (!epost.equals(epostigjen)) {
                 String melding = "Epostene er ikke like!";
                 Komponent.popup(parentFrame, melding);
             } else if (!Arrays.equals(passord, passordigjen)) {
-                    String melding = "Passordene er ikke like!";
-                    Komponent.popup(parentFrame, melding);
+                String melding = "Passordene er ikke like!";
+                Komponent.popup(parentFrame, melding);
             } else {
 
                 lege.setFornavn(fornavn);
@@ -335,13 +341,21 @@ public class AdminLege extends JTabbedPane {
             
             else if(e.getSource() == postNrFelt)
             {
-                if(Komponent.riktigPostNr(postNrFelt.getText())){
-                    postNrFelt.setForeground(Komponent.rettTekst);
-                    error.setText("");
+                String postNr = postNrFelt.getText();
+                if(!Postnummer.riktigPostNr(postNr)){
+                    postNrFelt.setForeground(Komponent.feilTekst);
+                    error.setText("Vennligst skriv postnummer med fire siffer (0-9).");
+                    poststedFelt.setText("");
+                }
+                else if(Poststed.finnPoststed(postNr) == null){
+                    postNrFelt.setForeground(Komponent.feilTekst);
+                    error.setText("Postnummeret eksisterer ikke!");
+                    poststedFelt.setText("");
                 }
                 else{
-                    postNrFelt.setForeground(Komponent.feilTekst);
-                    error.setText("Vennligst skriv postnummer med fire siffer (0-9).");       
+                    postNrFelt.setForeground(Komponent.rettTekst);
+                    error.setText("");
+                    poststedFelt.setText( Poststed.finnPoststed(postNr));
                 }
             }
             

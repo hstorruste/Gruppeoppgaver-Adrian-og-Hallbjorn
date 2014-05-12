@@ -799,5 +799,44 @@ public class Poststed
             "HESSENG", "BJØRNEVATN", "KIRKENES", "HESSENG", "KIRKENES", "SVANVIK", 
             "NEIDEN", "BUGØYNES", "VARDØ", "VARDØ", "KIBERG", "BERLEVÅG", 
             "BERLEVÅG", "KONGSFJORD", "BÅTSFJORD", "BÅTSFJORD"};
+    
+    //Returnerer poststedet til det aktuelle postnummeret.
+    public static String finnPoststed(String postNr)
+    {
+        int pNr;
+        int venstre = 0;
+        int hoyre = Postnummer.postnummer.length -1;
+        int midt = (venstre + hoyre)/2;
+        if(Postnummer.postnummer[venstre].equals(postNr))
+            return postSted[venstre];
+        if(Postnummer.postnummer[hoyre].equals(postNr))
+            return postSted[hoyre];
+        try{
+            pNr = Integer.parseInt(postNr);
+            int valgt = Integer.parseInt(Postnummer.postnummer[midt]);
+            
+            while(pNr != valgt)
+            {
+                valgt = Integer.parseInt(Postnummer.postnummer[midt]);
+                if((hoyre - venstre) == 1){
+                    return null;
+                }
+                else if (valgt > pNr){
+                    hoyre = midt;
+                    midt = (hoyre + venstre)/2;
+                }
+                else if(valgt < pNr){
+                    venstre = midt;
+                    midt = (venstre + hoyre)/2;
+                }
+            }
+        }
+        catch(NumberFormatException nfe){
+            System.out.println(nfe.toString());
+            return null;
+        }
+        return postSted[midt];
+    }
+  
 } 
 
