@@ -14,6 +14,7 @@ public class Statistikk extends JPanel {
     private JButton leggTilKnapp, taBortKnapp, statistikkKnapp;
     private Calendar kalender;
     private JSpinner aarsspinner;
+    private final int STARTAAR = 2012;
     private JTable tabell;
     private String[] navnString = {"Gruppe", "Kategori", "Medisin navn", "En medisin"};
     private String[] kolonnenavn = {"Type", "Jan", "Feb", "Mars", "April"};
@@ -121,7 +122,7 @@ public class Statistikk extends JPanel {
         JLabel navnSpinner = new JLabel("År:");
         
         int aarNu = kalender.get(Calendar.YEAR);
-        SpinnerModel aarModel = new SpinnerNumberModel(aarNu, aarNu - 100, aarNu, 1);
+        SpinnerModel aarModel = new SpinnerNumberModel(aarNu, STARTAAR, aarNu, 1);
         aarsspinner = new JSpinner(aarModel);
         JSpinner.NumberEditor editor = new JSpinner.NumberEditor(aarsspinner, "#");
         editor.getTextField().setEditable(false);

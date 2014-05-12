@@ -1,12 +1,15 @@
 package View;
 
-import View.util.Komponent;
+import Controller.ReseptComparator;
 import Model.*;
+import View.util.Komponent;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.util.Comparator;
 import java.util.TreeSet;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class StatistikkMedHistorikk extends JPanel {
 
@@ -33,6 +36,7 @@ public class StatistikkMedHistorikk extends JPanel {
 
     private KnappeLytter knappeLytter;
     private RadioLytter radioLytter;
+    private ListLytter listLytter;
 
     public StatistikkMedHistorikk(StatistikkVindu a) {
 
@@ -40,6 +44,7 @@ public class StatistikkMedHistorikk extends JPanel {
         parentFrame = a;
         knappeLytter = new KnappeLytter();
         radioLytter = new RadioLytter();
+        listLytter = new ListLytter();
 
         setLayout(new FlowLayout());
 
@@ -145,8 +150,10 @@ public class StatistikkMedHistorikk extends JPanel {
         navnListAreaPanel.add(historikkAreaNavn);
 
         personList = new JList<>();
+        personList.addListSelectionListener(listLytter);
 
         reseptList = new JList<>();
+        reseptList.addListSelectionListener(listLytter);
 
         reseptArea = new JTextArea(20, 10);
         reseptArea.setEditable(false);
@@ -275,6 +282,13 @@ public class StatistikkMedHistorikk extends JPanel {
     }
 
     private void leggtilPersonlist() {
+
+        legeListe = null;
+        pasientListe = null;
+        reseptListe = null;
+        reseptAlt = new String[]{};
+        reseptList.setListData(reseptAlt);
+
         if (legeRadio.isSelected()) {
             if (alleRadio.isSelected()) {
                 if (gruppFelt.getSelectedIndex() == 0 && kategoriFelt.getSelectedIndex() == 0
@@ -338,15 +352,73 @@ public class StatistikkMedHistorikk extends JPanel {
                 }
             }
             if (sokRadio.isSelected()) {
+                String fornavn = fornavnFelt.getText();
+                String etternavn = etternavnFelt.getText();
                 if (gruppFelt.getSelectedIndex() == 0 && kategoriFelt.getSelectedIndex() == 0
                         && medisinFelt.getSelectedIndex() == 0) {
 
+                    legeListe = parentFrame.finnLegeNavn(etternavn, fornavn);
+                    if (legeListe.length == 0) {
+                        String melding = "Finner ikke noen lege med det navnet";
+                        Komponent.popup(parentFrame, melding);
+                    } else {
+                        personAlt = new String[legeListe.length];
+                        for (int i = 0; i < personAlt.length; i++) {
+                            personAlt[i] = legeListe[i].getNavn() + " " + legeListe[i].getEPost();
+                        }
+                        personList.setListData(personAlt);
+                    }
                 }
                 if (medisinFelt.getSelectedIndex() != 0) {
+                    String medisinNavn = (String) medisinFelt.getSelectedItem();
+                    medisinListe = parentFrame.finnMedisinNavn(medisinNavn);
 
+                    legeListe = parentFrame.finnLegeNavn(etternavn, fornavn, medisinListe);
+                    if (legeListe.length == 0) {
+                        String melding = "Finner ikke noen lege med det navnet eller medisinen";
+                        Komponent.popup(parentFrame, melding);
+                    } else {
+                        personAlt = new String[legeListe.length];
+                        for (int i = 0; i < personAlt.length; i++) {
+                            personAlt[i] = legeListe[i].getNavn() + " " + legeListe[i].getEPost();
+                        }
+                        personList.setListData(personAlt);
+                    }
                 }
-            }
-        }
+                if (kategoriFelt.getSelectedIndex() != 0) {
+                    String kategoriNavn = (String) kategoriFelt.getSelectedItem();
+                    medisinListe = parentFrame.finnMedisinKategori(kategoriNavn);
+
+                    legeListe = parentFrame.finnLegeNavn(etternavn, fornavn, medisinListe);
+                    if (legeListe.length == 0) {
+                        String melding = "Finner ikke noen lege med det navnet eller medisinerna";
+                        Komponent.popup(parentFrame, melding);
+                    } else {
+                        personAlt = new String[legeListe.length];
+                        for (int i = 0; i < personAlt.length; i++) {
+                            personAlt[i] = legeListe[i].getNavn() + " " + legeListe[i].getEPost();
+                        }
+                        personList.setListData(personAlt);
+                    }
+                }
+                if (gruppFelt.getSelectedIndex() != 0) {
+                    String gruppeNavn = (String) gruppFelt.getSelectedItem();
+                    medisinListe = parentFrame.finnMedisinKategori(gruppeNavn);
+
+                    legeListe = parentFrame.finnLegeNavn(etternavn, fornavn, medisinListe);
+                    if (legeListe.length == 0) {
+                        String melding = "Finner ikke noen lege med det navnet eller medisinerna";
+                        Komponent.popup(parentFrame, melding);
+                    } else {
+                        personAlt = new String[legeListe.length];
+                        for (int i = 0; i < personAlt.length; i++) {
+                            personAlt[i] = legeListe[i].getNavn() + " " + legeListe[i].getEPost();
+                        }
+                        personList.setListData(personAlt);
+                    }
+                }
+            }//End if søk
+        }//End if lege
         if (pasientRadio.isSelected()) {
             if (alleRadio.isSelected()) {
                 if (gruppFelt.getSelectedIndex() == 0 && kategoriFelt.getSelectedIndex() == 0
@@ -398,7 +470,7 @@ public class StatistikkMedHistorikk extends JPanel {
 
                     pasientListe = parentFrame.getPasientListe(medisinListe);
                     if (pasientListe.length == 0) {
-                        String melding = "Finner ikke noen lege med dem medisinerna.";
+                        String melding = "Finner ikke noen pasient med dem medisinerna.";
                         Komponent.popup(parentFrame, melding);
                     } else {
                         personAlt = new String[pasientListe.length];
@@ -410,16 +482,84 @@ public class StatistikkMedHistorikk extends JPanel {
                 }
             }
             if (sokRadio.isSelected()) {
+                String etternavn = etternavnFelt.getText();
+                String fornavn = fornavnFelt.getText();
+                if (gruppFelt.getSelectedIndex() == 0 && kategoriFelt.getSelectedIndex() == 0
+                        && medisinFelt.getSelectedIndex() == 0) {
 
-            }
-        }
-    }
+                    pasientListe = parentFrame.finnPasientNavn(etternavn, fornavn);
+                    if (pasientListe.length == 0) {
+                        String melding = "Finner ikke noen pasient med det navnet.";
+                        Komponent.popup(parentFrame, melding);
+                    } else {
+                        personAlt = new String[pasientListe.length];
+                        for (int i = 0; i < personAlt.length; i++) {
+                            personAlt[i] = pasientListe[i].getNavn() + " " + pasientListe[i].getFnr();
+                        }
+                        personList.setListData(personAlt);
+                    }
+                }
+                if (medisinFelt.getSelectedIndex() != 0) {
+                    String medisinNavn = (String) medisinFelt.getSelectedItem();
+                    medisinListe = parentFrame.finnMedisinNavn(medisinNavn);
+
+                    pasientListe = parentFrame.finnPasientNavn(etternavn, fornavn, medisinListe);
+                    if (pasientListe.length == 0) {
+                        String melding = "Finner ikke noen pasient med det navnet eller medisinen.";
+                        Komponent.popup(parentFrame, melding);
+                    } else {
+                        personAlt = new String[pasientListe.length];
+                        for (int i = 0; i < personAlt.length; i++) {
+                            personAlt[i] = pasientListe[i].getNavn() + " " + pasientListe[i].getFnr();
+                        }
+                        personList.setListData(personAlt);
+                    }
+                }
+                if (kategoriFelt.getSelectedIndex() != 0) {
+                    String kategoriNavn = (String) kategoriFelt.getSelectedItem();
+                    medisinListe = parentFrame.finnMedisinKategori(kategoriNavn);
+
+                    pasientListe = parentFrame.finnPasientNavn(etternavn, fornavn, medisinListe);
+                    if (pasientListe.length == 0) {
+                        String melding = "Finner ikke noen pasient med det navnet eller medisinerna.";
+                        Komponent.popup(parentFrame, melding);
+                    } else {
+                        personAlt = new String[pasientListe.length];
+                        for (int i = 0; i < personAlt.length; i++) {
+                            personAlt[i] = pasientListe[i].getNavn() + " " + pasientListe[i].getFnr();
+                        }
+                        personList.setListData(personAlt);
+                    }
+                }
+                if (gruppFelt.getSelectedIndex() != 0) {
+                    String gruppeNavn = (String) gruppFelt.getSelectedItem();
+                    medisinListe = parentFrame.finnMedisinKategori(gruppeNavn);
+
+                    pasientListe = parentFrame.finnPasientNavn(etternavn, fornavn, medisinListe);
+                    if (pasientListe.length == 0) {
+                        String melding = "Finner ikke noen pasient med det navnet eller medisinerna.";
+                        Komponent.popup(parentFrame, melding);
+                    } else {
+                        personAlt = new String[pasientListe.length];
+                        for (int i = 0; i < personAlt.length; i++) {
+                            personAlt[i] = pasientListe[i].getNavn() + " " + pasientListe[i].getFnr();
+                        }
+                        personList.setListData(personAlt);
+                    }
+                }
+            }// End if søk
+        }// End if pasient
+    }//End metod
 
     private void leggTilReseptList() {
-        if (legeRadio.isSelected()) {
+        if (personList.getSelectedIndex() == -1) {
+            return;
+        }
+        if (legeListe != null) {
             lege = legeListe[personList.getSelectedIndex()];
             Pasient[] pasienter = lege.getPasientliste().finnPasientMedisin(medisinListe);
-            TreeSet<Resept> reseptSet = new TreeSet<>();
+            Comparator komp = new ReseptComparator();
+            TreeSet<Resept> reseptSet = new TreeSet<>(komp);
             for (Pasient p : pasienter) {
                 Resept[] r = p.getReseptliste().finnReseptMedisin(medisinListe, lege);
                 for (Resept res : r) {
@@ -435,11 +575,24 @@ public class StatistikkMedHistorikk extends JPanel {
             }
             reseptList.setListData(reseptAlt);
         }
+        if (pasientListe != null) {
+            pasient = pasientListe[personList.getSelectedIndex()];
+            reseptListe = pasient.getReseptliste().finnReseptMedisin(medisinListe, null);
+
+            reseptAlt = new String[reseptListe.length];
+            for (int i = 0; i < reseptAlt.length; i++) {
+                reseptAlt[i] = reseptListe[i].getMedisin().getNavn() + ", " + reseptListe[i].getMedisin().getStyrke();
+            }
+            reseptList.setListData(reseptAlt);
+        }
     }
 
     private void leggTilArea() {
         int i = reseptList.getSelectedIndex();
-        String reseptInfo = reseptListe[i].toString();
+        String reseptInfo = "";
+        if (i != -1) {
+            reseptInfo = reseptListe[i].toString();
+        }
         reseptArea.setText(reseptInfo);
     }
 
@@ -467,5 +620,19 @@ public class StatistikkMedHistorikk extends JPanel {
                 skjulFelt(parentFrame);
             }
         }
+    }
+
+    private class ListLytter implements ListSelectionListener {
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            if (e.getSource() == personList) {
+                reseptList.setSelectedIndex(-1);
+                leggTilReseptList();
+            } else if (e.getSource() == reseptList) {
+                leggTilArea();
+            }
+        }
+
     }
 }
