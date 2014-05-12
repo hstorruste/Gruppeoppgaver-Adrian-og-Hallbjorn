@@ -8,8 +8,7 @@ import java.awt.event.*;
 import java.util.Comparator;
 import java.util.TreeSet;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.event.*;
 
 public class StatistikkMedHistorikk extends JPanel {
 
@@ -50,7 +49,8 @@ public class StatistikkMedHistorikk extends JPanel {
 
         add(medisinHistorikkGUI());
     }
-
+    
+     //Oppretter alt i fanen for Medisin historikk.
     private JPanel medisinHistorikkGUI() {
 
         typeGrupp = new ButtonGroup();
@@ -172,7 +172,9 @@ public class StatistikkMedHistorikk extends JPanel {
 
         return medisinHistorikk;
     }
-
+    
+    /*Viser felt for søking av lege/pasient, tar imot en container som alle 
+     komponentene ligger i.*/
     private void visFelt(Container cont) {
         JComponent[] felt = new JComponent[]{fornavnFelt, etternavnFelt};
 
@@ -198,7 +200,8 @@ public class StatistikkMedHistorikk extends JPanel {
             }
         }
     }
-
+    
+    //Sjekker forandringer i gruppfelt
     private void checkGruppFelt() {
         if (gruppFelt.getSelectedIndex() == 0) {
             String[] kat = parentFrame.getAlleKategori();
@@ -228,6 +231,7 @@ public class StatistikkMedHistorikk extends JPanel {
         medisinFelt.setSelectedIndex(0);
     }
 
+     //Sjekker forandringer i kategorifelt
     private void checkKategoriFelt() {
         if (gruppFelt.getSelectedIndex() == 0 && kategoriFelt.getSelectedIndex() == 0) {
             String[] med = parentFrame.getAlleMedisinnavn();
@@ -281,6 +285,7 @@ public class StatistikkMedHistorikk extends JPanel {
         medisinFelt.setSelectedIndex(0);
     }
 
+    //Legger til person objekter i personList
     private void leggtilPersonlist() {
 
         legeListe = null;
@@ -550,7 +555,8 @@ public class StatistikkMedHistorikk extends JPanel {
             }// End if søk
         }// End if pasient
     }//End metod
-
+    
+    //Legger til resepter i reseptList
     private void leggTilReseptList() {
         if (personList.getSelectedIndex() == -1) {
             return;
@@ -586,7 +592,8 @@ public class StatistikkMedHistorikk extends JPanel {
             reseptList.setListData(reseptAlt);
         }
     }
-
+    
+    //Skriver ut resepten sin toString i reseptArea
     private void leggTilArea() {
         int i = reseptList.getSelectedIndex();
         String reseptInfo = "";

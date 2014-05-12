@@ -16,7 +16,7 @@ public class Statistikk extends JPanel {
     private JSpinner aarsspinner;
     private final int STARTAAR = 2012;
     private JTable tabell;
-    private String[] navnString = {"Gruppe", "Kategori", "Medisin navn", "En medisin"};
+    private String[] navnString = {"Gruppe", "Kategori", "Medisin"};
     private String[] kolonnenavn = {"Type", "Jan", "Feb", "Mars", "April"};
     private Object[][] celler
             = {
@@ -57,10 +57,7 @@ public class Statistikk extends JPanel {
                     Boolean.FALSE, Color.black
                 }
             };
-    private String[] eksempel = {"Gunnar", "Joppe", "Anders", "Gøran", "Adrian"};
-    private String[] tall = {"2014", "2013", "2012", "2011"};
-    private final int TEKSTFELTLENGDE = 5;
-
+   
     private KnappeLytter knappeLytter;
 
     public Statistikk(StatistikkVindu a) {
@@ -82,27 +79,25 @@ public class Statistikk extends JPanel {
         gruppeRadio = new JRadioButton(navnString[0], true);
         kategoriRadio = new JRadioButton(navnString[1], false);
         medisinNavnRadio = new JRadioButton(navnString[2], false);
-        enMedisinRadio = new JRadioButton(navnString[3], false);
         typeGruppe.add(gruppeRadio);
         typeGruppe.add(kategoriRadio);
         typeGruppe.add(medisinNavnRadio);
-        typeGruppe.add(enMedisinRadio);
 
         JPanel gruppeKatPanel = new JPanel(new GridLayout(0, 2, 5, 5));
         gruppeKatPanel.add(gruppeRadio);
         gruppeKatPanel.add(kategoriRadio);
 
-        JPanel medEnMedPanel = new JPanel(new GridLayout(0, 2, 5, 5));
-        medEnMedPanel.add(medisinNavnRadio);
-        medEnMedPanel.add(enMedisinRadio);
+        JPanel medisinPanel = new JPanel(new GridLayout(0, 2, 5, 5));
+        medisinPanel.add(medisinNavnRadio);
 
-        JPanel radioPanel = new JPanel(new GridLayout(0, 3, 5, 5));
+        JPanel radioPanel = new JPanel(new GridLayout(0, 5, 5, 5));
         radioPanel.add(gruppeKatPanel);
-        radioPanel.add(medEnMedPanel);
+        radioPanel.add(medisinPanel);
 
-        medisinList = new JList<>(eksempel);
+        medisinList = new JList<>();
 
         leggTilKnapp = new JButton(">>");
+        leggTilKnapp.setPreferredSize(new Dimension(5, 8));
         leggTilKnapp.addActionListener(knappeLytter);
 
         taBortKnapp = new JButton("<<");
@@ -112,7 +107,7 @@ public class Statistikk extends JPanel {
         knappPanel.add(leggTilKnapp);
         knappPanel.add(taBortKnapp);
 
-        leggTilMedisinList = new JList<>(eksempel);
+        leggTilMedisinList = new JList<>();
 
         JPanel listKnappPanel = new JPanel(new GridLayout(0, 3, 5, 5));
         listKnappPanel.add(new JScrollPane(medisinList));
