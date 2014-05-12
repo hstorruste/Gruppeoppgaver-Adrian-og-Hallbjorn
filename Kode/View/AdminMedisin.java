@@ -1,5 +1,6 @@
 package View;
 
+import View.util.Komponent;
 import Controller.Legeregister;
 import Model.Medisin;
 import java.awt.*;

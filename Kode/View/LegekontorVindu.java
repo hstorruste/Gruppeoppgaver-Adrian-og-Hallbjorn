@@ -4,6 +4,7 @@ package View;
  * Siste versjon 29-04-2014
  *
  */
+import View.util.Komponent;
 import Model.*;
 import Controller.*;
 import java.awt.BorderLayout;

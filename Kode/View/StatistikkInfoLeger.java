@@ -1,5 +1,6 @@
 package View;
 
+import View.util.Komponent;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;

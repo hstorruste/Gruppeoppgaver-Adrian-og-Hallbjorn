@@ -133,7 +133,7 @@ public class Lege extends Person implements Serializable
         public String toString()
 	{
 		String ut = toStringResept();
-                ut += "Bevilning: ";
+                ut += "Bevillning: ";
                 if(a && (b || c))
                         ut += "A, ";
                 if(a && !(b || c))

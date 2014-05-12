@@ -3,6 +3,7 @@ package View;
  Laget av Adrian Westlund s198571.
  Siste versjon 05-05-2014*/
 
+import View.util.Komponent;
 import Controller.Legeregister;
 import Controller.Medisinregister;
 import Controller.Pasientregister;

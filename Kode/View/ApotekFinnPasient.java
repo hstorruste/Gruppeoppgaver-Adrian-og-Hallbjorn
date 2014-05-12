@@ -4,6 +4,7 @@ package View;
  * Detta är GUI för finn pasient. Den är en del av AdminVindu. Laget av Adrian
  * Westlund s198571 Siste versjon 05-05-2014
  */
+import View.util.Komponent;
 import Model.Pasient;
 import java.awt.*;
 import java.awt.event.*;

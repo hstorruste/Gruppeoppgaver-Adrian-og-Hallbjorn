@@ -1,5 +1,6 @@
 package View;
 
+import View.util.Komponent;
 import Model.*;
 import Controller.*;
 import java.awt.*;

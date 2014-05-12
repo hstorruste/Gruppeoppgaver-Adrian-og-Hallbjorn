@@ -6,6 +6,7 @@
 
 package View;
 
+import View.util.Komponent;
 import Model.Lege;
 import Model.Medisin;
 import java.awt.BorderLayout;

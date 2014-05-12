@@ -1,4 +1,4 @@
-package View;
+package View.util;
 /*	Denne klassen lager vanligt anvendte komponenter.
     Laget av Adrian Westlund
     Siste versjon 25-04-2014*/
@@ -15,31 +15,31 @@ public class Komponent
     private static final String riktigEpost = "\\w+\\@\\w+\\.\\w+";
     private static final String korrektFnr = "[0-3]\\d[01]\\d{8}";
     public static final String dataFil = "data.dat";
-    protected static Color rettTekst = Color.black;
-    protected static Color feilTekst = Color.red;
+    public static Color rettTekst = Color.black;
+    public static Color feilTekst = Color.red;
 
    
     
     //Sjekker om Postnummer er riktig
-    protected static boolean riktigPostNr(String postNr)
+    public static boolean riktigPostNr(String postNr)
     {
         return postNr.matches(riktigPostNr);
     }
     
     //Sjekker om Epost er riktig
-    protected static boolean riktigEpost(String epost)
+    public static boolean riktigEpost(String epost)
     {
         return epost.matches(riktigEpost);
     }
     
     //Sjekker om Fødselsnummer er riktig
-    protected static boolean riktigFNr(String Fnr)
+    public static boolean riktigFNr(String Fnr)
     {
         return Fnr.matches(korrektFnr);
     }
     
     //	Lager en komponent med en label og en textField på samme rad
-    protected static JPanel labelFieldRow(String text, JTextField field)
+    public static JPanel labelFieldRow(String text, JTextField field)
     {
         JPanel panel = new JPanel();
         JLabel label = new JLabel(text);
@@ -50,7 +50,7 @@ public class Komponent
         return panel;
 	}
 	//	Lager en komponent med en label og en textField på två rader
-    protected static JPanel labelFieldColumb(String text, JTextField field)
+    public static JPanel labelFieldColumb(String text, JTextField field)
     {
         JPanel panel = new JPanel(false);
         JLabel label = new JLabel(text);
@@ -60,7 +60,7 @@ public class Komponent
         return panel;
     }
 	//	Lager en komponent med en label og en combobox på samme rad
-    protected static JPanel labelComboBoxRow(String text, JComboBox<String> comboBox)
+    public static JPanel labelComboBoxRow(String text, JComboBox<String> comboBox)
     {
 		JPanel panel = new JPanel();
 		JLabel label = new JLabel(text);
@@ -71,7 +71,7 @@ public class Komponent
         return panel;
     }
 	//	Lager en komponent med en label og en combobox på två rader
-    protected static JPanel labelComboBoxColumb(String text, JComboBox<String> comboBox)
+    public static JPanel labelComboBoxColumb(String text, JComboBox<String> comboBox)
     {
 		JPanel panel = new JPanel();
 		JLabel label = new JLabel(text);
@@ -110,7 +110,7 @@ public class Komponent
     
     /*	Metoden ändrar font genom att alla komponenter av Container
     	blir kallade på och sätter den bestämda fonten på dessa.*/
-    protected static void endreFont( Component komponent )
+    public static void endreFont( Component komponent )
     {
             komponent.setFont( font );
             if ( komponent instanceof Container )
@@ -122,7 +122,7 @@ public class Komponent
             }
     }
     // Endrer ikon
-    protected static void bilde(JFrame klass)
+    public static void bilde(JFrame klass)
     {
             String bildefil = "Handprint.png";
             URL kilde = Komponent.class.getResource(bildefil);
@@ -135,7 +135,7 @@ public class Komponent
             }
     }
     //	Lager ett popup box
-    protected static void popup(JFrame klass, String tekst)
+    public static void popup(JFrame klass, String tekst)
     {
              JOptionPane.showMessageDialog(klass, tekst);
     }

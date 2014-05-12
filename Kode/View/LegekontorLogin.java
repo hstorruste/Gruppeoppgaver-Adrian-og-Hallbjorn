@@ -6,6 +6,7 @@
 
 package View;
 
+import View.util.Komponent;
 import Model.Lege;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
