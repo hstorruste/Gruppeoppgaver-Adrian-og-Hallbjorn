@@ -12,7 +12,8 @@ import Model.Lege;
 import java.util.Random;
 
 /**Denne klassen er til for å generere lege objekter til e-resept-sytemet.
- *
+ *Siste versjon: 13-05-2014
+ *Laget av Hallbjørn Storruste s165519
  * @author Hallbjørn
  */
 public class LegeGenerator {
@@ -38,6 +39,7 @@ public class LegeGenerator {
         epost += Etternavn + "@";
         String arbeidsted = navngenerator.genererNavn();
         epost += arbeidsted + ".no";
+        epost = epost.toLowerCase();
         int arbSted = generator.nextInt(10);
         if(arbSted > 8)
             arbeidsted += " " + arbeidstedEtternavn[1];
@@ -47,7 +49,7 @@ public class LegeGenerator {
             arbeidsted += " " + arbeidstedEtternavn[0];
         char[] passord = {'1','2','3','4'};
         String gateadresse = gateAdresse();
-        int index = (generator.nextInt(Postnummer.postnummer.length) + 1);
+        int index = (generator.nextInt(Postnummer.postnummer.length));
         String postNr = Postnummer.postnummer[index];
         String postSted = Poststed.postSted[index];
         Lege ny = new Lege(Fornavn, Etternavn, epost, gateadresse, postNr, postSted, arbeidsted, passord);

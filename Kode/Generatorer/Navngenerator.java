@@ -1,7 +1,8 @@
 package Generatorer;
 
 /*Dette er et program for å generere fiktive navn.
-Laget av Hallbjørn Storruste*/
+Siste versjon: 13-05-2014
+Laget av Hallbjørn Storruste s165519*/
 
 import Model.*;
 import Controller.*;
@@ -88,10 +89,11 @@ public class Navngenerator
 						k = generator.nextInt(kon.length);
 
 				navn += kon[k];
+                                
+                                int dobbelKon = generator.nextInt(4);
 
-				if(dobbel && i!=0 && iDobble(kon[k]))
+				if(dobbelKon < 1 && i!=0 && iDobble(kon[k]))
 				{
-
 					if(i < lengde-2)//sjekker at vi ikke er på slutten av navnet.
 					{
 						navn += kon[k];
@@ -102,7 +104,6 @@ public class Navngenerator
 						navn += kon[k];
 						i++;
 					}
-
 				}
 				vokal = true;
 			}
