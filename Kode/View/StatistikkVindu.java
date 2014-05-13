@@ -80,6 +80,11 @@ public class StatistikkVindu extends JFrame {
         return medisinregister.finnMedisinKategori(kategoriNavn);
     }
     
+    //Retunerer alle medisiner med et bestemt gruppe.
+    public Medisin[] finnMedisinGruppe(String gruppeNavn) {
+        return medisinregister.finnMedisinGruppe(gruppeNavn);
+    }
+    
     /*Retunerer alle leger som har skrivit ut resept på medisinene i arrayet.
      **Om man sender med null får man alle leger.
      */

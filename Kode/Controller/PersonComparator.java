@@ -39,6 +39,11 @@ public class PersonComparator implements Comparator<Person>, Serializable
         in.defaultReadObject();
         initCollator();     
     }
+    /*Sammenligner pasientobjekter eller legeobjekter:
+    Om pasientene har likt fødselsnummer returneres '0'. De sammenligenes(ordnes)
+    på navn, men om de har samme navn ordnes de etter fødselsnummer.
+    Om legene har lik epost returneres '0'. De sammenlignes(ordnes) på navn,
+    men om de har samme navn ordnes de etter epost.*/
     @Override
 	public int compare( Person p1, Person p2 )
 	{
@@ -83,7 +88,9 @@ public class PersonComparator implements Comparator<Person>, Serializable
 				return kollator.compare(ep1, ep2);
 		}
 	}
-	public int compareNavn(Person p1, Person p2)
+        /*Sammenligner navnene til to personobjekter. Først på etternavn
+        deretter på fornavn.*/
+	private int compareNavn(Person p1, Person p2)
 	{
 		String e1 = p1.getEtternavn();
 		String e2 = p2.getEtternavn();

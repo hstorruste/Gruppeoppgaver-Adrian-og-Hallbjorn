@@ -14,7 +14,8 @@ public class Resept implements Serializable
 	private static final long serialVersionUID = 1005L;
 
 	private Medisin medisin;
-	private int reseptNr, reit;
+        private final int opprinneligReit;
+	private int reseptNr, resterendeReit;
         private Calendar dato;
 	private Lege lege;	
         private Pasient pasient;
@@ -27,7 +28,8 @@ public class Resept implements Serializable
 		dato = d;
 		lege = l;
                 pasient = p;
-		reit = r;
+                opprinneligReit = r;
+		resterendeReit = r;
 		reseptNr = rNr;
 		beskrivelse = b;
 		utlevert = false;
@@ -52,9 +54,13 @@ public class Resept implements Serializable
         {
             return pasient;
         }
-	public int getReit()
+        public int getOpprinneligReit()
+        {
+            return opprinneligReit;
+        }
+	public int getResterendeReit()
 	{
-                return reit;
+                return resterendeReit;
 	}
 	public String getBeskrivelse()
 	{
@@ -66,10 +72,10 @@ public class Resept implements Serializable
 	}
         public void setUtlevert()
         {
-            if(reit == 0)
+            if(resterendeReit == 0)
                 utlevert = true;
             else
-                reit--;
+                resterendeReit--;
         }
 	public String toString()
 	{
@@ -102,8 +108,12 @@ public class Resept implements Serializable
                 ut.append(beskrivelse);
                 ut.append("\nLege:\n");
                 ut.append(lege.toStringResept());
-                ut.append("\nReit: ");
-                ut.append(reit);
+                ut.append("\nOpprinnelig reit: ");
+                ut.append(opprinneligReit);
+                if(opprinneligReit > 0){
+                    ut.append("\nGjennværende Reit: ");
+                    ut.append(resterendeReit);
+                }
             }
             if(utlevert)
                 ut.append("\nUtlevert: Ja\n");

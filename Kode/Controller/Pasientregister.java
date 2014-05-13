@@ -108,7 +108,6 @@ public class Pasientregister implements Serializable
                 Resept[] resepter = tempRegister.finnReseptMedisin(medisin, null);
                 if(resepter.length > 0){
                     pasienter.add(runner);
-                    break;
                 }
                 
             }
