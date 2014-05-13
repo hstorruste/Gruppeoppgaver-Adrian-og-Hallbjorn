@@ -374,7 +374,7 @@ public class StatistikkMedHistorikk extends JPanel {
                         personList.setListData(personAlt);
                     }
                 }
-                if (medisinFelt.getSelectedIndex() != 0) {
+                else if (medisinFelt.getSelectedIndex() != 0) {
                     String medisinNavn = (String) medisinFelt.getSelectedItem();
                     medisinListe = parentFrame.finnMedisinNavn(medisinNavn);
 
@@ -390,7 +390,7 @@ public class StatistikkMedHistorikk extends JPanel {
                         personList.setListData(personAlt);
                     }
                 }
-                if (kategoriFelt.getSelectedIndex() != 0) {
+                else if (kategoriFelt.getSelectedIndex() != 0) {
                     String kategoriNavn = (String) kategoriFelt.getSelectedItem();
                     medisinListe = parentFrame.finnMedisinKategori(kategoriNavn);
 
@@ -406,7 +406,7 @@ public class StatistikkMedHistorikk extends JPanel {
                         personList.setListData(personAlt);
                     }
                 }
-                if (gruppFelt.getSelectedIndex() != 0) {
+                else if (gruppFelt.getSelectedIndex() != 0) {
                     String gruppeNavn = (String) gruppFelt.getSelectedItem();
                     medisinListe = parentFrame.finnMedisinGruppe(gruppeNavn);
 
@@ -437,7 +437,7 @@ public class StatistikkMedHistorikk extends JPanel {
                     }
                     personList.setListData(personAlt);
                 }
-                if (medisinFelt.getSelectedIndex() != 0) {
+                else if (medisinFelt.getSelectedIndex() != 0) {
                     String medisinNavn = (String) medisinFelt.getSelectedItem();
                     medisinListe = parentFrame.finnMedisinNavn(medisinNavn);
 
@@ -504,7 +504,7 @@ public class StatistikkMedHistorikk extends JPanel {
                         personList.setListData(personAlt);
                     }
                 }
-                if (medisinFelt.getSelectedIndex() != 0) {
+                else if (medisinFelt.getSelectedIndex() != 0) {
                     String medisinNavn = (String) medisinFelt.getSelectedItem();
                     medisinListe = parentFrame.finnMedisinNavn(medisinNavn);
 
@@ -520,7 +520,7 @@ public class StatistikkMedHistorikk extends JPanel {
                         personList.setListData(personAlt);
                     }
                 }
-                if (kategoriFelt.getSelectedIndex() != 0) {
+                else if (kategoriFelt.getSelectedIndex() != 0) {
                     String kategoriNavn = (String) kategoriFelt.getSelectedItem();
                     medisinListe = parentFrame.finnMedisinKategori(kategoriNavn);
 
@@ -536,7 +536,7 @@ public class StatistikkMedHistorikk extends JPanel {
                         personList.setListData(personAlt);
                     }
                 }
-                if (gruppFelt.getSelectedIndex() != 0) {
+                else if (gruppFelt.getSelectedIndex() != 0) {
                     String gruppeNavn = (String) gruppFelt.getSelectedItem();
                     medisinListe = parentFrame.finnMedisinGruppe(gruppeNavn);
 
