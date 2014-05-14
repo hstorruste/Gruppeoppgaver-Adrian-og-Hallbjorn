@@ -278,7 +278,6 @@ public class LegekontorSkrivResept extends JTabbedPane {
     
     //Setter inn  en resept i pasientens reseptregister.
     private void sendResept() {
-        //registerer resept
         Lege lege = parentFrame.getLege();
         String navn = (String) medisinFelt.getSelectedItem();
         String styrke = (String) styrkeFelt.getSelectedItem();

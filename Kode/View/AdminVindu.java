@@ -1,7 +1,7 @@
 /*Denne klassen er et GUI til admin. 
-  Upprättar AdminLege och AdminMedisin.
-  Laget av Adrian Westlund s198571.
-  Siste versjon 14-05-2014*/
+ Upprättar AdminLege och AdminMedisin.
+ Laget av Adrian Westlund s198571.
+ Siste versjon 14-05-2014*/
 package View;
 
 import View.util.Komponent;
@@ -11,7 +11,6 @@ import java.awt.*;
 import java.io.*;
 import java.util.TreeSet;
 import javax.swing.*;
-
 
 public class AdminVindu extends LegeRegSuper {
 
@@ -24,12 +23,12 @@ public class AdminVindu extends LegeRegSuper {
         super("Admin");
 
         setLayout(new GridLayout(0, 1, 5, 5));
-       
+
         legeregister = lreg;
         pasientregister = preg;
         medisinregister = mreg;
         //lesFil();
-        
+
         legeGUI = new AdminLege(this);
         medisinGUI = new AdminMedisin(this);
 
@@ -38,7 +37,7 @@ public class AdminVindu extends LegeRegSuper {
         gruppFane.addTab("Medisin", medisinGUI);
 
         add(gruppFane);
-        
+
         Komponent.endreFont(this);
         Komponent.bilde(this);
         pack();
@@ -62,30 +61,26 @@ public class AdminVindu extends LegeRegSuper {
     public String skrivLegeListe() {
         return legeregister.toString();
     }
-    
+
     //Returnerer medisinregisteret.
-    public String[] getAlleMedisinnavn()
-    {
+    public String[] getAlleMedisinnavn() {
         return medisinregister.getAlleMedisinnavn();
     }
-    
+
     /*Finner og returnerer en Stringarray med alle pakninger for en medisin 
-    med en gitt styrke og en gitt legemiddelform*/
-    public String[] getAlleMedisinPakninger(String navn, String styrke, String form)
-    {
+     med en gitt styrke og en gitt legemiddelform*/
+    public String[] getAlleMedisinPakninger(String navn, String styrke, String form) {
         return medisinregister.getAlleMedisinPakninger(navn, styrke, form);
     }
-    
+
     /*Finner og returnerer en Stringarray med alle legemiddelformer for 
-    en medisin med en gitt styrke*/
-    public String[] getAlleMedisinFormer(String navn, String styrke)
-    {
+     en medisin med en gitt styrke*/
+    public String[] getAlleMedisinFormer(String navn, String styrke) {
         return medisinregister.getAlleMedisinFormer(navn, styrke);
     }
-    
+
     //Finner og returnerer en Stringarray med alle styrker for en medisin
-    public String[] getAlleMedisinStyrker(String navn)
-    {
+    public String[] getAlleMedisinStyrker(String navn) {
         return medisinregister.getAlleMedisinStyrker(navn);
     }
 
@@ -98,9 +93,9 @@ public class AdminVindu extends LegeRegSuper {
     public boolean registrerMedisin(String navn, String kat, String gruppe, String styrke, String form, String pakning, String atcNr) {
         return medisinregister.settInn(navn, kat, gruppe, styrke, form, pakning, atcNr);
     }
-    
+
     //
-    public String[] skrivKatArray(){
+    public String[] skrivKatArray() {
         return medisinregister.getAlleKategorier();
     }
 
@@ -112,18 +107,16 @@ public class AdminVindu extends LegeRegSuper {
     @Override
     //Skriver medisinregister, legeregister og pasientregister til fil.
     public void skrivTilFil() {
-        try(ObjectOutputStream utfil = new ObjectOutputStream( new FileOutputStream(Komponent.dataFil)))
-        {
+        try (ObjectOutputStream utfil = new ObjectOutputStream(new FileOutputStream(Komponent.dataFil))) {
             utfil.writeObject(medisinregister);
             utfil.writeObject(legeregister);
             utfil.writeObject(pasientregister);
-        }
-        catch (NotSerializableException nse) {
-            System.out.println("Objektet er ikke serialisert!");
-            System.out.println(nse.getMessage());
+        } catch (NotSerializableException nse) {
+            String melding = "Objektet er ikke serialisert!\n" + nse.getMessage();
+            Komponent.popup(this, melding);
         } catch (IOException ioe) {
-            System.out.println("Problemer med utskrift til fil");
-            System.out.println(ioe.getMessage());
+            String melding = "Problemer med utskrift til fil\n" + ioe.getMessage();
+            Komponent.popup(this, melding);
         }
     }
 }

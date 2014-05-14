@@ -110,7 +110,7 @@ public class AdminMedisin extends JTabbedPane {
         medisinRediger.add(kompStyrke);
 
         medisinForm = new JTextField(TEKSTFELTLENGDE);
-        JComponent kompForm = Komponent.labelFieldRow("Form", medisinForm);
+        JComponent kompForm = Komponent.labelFieldRow("Legemiddelform", medisinForm);
         medisinRediger.add(kompForm);
 
         medisinPakning = new JTextField(TEKSTFELTLENGDE);
@@ -302,7 +302,7 @@ public class AdminMedisin extends JTabbedPane {
 
             if (registrert) {
                 parentFrame.skrivTilFil();
-                String melding = "Medisin er registrert!";
+                String melding = "Medisinen er registrert!";
                 Komponent.popup(parentFrame, melding);
                 oppdaterMedisiner();
                 regGruppVelger.setSelectedIndex(-1);
@@ -313,7 +313,7 @@ public class AdminMedisin extends JTabbedPane {
                 medisinPakning.setText("");
                 regATC.setText("");
             } else {
-                String melding = "Du ble ikke registrert!";
+                String melding = "Medisinen ble ikke registrert!";
                 Komponent.popup(parentFrame, melding);
             }
         }

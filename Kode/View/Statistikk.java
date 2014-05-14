@@ -32,7 +32,7 @@ public class Statistikk extends JPanel {
     private String[] navnString = {"Gruppe", "Kategori", "Medisin"};
     private String[] grupper = {"A", "B", "C"};
     private String[] medisinAlt, nyMedisinAlt;
-    private String[] kolonnenavn = {"Type", "Jan", "Feb", "Mars", "April", "Maj", "Juni", "Juli", "Aug", "Sep", "Okt", "Nov", "Des"};
+    private String[] kolonnenavn = {"Type", "Jan", "Feb", "Mars", "April", "Mai", "Juni", "Juli", "Aug", "Sep", "Okt", "Nov", "Des"};
     private final int RADER = 25;
     private KnappeLytter knappeLytter;
     private RadioLytter radioLytter;

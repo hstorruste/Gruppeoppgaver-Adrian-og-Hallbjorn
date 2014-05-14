@@ -1,6 +1,6 @@
 /*Dette er en GUI for Legekontorvinduet arver JFrame-klassen. 
  Laget av Hallbjørn Storruste s165519 
-  Siste versjon 14-05-2014*/
+ Siste versjon 14-05-2014*/
 package View;
 
 import View.util.Komponent;
@@ -57,7 +57,7 @@ public class LegekontorVindu extends LegeRegSuper {
             return funnet;
         }
     }
-    
+
     /*Setter inn en ny lege i registeret. 
      Returnerer true hvis det er vellykket*/
     public boolean registrerLege(String fornavn, String etternavn, String ep,
@@ -65,7 +65,7 @@ public class LegekontorVindu extends LegeRegSuper {
         return legeregister.settInn(fornavn, etternavn, ep,
                 gadresse, pNr, psted, as, pass);
     }
-    
+
     /*Denne metoden tar imot objektet til legen som er innlogget, setter
      tittelen på vinduet på nytt med legens navn og repainter vinduet med 
      finnPasientGUI.*/
@@ -103,7 +103,7 @@ public class LegekontorVindu extends LegeRegSuper {
     public Pasient getPasient() {
         return pasient;
     }
-    
+
     /*Denne metoden tar imot objektet til pasienten som det skal skrives ut
      resept til og repainter vinduet med skrivReseptGUI. */
     public void tegnSkrivReseptGUI(Pasient pasient) {
@@ -140,7 +140,7 @@ public class LegekontorVindu extends LegeRegSuper {
     public String[] getAlleMedisinPakninger(String navn, String styrke, String form) {
         return medisinregister.getAlleMedisinPakninger(navn, styrke, form);
     }
-    
+
     /*Finner og returnerer en Stringarray med alle legemiddelformer for 
      en medisin med en gitt styrke*/
     public String[] getAlleMedisinFormer(String navn, String styrke) {
@@ -157,7 +157,7 @@ public class LegekontorVindu extends LegeRegSuper {
         Medisin funnet = medisinregister.finnMedisin(navn, styrke, form, pakning);
         return funnet;
     }
-    
+
     /*Registrerer en resept på pasienten.Den sørger også for 
      at pasienten finnes i legens eget register.*/
     public boolean registrerResept(Medisin medisin, Calendar d, Lege lege, int reit, String beskrivelse) {
@@ -183,7 +183,7 @@ public class LegekontorVindu extends LegeRegSuper {
         setTitle(tittel);
         Komponent.endreFont(this);
     }
-    
+
     //Skriver medisinregister, legeregister og pasientregister til fil.
     public void skrivTilFil() {
         try (ObjectOutputStream utfil = new ObjectOutputStream(new FileOutputStream(Komponent.dataFil))) {
@@ -191,11 +191,11 @@ public class LegekontorVindu extends LegeRegSuper {
             utfil.writeObject(legeregister);
             utfil.writeObject(pasientregister);
         } catch (NotSerializableException nse) {
-            System.out.println("Objektet er ikke serialisert!");
-            System.out.println(nse.getMessage());
+            String melding = "Objektet er ikke serialisert!\n" + nse.getMessage();
+            Komponent.popup(this, melding);
         } catch (IOException ioe) {
-            System.out.println("Problemer med utskrift til fil");
-            System.out.println(ioe.getMessage());
+            String melding = "Problemer med utskrift til fil\n" + ioe.getMessage();
+            Komponent.popup(this, melding);
         }
     }
 }

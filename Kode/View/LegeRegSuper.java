@@ -1,7 +1,9 @@
 /*Dette er en abstrakt superklasse for LegekontorVindu og AdminVindu.  
- Ved at de er subklasser av denne klassen vil de begge kunne bruke 
- LegeRegistrer som er et JPanel som tar imot et LegeRegSuper - objekt.
- Den inneholder tre abstrakte metoder som må implementeres av subklassene.
+ Den inneholder to abstrakte metoder som må implementeres av subklassene. 
+ Subklasser av denne klassen vil da kunne bruke LegeRegistrer som tar imot 
+ et LegeRegSuper - objekt. Dette er fordi LegeRegister benytter seg av 
+ metodene som LegeRegSuper - og dermed også LegekontorVindu og AdminVindu har.
+ 
  Laget av Hallbjørn Storruste s165519
  Siste versjon 28-04-2014*/
 package View;

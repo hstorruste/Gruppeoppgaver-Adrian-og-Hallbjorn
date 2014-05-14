@@ -1,7 +1,7 @@
 /*Denne klassen er et GUI til statistikk. 
-  Upprättar medHistorikk, infoLeger och statistikk.
-  Laget av Adrian Westlund s198571.
-  Siste versjon 14-05-2014*/
+ Upprättar medHistorikk, infoLeger och statistikk.
+ Laget av Adrian Westlund s198571.
+ Siste versjon 14-05-2014*/
 package View;
 
 import Controller.*;
@@ -138,11 +138,11 @@ public class StatistikkVindu extends JFrame {
             utfil.writeObject(legeregister);
             utfil.writeObject(pasientregister);
         } catch (NotSerializableException nse) {
-            System.out.println("Objektet er ikke serialisert!");
-            System.out.println(nse.getMessage());
+            String melding = "Objektet er ikke serialisert!\n" + nse.getMessage();
+            Komponent.popup(this, melding);
         } catch (IOException ioe) {
-            System.out.println("Problemer med utskrift til fil");
-            System.out.println(ioe.getMessage());
+            String melding = "Problemer med utskrift til fil\n" + ioe.getMessage();
+            Komponent.popup(this, melding);
         }
     }
 }

@@ -56,7 +56,7 @@ public class LegekontorFinnPasient extends JTabbedPane {
 
         finnKnapp = new JButton("Finn");
         finnKnapp.addActionListener(knappeLytter);
-        logutFinnKnapp = new JButton("Log ut");
+        logutFinnKnapp = new JButton("Logg ut");
         logutFinnKnapp.addActionListener(knappeLytter);
 
         errorFinn = new JLabel("");
@@ -95,7 +95,7 @@ public class LegekontorFinnPasient extends JTabbedPane {
         registrerKnapp = new JButton("Registrer");
         registrerKnapp.addActionListener(knappeLytter);
 
-        logutRegistrerKnapp = new JButton("Log ut");
+        logutRegistrerKnapp = new JButton("Logg ut");
         logutRegistrerKnapp.addActionListener(knappeLytter);
 
         JPanel knappePanel = new JPanel(new GridLayout(1, 0, 5, 5));

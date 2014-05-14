@@ -125,7 +125,7 @@ public class Lege extends Person implements Serializable {
             ut += postnummer + " " + poststed + "\n";
         }
         if (!arbetssted.equals("")) {
-            ut += "Arbeidsted: " + arbetssted + "\n";
+            ut += "Arbeidssted: " + arbetssted + "\n";
         }
         return ut;
     }

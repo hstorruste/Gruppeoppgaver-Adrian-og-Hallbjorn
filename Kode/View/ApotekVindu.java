@@ -95,11 +95,11 @@ public class ApotekVindu extends JFrame {
             utfil.writeObject(legeregister);
             utfil.writeObject(pasientregister);
         } catch (NotSerializableException nse) {
-            System.out.println("Objektet er ikke serialisert!");
-            System.out.println(nse.getMessage());
+            String melding = "Objektet er ikke serialisert!\n" + nse.getMessage();
+            Komponent.popup(this, melding);
         } catch (IOException ioe) {
-            System.out.println("Problemer med utskrift til fil");
-            System.out.println(ioe.getMessage());
+            String melding = "Problemer med utskrift til fil\n" + ioe.getMessage();
+            Komponent.popup(this, melding);
         }
     }
 }
