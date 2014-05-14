@@ -18,7 +18,7 @@ public class StatistikkInfoLeger extends JPanel {
     private JButton sokKnapp;
     private JTextArea textArea;
     private String[] navnString = {"Alle", "Søk", "Reseptgruppe", "Legeliste", "Info om legen"};
-    private JList legeList;
+    private JList<String> legeList;
     private String[] legeAlt;
     private Lege[] legeListe;
     private Lege lege;

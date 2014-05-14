@@ -49,8 +49,8 @@ public class StatistikkMedHistorikk extends JPanel {
 
         add(medisinHistorikkGUI());
     }
-    
-     //Oppretter alt i fanen for Medisin historikk.
+
+    //Oppretter alt i fanen for Medisin historikk.
     private JPanel medisinHistorikkGUI() {
 
         typeGrupp = new ButtonGroup();
@@ -172,7 +172,7 @@ public class StatistikkMedHistorikk extends JPanel {
 
         return medisinHistorikk;
     }
-    
+
     /*Viser felt for søking av lege/pasient, tar imot en container som alle 
      komponentene ligger i.*/
     private void visFelt(Container cont) {
@@ -200,7 +200,7 @@ public class StatistikkMedHistorikk extends JPanel {
             }
         }
     }
-    
+
     //Sjekker forandringer i gruppfelt
     private void checkGruppFelt() {
         if (gruppFelt.getSelectedIndex() == 0) {
@@ -231,7 +231,7 @@ public class StatistikkMedHistorikk extends JPanel {
         medisinFelt.setSelectedIndex(0);
     }
 
-     //Sjekker forandringer i kategorifelt
+    //Sjekker forandringer i kategorifelt
     private void checkKategoriFelt() {
         if (gruppFelt.getSelectedIndex() == 0 && kategoriFelt.getSelectedIndex() == 0) {
             String[] med = parentFrame.getAlleMedisinnavn();
@@ -322,8 +322,7 @@ public class StatistikkMedHistorikk extends JPanel {
                         }
                         personList.setListData(personAlt);
                     }
-                }
-                else if (kategoriFelt.getSelectedIndex() != 0) {
+                } else if (kategoriFelt.getSelectedIndex() != 0) {
                     String kategoriNavn = (String) kategoriFelt.getSelectedItem();
                     medisinListe = parentFrame.finnMedisinKategori(kategoriNavn);
 
@@ -338,8 +337,7 @@ public class StatistikkMedHistorikk extends JPanel {
                         }
                         personList.setListData(personAlt);
                     }
-                }
-                else if (gruppFelt.getSelectedIndex() != 0) {
+                } else if (gruppFelt.getSelectedIndex() != 0) {
                     String gruppeNavn = (String) gruppFelt.getSelectedItem();
                     medisinListe = parentFrame.finnMedisinGruppe(gruppeNavn);
 
@@ -373,8 +371,7 @@ public class StatistikkMedHistorikk extends JPanel {
                         }
                         personList.setListData(personAlt);
                     }
-                }
-                else if (medisinFelt.getSelectedIndex() != 0) {
+                } else if (medisinFelt.getSelectedIndex() != 0) {
                     String medisinNavn = (String) medisinFelt.getSelectedItem();
                     medisinListe = parentFrame.finnMedisinNavn(medisinNavn);
 
@@ -389,8 +386,7 @@ public class StatistikkMedHistorikk extends JPanel {
                         }
                         personList.setListData(personAlt);
                     }
-                }
-                else if (kategoriFelt.getSelectedIndex() != 0) {
+                } else if (kategoriFelt.getSelectedIndex() != 0) {
                     String kategoriNavn = (String) kategoriFelt.getSelectedItem();
                     medisinListe = parentFrame.finnMedisinKategori(kategoriNavn);
 
@@ -405,8 +401,7 @@ public class StatistikkMedHistorikk extends JPanel {
                         }
                         personList.setListData(personAlt);
                     }
-                }
-                else if (gruppFelt.getSelectedIndex() != 0) {
+                } else if (gruppFelt.getSelectedIndex() != 0) {
                     String gruppeNavn = (String) gruppFelt.getSelectedItem();
                     medisinListe = parentFrame.finnMedisinGruppe(gruppeNavn);
 
@@ -436,8 +431,7 @@ public class StatistikkMedHistorikk extends JPanel {
                         personAlt[i] = pasientListe[i].getNavn() + " " + pasientListe[i].getFnr();
                     }
                     personList.setListData(personAlt);
-                }
-                else if (medisinFelt.getSelectedIndex() != 0) {
+                } else if (medisinFelt.getSelectedIndex() != 0) {
                     String medisinNavn = (String) medisinFelt.getSelectedItem();
                     medisinListe = parentFrame.finnMedisinNavn(medisinNavn);
 
@@ -452,8 +446,7 @@ public class StatistikkMedHistorikk extends JPanel {
                         }
                         personList.setListData(personAlt);
                     }
-                }
-                else if (kategoriFelt.getSelectedIndex() != 0) {
+                } else if (kategoriFelt.getSelectedIndex() != 0) {
                     String kategoriNavn = (String) kategoriFelt.getSelectedItem();
                     medisinListe = parentFrame.finnMedisinKategori(kategoriNavn);
 
@@ -468,8 +461,7 @@ public class StatistikkMedHistorikk extends JPanel {
                         }
                         personList.setListData(personAlt);
                     }
-                }
-                else if (gruppFelt.getSelectedIndex() != 0) {
+                } else if (gruppFelt.getSelectedIndex() != 0) {
                     String gruppeNavn = (String) gruppFelt.getSelectedItem();
                     medisinListe = parentFrame.finnMedisinGruppe(gruppeNavn);
 
@@ -503,8 +495,7 @@ public class StatistikkMedHistorikk extends JPanel {
                         }
                         personList.setListData(personAlt);
                     }
-                }
-                else if (medisinFelt.getSelectedIndex() != 0) {
+                } else if (medisinFelt.getSelectedIndex() != 0) {
                     String medisinNavn = (String) medisinFelt.getSelectedItem();
                     medisinListe = parentFrame.finnMedisinNavn(medisinNavn);
 
@@ -519,8 +510,7 @@ public class StatistikkMedHistorikk extends JPanel {
                         }
                         personList.setListData(personAlt);
                     }
-                }
-                else if (kategoriFelt.getSelectedIndex() != 0) {
+                } else if (kategoriFelt.getSelectedIndex() != 0) {
                     String kategoriNavn = (String) kategoriFelt.getSelectedItem();
                     medisinListe = parentFrame.finnMedisinKategori(kategoriNavn);
 
@@ -535,8 +525,7 @@ public class StatistikkMedHistorikk extends JPanel {
                         }
                         personList.setListData(personAlt);
                     }
-                }
-                else if (gruppFelt.getSelectedIndex() != 0) {
+                } else if (gruppFelt.getSelectedIndex() != 0) {
                     String gruppeNavn = (String) gruppFelt.getSelectedItem();
                     medisinListe = parentFrame.finnMedisinGruppe(gruppeNavn);
 
@@ -555,7 +544,7 @@ public class StatistikkMedHistorikk extends JPanel {
             }// End if søk
         }// End if pasient
     }//End metod
-    
+
     //Legger til resepter i reseptList
     private void leggTilReseptList() {
         if (personList.getSelectedIndex() == -1) {
@@ -592,7 +581,7 @@ public class StatistikkMedHistorikk extends JPanel {
             reseptList.setListData(reseptAlt);
         }
     }
-    
+
     //Skriver ut resepten sin toString i reseptArea
     private void leggTilArea() {
         int i = reseptList.getSelectedIndex();
