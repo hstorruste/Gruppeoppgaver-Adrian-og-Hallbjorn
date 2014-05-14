@@ -1,49 +1,43 @@
 package Model;
 /*	Dette er en abstrakt superklasse som inneholder Fornavn og Etternavn
-		Laget av Hallbjørn Storruste
-		Siste versjon 03-04-2014*/
+ Laget av Hallbjørn Storruste
+ Siste versjon 03-04-2014*/
+
 import java.io.*;
 
-public abstract class Person implements Serializable
-{
-	private static final long serialVersionUID = 1001L;
+public abstract class Person implements Serializable {
 
-	private String fornavn, etternavn;
+    private static final long serialVersionUID = 1001L;
 
-	public Person(String fnavn, String enavn)
-	{
-		fornavn = fnavn;
-		etternavn = enavn;
-	}
+    private String fornavn, etternavn;
 
-	public String getFornavn()
-	{
-		return fornavn;
-	}
+    public Person(String fnavn, String enavn) {
+        fornavn = fnavn;
+        etternavn = enavn;
+    }
 
-	public String getEtternavn()
-	{
-		return etternavn;
-	}
-        
-        public String getNavn()
-        {
-            return etternavn + ", " + fornavn;
-        }
+    public String getFornavn() {
+        return fornavn;
+    }
 
-	public void setFornavn(String f)
-	{
-		fornavn = f;
-	}
+    public String getEtternavn() {
+        return etternavn;
+    }
 
-	public void setEtternavn( String e)
-	{
-		etternavn = e;
-	}
+    public String getNavn() {
+        return etternavn + ", " + fornavn;
+    }
 
-	public String toString()
-	{
-		return "Navn: " + etternavn + ", " + fornavn + "\n";
-	}
+    public void setFornavn(String f) {
+        fornavn = f;
+    }
+
+    public void setEtternavn(String e) {
+        etternavn = e;
+    }
+
+    public String toString() {
+        return "Navn: " + etternavn + ", " + fornavn + "\n";
+    }
 
 }
