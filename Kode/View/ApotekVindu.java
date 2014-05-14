@@ -1,12 +1,10 @@
-package View;
-/*  Denne klassen er et GUI til apotek.
+/*Dette er en GUI for apotek.
  Laget av Adrian Westlund s198571.
- Siste versjon 05-05-2014*/
+ Siste versjon 14-05-2014*/
+package View;
 
 import View.util.Komponent;
-import Controller.Legeregister;
-import Controller.Medisinregister;
-import Controller.Pasientregister;
+import Controller.*;
 import Model.Pasient;
 import javax.swing.*;
 import java.awt.*;
@@ -38,17 +36,18 @@ public class ApotekVindu extends JFrame {
         legeregister = lreg;
         pasientregister = preg;
         medisinregister = mreg;
-        
+
         Komponent.bilde(this);
         setSize(BREDDE, HØYDE);
         setVisible(true);
     }
 
-    //Returnerer pasientobjektet.
+    //Returnerer pasient objektet.
     public Pasient getKund() {
         return kund;
     }
 
+    //Finner en pasient på fødselsnummer. 
     public Pasient hittad(String fnr) {
         Pasient hittad = pasientregister.finnPasientFnr(fnr);
         if (hittad == null) {
@@ -57,15 +56,21 @@ public class ApotekVindu extends JFrame {
             return hittad;
         }
     }
-     public void tegnFinnPasientGUI()
-        {
-            if(GUI != null)
-                remove(GUI);
-            GUI = new ApotekFinnPasient(this);
-            add(GUI);
-            setTitle(tittel);
-            Komponent.endreFont(this);
+
+    //Repainter vinduet med finnPasientGUI.
+    public void tegnFinnPasientGUI() {
+        if (GUI != null) {
+            remove(GUI);
         }
+        GUI = new ApotekFinnPasient(this);
+        add(GUI);
+        setTitle(tittel);
+        Komponent.endreFont(this);
+    }
+
+    /*Tar imot objektet til pasientet som er funnen, setter
+     tittelen på vinduet på nytt med pasientens navn og repainter vinduet med 
+     apotekPasientGUI.*/
     public void tegnApotekPasientGUI(Pasient kund) {
 
         this.kund = kund;
@@ -82,15 +87,14 @@ public class ApotekVindu extends JFrame {
         Komponent.endreFont(this);
         repaint();
     }
-    /*Skriver medisinregister, legeregister og pasientregister til fil.*/
+
+    //Skriver medisinregister, legeregister og pasientregister til fil.
     public void skrivTilFil() {
-        try(ObjectOutputStream utfil = new ObjectOutputStream( new FileOutputStream(Komponent.dataFil)))
-        {
+        try (ObjectOutputStream utfil = new ObjectOutputStream(new FileOutputStream(Komponent.dataFil))) {
             utfil.writeObject(medisinregister);
             utfil.writeObject(legeregister);
             utfil.writeObject(pasientregister);
-        }
-        catch (NotSerializableException nse) {
+        } catch (NotSerializableException nse) {
             System.out.println("Objektet er ikke serialisert!");
             System.out.println(nse.getMessage());
         } catch (IOException ioe) {

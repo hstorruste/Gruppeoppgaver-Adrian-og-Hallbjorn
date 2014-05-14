@@ -1,3 +1,7 @@
+/*Denne klassen er et GUI til admin. 
+  Upprättar AdminLege och AdminMedisin.
+  Laget av Adrian Westlund s198571.
+  Siste versjon 14-05-2014*/
 package View;
 
 import View.util.Komponent;
@@ -8,10 +12,7 @@ import java.io.*;
 import java.util.TreeSet;
 import javax.swing.*;
 
-/*Denne klassen er et GUI til admin. 
- Upprättar AdminLege och AdminMedisin.
- Laget av Adrian Westlund s198571.
- Siste versjon 29-04-2014*/
+
 public class AdminVindu extends LegeRegSuper {
 
     private JTabbedPane legeGUI, medisinGUI;
@@ -67,18 +68,21 @@ public class AdminVindu extends LegeRegSuper {
     {
         return medisinregister.getAlleMedisinnavn();
     }
+    
     /*Finner og returnerer en Stringarray med alle pakninger for en medisin 
     med en gitt styrke og en gitt legemiddelform*/
     public String[] getAlleMedisinPakninger(String navn, String styrke, String form)
     {
         return medisinregister.getAlleMedisinPakninger(navn, styrke, form);
     }
+    
     /*Finner og returnerer en Stringarray med alle legemiddelformer for 
     en medisin med en gitt styrke*/
     public String[] getAlleMedisinFormer(String navn, String styrke)
     {
         return medisinregister.getAlleMedisinFormer(navn, styrke);
     }
+    
     //Finner og returnerer en Stringarray med alle styrker for en medisin
     public String[] getAlleMedisinStyrker(String navn)
     {
@@ -92,9 +96,10 @@ public class AdminVindu extends LegeRegSuper {
 
     //Registrer medisin med Medisinregister sin settInn metode
     public boolean registrerMedisin(String navn, String kat, String gruppe, String styrke, String form, String pakning, String atcNr) {
-
         return medisinregister.settInn(navn, kat, gruppe, styrke, form, pakning, atcNr);
     }
+    
+    //
     public String[] skrivKatArray(){
         return medisinregister.getAlleKategorier();
     }
@@ -103,9 +108,9 @@ public class AdminVindu extends LegeRegSuper {
     public String skrivMedisinListe() {
         return medisinregister.toString();
     }
-    /*Skriver medisinregister, legeregister og pasientregister til fil.*/
 
     @Override
+    //Skriver medisinregister, legeregister og pasientregister til fil.
     public void skrivTilFil() {
         try(ObjectOutputStream utfil = new ObjectOutputStream( new FileOutputStream(Komponent.dataFil)))
         {

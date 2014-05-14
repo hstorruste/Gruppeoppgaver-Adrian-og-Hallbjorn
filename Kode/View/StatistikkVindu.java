@@ -1,3 +1,7 @@
+/*Denne klassen er et GUI til statistikk. 
+  Upprättar medHistorikk, infoLeger och statistikk.
+  Laget av Adrian Westlund s198571.
+  Siste versjon 14-05-2014*/
 package View;
 
 import Controller.*;
@@ -79,15 +83,14 @@ public class StatistikkVindu extends JFrame {
     public Medisin[] finnMedisinKategori(String kategoriNavn) {
         return medisinregister.finnMedisinKategori(kategoriNavn);
     }
-    
+
     //Retunerer alle medisiner med et bestemt gruppe.
     public Medisin[] finnMedisinGruppe(String gruppeNavn) {
         return medisinregister.finnMedisinGruppe(gruppeNavn);
     }
-    
+
     /*Retunerer alle leger som har skrivit ut resept på medisinene i arrayet.
-     **Om man sender med null får man alle leger.
-     */
+     Om man sender med null får man alle leger.*/
     public Lege[] getLegeListe(Medisin[] medisiner) {
         if (medisiner == null) {
             return legeregister.getAlleLeger();
@@ -102,15 +105,13 @@ public class StatistikkVindu extends JFrame {
     }
 
     /*Retunerer alle leger som har skrivit ut resept på medisinene i arrayet
-     **og som overensstemmer med navn.
-     */
+     og som overensstemmer med navn.*/
     public Lege[] finnLegeNavn(String etternavn, String fornavn, Medisin[] medisin) {
         return legeregister.finnLegeNavn(etternavn, fornavn, medisin);
     }
 
     /*Retunerer alle pasienter som har fått resept på medisinene i arrayet.
-     **Om man sender med null får man alle pasienter.
-     */
+     Om man sender med null får man alle pasienter.*/
     public Pasient[] getPasientListe(Medisin[] medisiner) {
         if (medisiner == null) {
             return pasientregister.getAllePasienter();
@@ -118,19 +119,19 @@ public class StatistikkVindu extends JFrame {
             return pasientregister.finnPasientMedisin(medisiner);
         }
     }
-    
+
     //Retunerer alle pasienter som overensstemmer med navn.
-    public Pasient[] finnPasientNavn(String etternavn, String fornavn){
+    public Pasient[] finnPasientNavn(String etternavn, String fornavn) {
         return pasientregister.finnPasientNavn(etternavn, fornavn);
     }
-    
+
     /*Retunerer alle pasienter som har fått resept på medisinene i arrayet
-    **og som overensstemmer med navn.
-    */
-    public Pasient[] finnPasientNavn(String etternavn, String fornavn, Medisin[] medisin){
+     og som overensstemmer med navn.*/
+    public Pasient[] finnPasientNavn(String etternavn, String fornavn, Medisin[] medisin) {
         return pasientregister.finnPasientNavn(etternavn, fornavn, medisin);
     }
 
+    //Skriver medisinregister, legeregister og pasientregister til fil.
     public void skrivTilFil() {
         try (ObjectOutputStream utfil = new ObjectOutputStream(new FileOutputStream(Komponent.dataFil))) {
             utfil.writeObject(medisinregister);

@@ -1,3 +1,6 @@
+/*Denne klassen upprättar alla komponenter till lege fanan.
+  Laget av Adrian Westlund s198571.
+  Siste versjon 14-05-2014*/
 package View;
 
 import View.util.*;
@@ -8,9 +11,6 @@ import java.awt.event.*;
 import java.util.Arrays;
 import javax.swing.*;
 
-/*Denne klassen upprättar alla komponenter till lege fanan.
- Laget av Adrian Westlund s198571.
- Siste versjon 05-05-2014*/
 public class AdminLege extends JTabbedPane {
 
     private AdminVindu parentFrame;
@@ -21,8 +21,7 @@ public class AdminLege extends JTabbedPane {
     private JLabel error;
     private JTextArea legeTextArea;
     private String[] labeltekst = {"E-post", "Fornavn", "Etternavn", "E-post", "E-post igjen",
-        "Passord", "Passord igjen", "Gateadresse", "Postnummer",
-        "Poststed", "Arbeidssted"};
+        "Passord", "Passord igjen", "Gateadresse", "Postnummer", "Poststed", "Arbeidssted"};
     private JCheckBox a, b, c;
 
     private final int TEKSTFELTLENGDE = 10;
@@ -124,15 +123,15 @@ public class AdminLege extends JTabbedPane {
         checkbox.add(b);
         checkbox.add(c);
         rediger.add(checkbox);
-        
+
         redigerKnapp = new JButton("Lagre");
         redigerKnapp.addActionListener(knappeLytter);
 
         JPanel redigerKnappPanel = new JPanel(new BorderLayout());
-       
+
         redigerKnappPanel.add(redigerKnapp, BorderLayout.LINE_END);
         rediger.add(redigerKnappPanel);
-        
+
         skjulFelt(rediger);
 
         JPanel legeInnFelt = new JPanel(new FlowLayout());
@@ -146,12 +145,12 @@ public class AdminLege extends JTabbedPane {
         legeTextfeltPanel.add(scrollPane);
 
         error = new JLabel("\t");
-        error.setForeground(Komponent.feilTekst);   
-        
+        error.setForeground(Komponent.feilTekst);
+
         JPanel toPanel = new JPanel(new BorderLayout());
         toPanel.add(legeInnFelt, BorderLayout.LINE_START);
         toPanel.add(legeTextfeltPanel, BorderLayout.LINE_END);
-        toPanel.add(error,BorderLayout.PAGE_END);
+        toPanel.add(error, BorderLayout.PAGE_END);
 
         JPanel legeRedigerTilFane = new JPanel(new FlowLayout());
         legeRedigerTilFane.add(toPanel);
@@ -159,7 +158,7 @@ public class AdminLege extends JTabbedPane {
         return legeRedigerTilFane;
     }
 
-    //Metoden skal finner en lege på e-post
+    //Finner en lege på e-post.
     private void finnLege() {
         lege = parentFrame.finnLege(finnLegeFelt.getText());
         if (lege == null) {
@@ -183,52 +182,53 @@ public class AdminLege extends JTabbedPane {
             a.setSelected(lege.getA());
             b.setSelected(lege.getB());
             c.setSelected(lege.getC());
-            
-            JComponent[] felt = new JComponent[]{fornavnFelt, etternavnFelt, 
-            ePostFelt, ePostIgenFelt, passordFelt, passordIgenFelt, gateadresseFelt,
-            postNrFelt, poststedFelt, arbetsstedFelt};
-        
-        for(JComponent child: felt)
-        {
-            child.setVisible(true);
-            JLabel merkelapp = Komponent.finnLabelTilFelt(this, child);
-            if(merkelapp != null)
-                merkelapp.setVisible(true);
-        }
-        
-        redigerKnapp.setVisible(true);
-        a.setVisible(true);
-        b.setVisible(true);
-        c.setVisible(true);
+
+            JComponent[] felt = new JComponent[]{fornavnFelt, etternavnFelt,
+                ePostFelt, ePostIgenFelt, passordFelt, passordIgenFelt, gateadresseFelt,
+                postNrFelt, poststedFelt, arbetsstedFelt};
+
+            for (JComponent child : felt) {
+                child.setVisible(true);
+                JLabel merkelapp = Komponent.finnLabelTilFelt(this, child);
+                if (merkelapp != null) {
+                    merkelapp.setVisible(true);
+                }
+            }
+
+            redigerKnapp.setVisible(true);
+            a.setVisible(true);
+            b.setVisible(true);
+            c.setVisible(true);
         }
     }
+
     /*Skjuler felt for editering av lege, tar imot en container som alle 
-    komponentene ligger i.*/
-    private void skjulFelt(Container cont)
-    {
-        JComponent[] felt = new JComponent[]{fornavnFelt, etternavnFelt, 
+     komponentene ligger i.*/
+    private void skjulFelt(Container cont) {
+        JComponent[] felt = new JComponent[]{fornavnFelt, etternavnFelt,
             ePostFelt, ePostIgenFelt, passordFelt, passordIgenFelt, gateadresseFelt,
             postNrFelt, poststedFelt, arbetsstedFelt};
-        
-        for(JComponent child: felt)
-        {
+
+        for (JComponent child : felt) {
             child.setVisible(false);
             JLabel merkelapp = Komponent.finnLabelTilFelt(cont, child);
-            if(merkelapp != null)
+            if (merkelapp != null) {
                 merkelapp.setVisible(false);
+            }
         }
-        
+
         redigerKnapp.setVisible(false);
         a.setVisible(false);
         b.setVisible(false);
         c.setVisible(false);
     }
-    //Metoden skriver legeregister.toString()
+
+    //Skriver legeregister.toString()
     private void skrivListe() {
         legeTextArea.setText(parentFrame.skrivLegeListe());
     }
 
-    //Metoden uppdaterar en lege.
+    //Uppdaterar et lege object.
     private void updateLege() {
         if (lege == null) {
             Komponent.popup(parentFrame, "Ingen lege er funnet");
@@ -243,15 +243,15 @@ public class AdminLege extends JTabbedPane {
             String postnr = postNrFelt.getText();
             String poststed = poststedFelt.getText();
             String arbeidssted = arbetsstedFelt.getText();
-            
-            if(!Komponent.riktigEpost(epost) || !Komponent.riktigEpost(epostigjen)){
+
+            if (!Komponent.riktigEpost(epost) || !Komponent.riktigEpost(epostigjen)) {
                 String melding = "Epost er ikke på formen noen@eksempel.no!";
                 Komponent.popup(parentFrame, melding);
-            } else if(!Postnummer.riktigPostNr(postnr)){
+            } else if (!Postnummer.riktigPostNr(postnr)) {
                 String melding = "Postnummer må inneholde fire siffer (0-9)!";
                 Komponent.popup(parentFrame, melding);
                 poststedFelt.setText("");
-            } else if(Poststed.finnPoststed(postnr) == null){
+            } else if (Poststed.finnPoststed(postnr) == null) {
                 String melding = "Postnummeret eksisterer ikke!";
                 Komponent.popup(parentFrame, melding);
                 poststedFelt.setText("");
@@ -321,44 +321,37 @@ public class AdminLege extends JTabbedPane {
             }
         }
     }
-    
+
     private class FeltLytter extends FocusAdapter {
 
         @Override
         public void focusLost(FocusEvent e) {
-            if(e.getSource() == ePostFelt || e.getSource() == ePostIgenFelt)
-            {
-                JTextField felt = (JTextField)e.getSource();
-                if(Komponent.riktigEpost(felt.getText())){
+            if (e.getSource() == ePostFelt || e.getSource() == ePostIgenFelt) {
+                JTextField felt = (JTextField) e.getSource();
+                if (Komponent.riktigEpost(felt.getText())) {
                     felt.setForeground(Komponent.rettTekst);
                     error.setText("");
+                } else {
+                    felt.setForeground(Komponent.feilTekst);
+                    error.setText("Vennligst skriv epost på formen noen@eksempel.no.");
                 }
-                else{
-                     felt.setForeground(Komponent.feilTekst);
-                     error.setText("Vennligst skriv epost på formen noen@eksempel.no.");
-                }
-            }
-            
-            else if(e.getSource() == postNrFelt)
-            {
+            } else if (e.getSource() == postNrFelt) {
                 String postNr = postNrFelt.getText();
-                if(!Postnummer.riktigPostNr(postNr)){
+                if (!Postnummer.riktigPostNr(postNr)) {
                     postNrFelt.setForeground(Komponent.feilTekst);
                     error.setText("Vennligst skriv postnummer med fire siffer (0-9).");
                     poststedFelt.setText("");
-                }
-                else if(Poststed.finnPoststed(postNr) == null){
+                } else if (Poststed.finnPoststed(postNr) == null) {
                     postNrFelt.setForeground(Komponent.feilTekst);
                     error.setText("Postnummeret eksisterer ikke!");
                     poststedFelt.setText("");
-                }
-                else{
+                } else {
                     postNrFelt.setForeground(Komponent.rettTekst);
                     error.setText("");
-                    poststedFelt.setText( Poststed.finnPoststed(postNr));
+                    poststedFelt.setText(Poststed.finnPoststed(postNr));
                 }
             }
-            
+
         }
     }
 }

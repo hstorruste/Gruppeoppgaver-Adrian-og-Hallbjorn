@@ -1,3 +1,6 @@
+/*Denne klassen upprättar alla komponenter till info leger fanan.
+ Laget av Adrian Westlund s198571.
+ Siste versjon 14-05-2014*/
 package View;
 
 import Model.Lege;
@@ -153,7 +156,8 @@ public class StatistikkInfoLeger extends JPanel {
         }
     }
 
-    //Legger til lege objekter i legeList
+    /*Sjekker alle verdier til vinduet og finner de leger som passer søket.
+     setter sen in legene i legeListe med setLegeList()*/
     private void leggTilLegeList() {
         legeListe = null;
         if (alleRadio.isSelected()) {
@@ -174,14 +178,14 @@ public class StatistikkInfoLeger extends JPanel {
             } else if (a.isSelected()) {
                 legeListe = sjekkA(leger);
                 setLegeList(legeListe);
-            } else if (b.isSelected() && c.isSelected()){
+            } else if (b.isSelected() && c.isSelected()) {
                 legeListe = sjekkC(leger);
                 legeListe = sjekkB(legeListe);
                 setLegeList(legeListe);
-            } else if (b.isSelected()){
+            } else if (b.isSelected()) {
                 legeListe = sjekkB(leger);
                 setLegeList(legeListe);
-            } else if (c.isSelected()){
+            } else if (c.isSelected()) {
                 legeListe = sjekkC(leger);
                 setLegeList(legeListe);
             } else {
@@ -189,10 +193,10 @@ public class StatistikkInfoLeger extends JPanel {
                 Komponent.popup(parentFrame, melding);
             }
         }
-        if(sokRadio.isSelected()){
+        if (sokRadio.isSelected()) {
             String etternavn = etternavnFelt.getText();
             String fornavn = fornavnFelt.getText();
-            Lege[] leger = parentFrame.finnLegeNavn( etternavn, fornavn );
+            Lege[] leger = parentFrame.finnLegeNavn(etternavn, fornavn);
             if (a.isSelected() && b.isSelected() && c.isSelected()) {
                 legeListe = sjekkC(leger);
                 legeListe = sjekkB(legeListe);
@@ -209,14 +213,14 @@ public class StatistikkInfoLeger extends JPanel {
             } else if (a.isSelected()) {
                 legeListe = sjekkA(leger);
                 setLegeList(legeListe);
-            } else if (b.isSelected() && c.isSelected()){
+            } else if (b.isSelected() && c.isSelected()) {
                 legeListe = sjekkC(leger);
                 legeListe = sjekkB(legeListe);
                 setLegeList(legeListe);
-            } else if (b.isSelected()){
+            } else if (b.isSelected()) {
                 legeListe = sjekkB(leger);
                 setLegeList(legeListe);
-            } else if (c.isSelected()){
+            } else if (c.isSelected()) {
                 legeListe = sjekkC(leger);
                 setLegeList(legeListe);
             } else {
@@ -226,6 +230,7 @@ public class StatistikkInfoLeger extends JPanel {
         }
     }
 
+//Legger til lege objekter i legeList
     private void setLegeList(Lege[] leger) {
         if (leger.length == 0) {
             String melding = "Finner ikke noen lege.";
@@ -239,6 +244,7 @@ public class StatistikkInfoLeger extends JPanel {
         }
     }
 
+    //Sjekker om legen får skriva resepter på gruppen A.
     private Lege[] sjekkA(Lege[] leger) {
         int k = 0;
         legeListe = new Lege[leger.length];
@@ -252,6 +258,7 @@ public class StatistikkInfoLeger extends JPanel {
         return legeListe;
     }
 
+    //Sjekker om legen får skriva resepter på gruppen B.
     private Lege[] sjekkB(Lege[] leger) {
         int k = 0;
         legeListe = new Lege[leger.length];
@@ -265,6 +272,7 @@ public class StatistikkInfoLeger extends JPanel {
         return legeListe;
     }
 
+    //Sjekker om legen får skriva resepter på gruppen C.
     private Lege[] sjekkC(Lege[] leger) {
         int k = 0;
         legeListe = new Lege[leger.length];
@@ -278,7 +286,7 @@ public class StatistikkInfoLeger extends JPanel {
         return legeListe;
     }
 
-//Skriver ut resepten sin toString i reseptArea
+    //Skriver ut resepten sin toString i reseptArea
     private void leggTilArea() {
         int i = legeList.getSelectedIndex();
         String reseptInfo = "";
@@ -312,7 +320,6 @@ public class StatistikkInfoLeger extends JPanel {
 
     private class ListLytter implements ListSelectionListener {
 
-        @Override
         public void valueChanged(ListSelectionEvent e) {
             if (e.getSource() == legeList) {
                 leggTilArea();

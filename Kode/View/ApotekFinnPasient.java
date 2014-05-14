@@ -1,9 +1,8 @@
+/*Detta är GUI för finn pasient. Den är en del av ApotekVindu. 
+ Laget av Adrian Westlund s198571 
+ Siste versjon 05-05-2014*/
 package View;
 
-/**
- * Detta är GUI för finn pasient. Den är en del av AdminVindu. Laget av Adrian
- * Westlund s198571 Siste versjon 05-05-2014
- */
 import View.util.Komponent;
 import Model.Pasient;
 import java.awt.*;
@@ -29,7 +28,7 @@ public class ApotekFinnPasient extends JPanel {
         add(finnPasientGUI());
     }
 
-    //Lagar allt till login
+    //Oppretter alle komponenter for login.
     public JPanel finnPasientGUI() {
         JPanel apotekFinnPasient = new JPanel(new GridLayout(0, 1, 5, 5));
 
@@ -48,7 +47,7 @@ public class ApotekFinnPasient extends JPanel {
         return apotekFinnPasient;
     }
 
-    //Metoden skal finner en pasient på fødselsnummer
+    //Finner en pasient på fødselsnummer
     public void hittadPasient() {
         String fnr = finnPasient.getText();
         Pasient hittad = parentFrame.hittad(fnr);

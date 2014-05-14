@@ -1,3 +1,6 @@
+/*Denne klassen upprättar alla komponenter till medisin fanan.
+  Laget av Adrian Westlund s198571.
+  Siste versjon 14-05-2014*/
 package View;
 
 import View.util.Komponent;
@@ -7,17 +10,14 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-/*Denne klassen upprättar alla komponenter till medisin fanan.
- Laget av Adrian Westlund s198571.
- Siste versjon 06-05-2014*/
 public class AdminMedisin extends JTabbedPane {
 
     private AdminVindu parentFrame;
-    private JTextField medisinNavn, medisinStyrke, medisinForm, medisinPakning, atc, 
+    private JTextField medisinNavn, medisinStyrke, medisinForm, medisinPakning, atc,
             regMedisinNavn, regMedisinStyrke, regMedisinForm, regMedisinPakning, regATC;
     private JButton finnMedisinKnapp, seMedisinListeKnapp, medisinSpareKnapp, regMedisinSpareKnapp;
     private JTextArea medisinTextArea;
-    private JComboBox<String> finnNavn, finnStyrke, finnForm, finnPakning, 
+    private JComboBox<String> finnNavn, finnStyrke, finnForm, finnPakning,
             gruppVelger, kategoriVelger, regGruppVelger, regKategoriVelger;
     private String[] abc = {"A", "B", "C"};
     private String[] kategoriArray;
@@ -43,10 +43,10 @@ public class AdminMedisin extends JTabbedPane {
         addTab("Registrer", registrer);
     }
 
-    //Leger alla komponenter till medisin sin rediger fana.
+    //Oppretter alt i fanen for rediger.
     private JPanel redigerGUI() {
         JPanel medisinRediger = new JPanel(new GridLayout(0, 1, 5, 5));
-        
+
         String[] medisiner = parentFrame.getAlleMedisinnavn();
         finnNavn = new JComboBox<>(medisiner);
         finnNavn.setSelectedIndex(-1);
@@ -54,28 +54,28 @@ public class AdminMedisin extends JTabbedPane {
         finnNavn.addActionListener(lytter);
         JPanel navnRediger = (JPanel) Komponent.labelComboBoxRow("Medisin", finnNavn);
         medisinRediger.add(navnRediger);
-        
+
         finnStyrke = new JComboBox<>();
         finnStyrke.setSelectedIndex(-1);
         finnStyrke.setEditable(false);
         finnStyrke.addActionListener(lytter);
         JPanel styrkeRediger = Komponent.labelComboBoxRow("Styrke", finnStyrke);
         medisinRediger.add(styrkeRediger);
-        
+
         finnForm = new JComboBox<>();
         finnForm.setSelectedIndex(-1);
         finnForm.setEditable(false);
         finnForm.addActionListener(lytter);
         JPanel formRediger = Komponent.labelComboBoxRow("Form", finnForm);
         medisinRediger.add(formRediger);
-        
+
         finnPakning = new JComboBox<>();
         finnPakning.setSelectedIndex(-1);
         finnPakning.setEditable(false);
         finnPakning.addActionListener(lytter);
         JPanel pakningRediger = Komponent.labelComboBoxRow("Pakning", finnPakning);
         medisinRediger.add(pakningRediger);
-        
+
         finnMedisinKnapp = new JButton("Finn");
         finnMedisinKnapp.setPreferredSize(new Dimension(152, 20));
         finnMedisinKnapp.addActionListener(lytter);
@@ -89,11 +89,11 @@ public class AdminMedisin extends JTabbedPane {
         JPanel seMedisinListeKnappPanel = new JPanel(new BorderLayout());
         seMedisinListeKnappPanel.add(seMedisinListeKnapp, BorderLayout.LINE_END);
         medisinRediger.add(seMedisinListeKnappPanel);
-        
+
         medisinNavn = new JTextField(TEKSTFELTLENGDE);
         JComponent kompNavn = Komponent.labelFieldRow("Navn", medisinNavn);
         medisinRediger.add(kompNavn);
-                
+
         kategoriVelger = new JComboBox<>(kategoriArray);
         kategoriVelger.setSelectedIndex(-1);
         kategoriVelger.setEditable(true);
@@ -104,15 +104,15 @@ public class AdminMedisin extends JTabbedPane {
         gruppVelger.setSelectedIndex(-1);
         JComponent grupp = Komponent.labelComboBoxRow("Gruppe", gruppVelger);
         medisinRediger.add(grupp);
-        
+
         medisinStyrke = new JTextField(TEKSTFELTLENGDE);
         JComponent kompStyrke = Komponent.labelFieldRow("Styrke", medisinStyrke);
         medisinRediger.add(kompStyrke);
-        
+
         medisinForm = new JTextField(TEKSTFELTLENGDE);
         JComponent kompForm = Komponent.labelFieldRow("Form", medisinForm);
         medisinRediger.add(kompForm);
-        
+
         medisinPakning = new JTextField(TEKSTFELTLENGDE);
         JComponent kompPakning = Komponent.labelFieldRow("Pakning", medisinPakning);
         medisinRediger.add(kompPakning);
@@ -144,22 +144,20 @@ public class AdminMedisin extends JTabbedPane {
 
         JPanel medisinRedigerTilFane = new JPanel(new FlowLayout());
         medisinRedigerTilFane.add(toPanel);
-        
-        
+
         skjulFelt(medisinRedigerTilFane);
-        
-            
+
         return medisinRedigerTilFane;
     }
 
-    //Leger alla komponenter till medisin sin registrer fana.
+    //Oppretter alt i fanen for registrer.
     private JPanel registrerGUI() {
         JPanel medisinRegistrer = new JPanel(new GridLayout(0, 1, 5, 5));
 
         regMedisinNavn = new JTextField(TEKSTFELTLENGDE);
         JPanel kompNavn = Komponent.labelFieldRow("Navn", regMedisinNavn);
         medisinRegistrer.add(kompNavn);
-        
+
         regKategoriVelger = new JComboBox<>(kategoriArray);
         regKategoriVelger.setSelectedIndex(-1);
         regKategoriVelger.setEditable(true);
@@ -170,19 +168,19 @@ public class AdminMedisin extends JTabbedPane {
         regGruppVelger.setSelectedIndex(-1);
         JPanel grupp = Komponent.labelComboBoxRow("Gruppe", regGruppVelger);
         medisinRegistrer.add(grupp);
-        
+
         regMedisinStyrke = new JTextField(TEKSTFELTLENGDE);
         JPanel kompStyrke = Komponent.labelFieldRow("Styrke", regMedisinStyrke);
         medisinRegistrer.add(kompStyrke);
-        
+
         regMedisinForm = new JTextField(TEKSTFELTLENGDE);
         JPanel kompForm = Komponent.labelFieldRow("Legemiddelform", regMedisinForm);
         medisinRegistrer.add(kompForm);
-        
+
         regMedisinPakning = new JTextField(TEKSTFELTLENGDE);
         JPanel kompPakning = Komponent.labelFieldRow("Pakning", regMedisinPakning);
         medisinRegistrer.add(kompPakning);
-        
+
         regATC = new JTextField(TEKSTFELTLENGDE);
         regATC.addActionListener(lytter);
         JPanel kompATC = Komponent.labelFieldRow("ATC-nr", regATC);
@@ -197,25 +195,26 @@ public class AdminMedisin extends JTabbedPane {
         return medisinRegistrer;
     }
 
+    //Finner en bestemd medisin med navn, styrke, form, pakning.
     public void finnMedisin() {
-        String navn = (String)finnNavn.getSelectedItem();
-        String styrke = (String)finnStyrke.getSelectedItem();
-        String form = (String)finnForm.getSelectedItem();
-        String pakning = (String)finnPakning.getSelectedItem();
-        
+        String navn = (String) finnNavn.getSelectedItem();
+        String styrke = (String) finnStyrke.getSelectedItem();
+        String form = (String) finnForm.getSelectedItem();
+        String pakning = (String) finnPakning.getSelectedItem();
+
         funnet = parentFrame.finnMedisin(navn, styrke, form, pakning);
         if (funnet == null) {
             Komponent.popup(parentFrame, "Finner ikke medisinen");
         } else {
-            JComponent[] felt = new JComponent[]{gruppVelger, kategoriVelger, 
-            medisinNavn, medisinStyrke, medisinForm, medisinPakning, atc};
-        
-            for(JComponent child: felt)
-            {
+            JComponent[] felt = new JComponent[]{gruppVelger, kategoriVelger,
+                medisinNavn, medisinStyrke, medisinForm, medisinPakning, atc};
+
+            for (JComponent child : felt) {
                 child.setVisible(true);
                 JLabel merkelapp = Komponent.finnLabelTilFelt(this, child);
-                if(merkelapp != null)
+                if (merkelapp != null) {
                     merkelapp.setVisible(true);
+                }
             }
 
             medisinSpareKnapp.setVisible(true);
@@ -241,12 +240,14 @@ public class AdminMedisin extends JTabbedPane {
         }
     }
 
+    //Skriver medisinregister.toString()
     public void skrivListe() {
         medisinTextArea.setText(parentFrame.skrivMedisinListe());
     }
 
+    //Metoden uppdaterar et medisin object.
     public void updateMedisin() {
-        
+
         if (funnet == null) {
             Komponent.popup(parentFrame, "Ingen medisin funnet");
         } else {
@@ -257,7 +258,7 @@ public class AdminMedisin extends JTabbedPane {
             String styrke = medisinStyrke.getText();
             String form = medisinForm.getText();
             String pakning = medisinPakning.getText();
-            
+
             funnet.setGrupp(grupp);
             funnet.setKategori(kategori);
             funnet.setNavn(navn);
@@ -276,13 +277,14 @@ public class AdminMedisin extends JTabbedPane {
             medisinForm.setText("");
             medisinPakning.setText("");
             atc.setText("");
-            
+
             funnet = null;
             skjulFelt(this);
-            
+
             oppdaterMedisiner();
         }
     }
+
     // Metoden registrerar en pasient om alla felt är ifyllda
     private void registrerMedisin() {
         String navn = regMedisinNavn.getText();
@@ -297,7 +299,7 @@ public class AdminMedisin extends JTabbedPane {
             Komponent.popup(parentFrame, melding);
         } else {
             boolean registrert = parentFrame.registrerMedisin(navn, kategori, grupp, styrke, form, pakning, atcNr);
-            
+
             if (registrert) {
                 parentFrame.skrivTilFil();
                 String melding = "Medisin er registrert!";
@@ -316,142 +318,136 @@ public class AdminMedisin extends JTabbedPane {
             }
         }
     }
-    /*Oppdaterer innhold i ComboBox for pakning og gjør dem synlig/usynlig.*/
-    private void oppdaterPakningComboBox()
-    {
-        if(finnForm.getSelectedIndex() > -1)
-        {
+
+    //Oppdaterer innhold i ComboBox for pakning og gjør dem synlig/usynlig.
+    private void oppdaterPakningComboBox() {
+        if (finnForm.getSelectedIndex() > -1) {
             finnPakning.setVisible(true);
             JLabel merkelapp = Komponent.finnLabelTilFelt(this, finnPakning);
             merkelapp.setVisible(true);
             finnPakning.removeAllItems();
-            String navn = (String)finnNavn.getSelectedItem();
-            String styrke = (String)finnStyrke.getSelectedItem();
-            String form = (String)finnForm.getSelectedItem();
+            String navn = (String) finnNavn.getSelectedItem();
+            String styrke = (String) finnStyrke.getSelectedItem();
+            String form = (String) finnForm.getSelectedItem();
             String[] pakning = parentFrame.getAlleMedisinPakninger(navn, styrke, form);
-            for(int i = 0; i < pakning.length; i++)
+            for (int i = 0; i < pakning.length; i++) {
                 finnPakning.insertItemAt(pakning[i], i);
-        }
-        else
-        {
+            }
+        } else {
             finnPakning.setVisible(false);
             JLabel merkelapp = Komponent.finnLabelTilFelt(this, finnPakning);
             merkelapp.setVisible(false);
             /*gruppeFelt.setText("");
-            kategoriFelt.setText("");
-            atcFelt.setText("");*/
+             kategoriFelt.setText("");
+             atcFelt.setText("");*/
         }
     }
-    
-    /*Oppdaterer innhold i ComboBox for form og gjør dem synlig/usynlig.*/
-    private void oppdaterFormComboBox()
-    {
-        if(finnStyrke.getSelectedIndex() > -1)
-        {
+
+    //Oppdaterer innhold i ComboBox for form og gjør dem synlig/usynlig.
+    private void oppdaterFormComboBox() {
+        if (finnStyrke.getSelectedIndex() > -1) {
             finnForm.setVisible(true);
             JLabel merkelapp = Komponent.finnLabelTilFelt(this, finnForm);
             merkelapp.setVisible(true);
             finnForm.removeAllItems();
-            String navn = (String)finnNavn.getSelectedItem();
-            String styrke = (String)finnStyrke.getSelectedItem();
+            String navn = (String) finnNavn.getSelectedItem();
+            String styrke = (String) finnStyrke.getSelectedItem();
             String[] form = parentFrame.getAlleMedisinFormer(navn, styrke);
-            for(int i = 0; i < form.length; i++)
+            for (int i = 0; i < form.length; i++) {
                 finnForm.insertItemAt(form[i], i);
-        }
-        else
-        {
+            }
+        } else {
             JComponent[] felt = new JComponent[]{finnForm, finnPakning};
-        
-            for(JComponent child: felt)
-            {
+
+            for (JComponent child : felt) {
                 child.setVisible(false);
                 JLabel merkelapp = Komponent.finnLabelTilFelt(this, child);
-                if(merkelapp != null)
+                if (merkelapp != null) {
                     merkelapp.setVisible(false);
+                }
             }
             /*gruppeFelt.setText("");
-            kategoriFelt.setText("");
-            atcFelt.setText("");*/
+             kategoriFelt.setText("");
+             atcFelt.setText("");*/
 
         }
     }
-    /*Oppdaterer innhold i ComboBox for styrke og gjør dem synlig/usynlig.*/
-    private void oppdaterStyrkeComboBox()
-    {
-        if(finnNavn.getSelectedIndex() > -1)
-        {
+
+    //Oppdaterer innhold i ComboBox for styrke og gjør dem synlig/usynlig.
+    private void oppdaterStyrkeComboBox() {
+        if (finnNavn.getSelectedIndex() > -1) {
             finnStyrke.setVisible(true);
             JLabel merkelapp = Komponent.finnLabelTilFelt(this, finnStyrke);
             merkelapp.setVisible(true);
             finnStyrke.removeAllItems();
-            String navn = (String)finnNavn.getSelectedItem();
+            String navn = (String) finnNavn.getSelectedItem();
             String[] styrke = parentFrame.getAlleMedisinStyrker(navn);
-            for(int i = 0; i < styrke.length; i++)
+            for (int i = 0; i < styrke.length; i++) {
                 finnStyrke.insertItemAt(styrke[i], i);
-            
-        }
-        else
-        {
+            }
+
+        } else {
             JComponent[] felt = new JComponent[]{finnStyrke, finnForm, finnPakning};
-        
-            for(JComponent child: felt)
-            {
+
+            for (JComponent child : felt) {
                 child.setVisible(false);
                 JLabel merkelapp = Komponent.finnLabelTilFelt(this, child);
-                if(merkelapp != null)
+                if (merkelapp != null) {
                     merkelapp.setVisible(false);
+                }
             }
             /*gruppeFelt.setText("");
-            kategoriFelt.setText("");
-            atcFelt.setText("");*/
+             kategoriFelt.setText("");
+             atcFelt.setText("");*/
         }
     }
+
     //Oppdaterer medisinlisten
-    private void oppdaterMedisiner()
-    {
+    private void oppdaterMedisiner() {
         String[] medisiner = parentFrame.getAlleMedisinnavn();
         finnNavn.removeAllItems();
-        for(int i = 0; i < medisiner.length; i++)
+        for (int i = 0; i < medisiner.length; i++) {
             finnNavn.insertItemAt(medisiner[i], i);
-        
+        }
+
         kategoriArray = parentFrame.skrivKatArray();
         kategoriVelger.removeAllItems();
         regKategoriVelger.removeAllItems();
-        for(int i = 0; i < kategoriArray.length; i++)
-        {
+        for (int i = 0; i < kategoriArray.length; i++) {
             kategoriVelger.insertItemAt(kategoriArray[i], i);
             regKategoriVelger.insertItemAt(kategoriArray[i], i);
         }
     }
-    /*Skjuler felt for editering av medisin, tar imot en container som alle 
-    komponentene ligger i.*/
-    private void skjulFelt(Container cont)
-    {
-        JComponent[] felt = new JComponent[]{gruppVelger, kategoriVelger, 
-            medisinNavn, medisinStyrke, medisinForm, medisinPakning, atc};
-        
-            for(JComponent child: felt)
-            {
-                child.setVisible(false);
-                JLabel merkelapp = Komponent.finnLabelTilFelt(cont, child);
-                if(merkelapp != null)
-                    merkelapp.setVisible(false);
-            }
 
-            medisinSpareKnapp.setVisible(false);
+    /*Skjuler felt for editering av medisin, tar imot en container som alle 
+     komponentene ligger i.*/
+    private void skjulFelt(Container cont) {
+        JComponent[] felt = new JComponent[]{gruppVelger, kategoriVelger,
+            medisinNavn, medisinStyrke, medisinForm, medisinPakning, atc};
+
+        for (JComponent child : felt) {
+            child.setVisible(false);
+            JLabel merkelapp = Komponent.finnLabelTilFelt(cont, child);
+            if (merkelapp != null) {
+                merkelapp.setVisible(false);
+            }
+        }
+
+        medisinSpareKnapp.setVisible(false);
     }
+
     private class KnappeLytterMedisin implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == finnMedisinKnapp) {
-                finnMedisin();               
-            } else if(e.getSource() == finnNavn)
+                finnMedisin();
+            } else if (e.getSource() == finnNavn) {
                 oppdaterStyrkeComboBox();
-            else if(e.getSource() == finnStyrke)
+            } else if (e.getSource() == finnStyrke) {
                 oppdaterFormComboBox();
-            else if(e.getSource() == finnForm)
+            } else if (e.getSource() == finnForm) {
                 oppdaterPakningComboBox();
-            else if (e.getSource() == seMedisinListeKnapp) {
+            } else if (e.getSource() == seMedisinListeKnapp) {
                 skrivListe();
             } else if (e.getSource() == medisinSpareKnapp || e.getSource() == atc) {
                 updateMedisin();

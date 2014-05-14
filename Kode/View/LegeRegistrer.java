@@ -1,35 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/*Dette er GUI for registering av lege. Klassen arver JPanel. Den er en del av
+ Legekontorvinduet(Brukes av LegekontorVindu). Laget av Hallbjørn Storruste
+ s165519 Siste versjon 28-04-2014*/
 package View;
 
 import View.util.*;
 import Model.Lege;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.Arrays;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 
-/**
- * *Dette er GUI for registering av lege. Klassen arver JPanel. Den er en del av
- * Legekontorvinduet(Brukes av LegekontorVindu). Laget av Hallbjørn Storruste
- * s165519 Siste versjon 28-04-2014
- *
- * @author Hallbjørn
- */
 public class LegeRegistrer extends JPanel {
 
     private LegeRegSuper parentFrame;
@@ -89,7 +69,7 @@ public class LegeRegistrer extends JPanel {
 
         error = new JLabel("");
         error.setForeground(Komponent.feilTekst);
-        
+
         registrerKnapp = new JButton("Registrer");
         registrerKnapp.addActionListener(knappeLytter);
 
@@ -124,18 +104,18 @@ public class LegeRegistrer extends JPanel {
         String postnr = postnrFelt.getText();
         String poststed = poststedFelt.getText();
         String arbeidssted = arbstedFelt.getText();
-        
-        if(!Komponent.riktigEpost(epost) || !Komponent.riktigEpost(epostigjen)){
+
+        if (!Komponent.riktigEpost(epost) || !Komponent.riktigEpost(epostigjen)) {
             String melding = "Epost er ikke på formen noen@eksempel.no!";
             Komponent.popup(parentFrame, melding);
-        } else if(!Postnummer.riktigPostNr(postnr)){
+        } else if (!Postnummer.riktigPostNr(postnr)) {
             String melding = "Postnummer må inneholde fire siffer (0-9)!";
             Komponent.popup(parentFrame, melding);
             poststedFelt.setText("");
-        } else if(Poststed.finnPoststed(postnr) == null){
+        } else if (Poststed.finnPoststed(postnr) == null) {
             String melding = "Postnummeret eksisterer ikke!";
-             Komponent.popup(parentFrame, melding);
-             poststedFelt.setText("");
+            Komponent.popup(parentFrame, melding);
+            poststedFelt.setText("");
         } else if (!epost.equals(epostigjen)) {
             String melding = "Epostene er ikke like!";
             Komponent.popup(parentFrame, melding);
@@ -186,44 +166,37 @@ public class LegeRegistrer extends JPanel {
             }
         }
     }
-    
+
     private class FeltLytter extends FocusAdapter {
 
         @Override
         public void focusLost(FocusEvent e) {
-            if(e.getSource() == epostFelt || e.getSource() == epostigjenFelt)
-            {
-                JTextField felt = (JTextField)e.getSource();
-                if(Komponent.riktigEpost(felt.getText())){
+            if (e.getSource() == epostFelt || e.getSource() == epostigjenFelt) {
+                JTextField felt = (JTextField) e.getSource();
+                if (Komponent.riktigEpost(felt.getText())) {
                     felt.setForeground(Komponent.rettTekst);
                     error.setText("");
+                } else {
+                    felt.setForeground(Komponent.feilTekst);
+                    error.setText("Vennligst skriv epost på formen noen@eksempel.no.");
                 }
-                else{
-                     felt.setForeground(Komponent.feilTekst);
-                     error.setText("Vennligst skriv epost på formen noen@eksempel.no.");
-                }
-            }
-            
-            else if(e.getSource() == postnrFelt)
-            {
+            } else if (e.getSource() == postnrFelt) {
                 String postNr = postnrFelt.getText();
-                if(!Postnummer.riktigPostNr(postNr)){
+                if (!Postnummer.riktigPostNr(postNr)) {
                     postnrFelt.setForeground(Komponent.feilTekst);
                     error.setText("Vennligst skriv postnummer med fire siffer (0-9).");
                     poststedFelt.setText("");
-                }
-                else if(Poststed.finnPoststed(postNr) == null){
+                } else if (Poststed.finnPoststed(postNr) == null) {
                     postnrFelt.setForeground(Komponent.feilTekst);
                     error.setText("Postnummeret eksisterer ikke!");
                     poststedFelt.setText("");
-                }
-                else{
+                } else {
                     postnrFelt.setForeground(Komponent.rettTekst);
                     error.setText("");
-                    poststedFelt.setText( Poststed.finnPoststed(postNr));
+                    poststedFelt.setText(Poststed.finnPoststed(postNr));
                 }
             }
-            
+
         }
     }
 

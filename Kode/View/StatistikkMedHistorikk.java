@@ -1,3 +1,6 @@
+/*Denne klassen upprättar alla komponenter till medisin historikk fanan.
+ Laget av Adrian Westlund s198571.
+ Siste versjon 14-05-2014*/
 package View;
 
 import Controller.ReseptComparator;
@@ -620,7 +623,6 @@ public class StatistikkMedHistorikk extends JPanel {
 
     private class ListLytter implements ListSelectionListener {
 
-        @Override
         public void valueChanged(ListSelectionEvent e) {
             if (e.getSource() == personList) {
                 reseptList.setSelectedIndex(-1);

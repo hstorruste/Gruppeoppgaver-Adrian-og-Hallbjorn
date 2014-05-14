@@ -1,3 +1,6 @@
+/*Denne klassen upprättar alla komponenter till statistikk fanan.
+  Laget av Adrian Westlund s198571.
+  Siste versjon 14-05-2014*/
 package View;
 
 import Model.Medisin;
@@ -162,24 +165,30 @@ public class Statistikk extends JPanel {
         inn = liste.toArray(inn);
         for (int i = 0; i < inn.length; i++) {
             if (!finnes(inn[i], nyMedisinList)) {
-                if ( antall < RADER)
-                listModell.addElement(inn[i]);
-                else{
+                if (antall < RADER) {
+                    antall++;
+                    listModell.addElement(inn[i]);
+                } else {
                     String melding = "Du kan bare leggetil " + RADER + " elementer.";
                     Komponent.popup(parentFrame, melding);
                 }
-                   
+
             }
         }
     }
 
+    //Fjerner en eller flere navn fra nyMedisinList.
     private void fjernElement() {
-        String fjern = nyMedisinList.getSelectedValue();
-        listModell.removeElement(fjern);
+        java.util.List<String> liste = nyMedisinList.getSelectedValuesList();
+        String[] fjern = new String[liste.size()];
+        fjern = liste.toArray(fjern);
+        for (int i = 0; i < fjern.length; i++) {
+            listModell.removeElement(fjern[i]);
+        }
     }
 
+    //Setter inn verdier i tabellen.
     private void lageTabell() {
-
         String navn;
 
         for (int i = 0; i < listModell.size(); i++) {
@@ -189,12 +198,14 @@ public class Statistikk extends JPanel {
             Integer[] nummer;
             nummer = finnResepter(navn, aar);
             for (int j = 1; j < KOLONNER; j++) {
-                tabell.getModel().setValueAt(nummer[j-1], i, j);
-            
+                tabell.getModel().setValueAt(nummer[j - 1], i, j);
+
             }
         }
     }
 
+    /*Finner hur många resepter som är skrivet på navnet 
+     som sänds med på varje månad på året som sänds med.*/
     private Integer[] finnResepter(String navn, int aar) {
 
         Medisin[] medisinListe;
