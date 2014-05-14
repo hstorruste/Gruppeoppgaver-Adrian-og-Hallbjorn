@@ -121,6 +121,7 @@ public class Statistikk extends JPanel {
         leggTilPanel.add(comboBoxKnappPanel, BorderLayout.PAGE_END);
 
         tabell = new JTable(tabellModell);
+        tabell.setEnabled(false);
 
         JPanel statistikk = new JPanel(new BorderLayout());
         statistikk.add(leggTilPanel, BorderLayout.PAGE_START);
