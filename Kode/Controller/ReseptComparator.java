@@ -2,6 +2,7 @@ package Controller;
 
 import Model.*;
 import java.io.*;
+import java.text.DateFormat;
 import java.text.RuleBasedCollator;
 import java.util.Comparator;
 
@@ -40,10 +41,11 @@ public class ReseptComparator implements Comparator<Resept>, Serializable {
     }
 
     @Override
-    /*Sammenligner reseptene på reseptnummer.*/
+    /*Sammenligner reseptene på dato de er utskrevet.*/
     public int compare(Resept r1, Resept r2) {
-        String resept1 = String.valueOf(r1.getReseptNr());
-        String resept2 = String.valueOf(r2.getReseptNr());
+                
+        String resept1 = String.valueOf(r1.getDato().getTimeInMillis());
+        String resept2 = String.valueOf(r2.getDato().getTimeInMillis());
 
         int d = kollator.compare(resept1, resept2);
 

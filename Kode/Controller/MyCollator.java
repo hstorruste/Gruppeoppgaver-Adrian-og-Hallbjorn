@@ -4,7 +4,7 @@ package Controller;
  * Denne klassen lager en tegnrekkefølge som gjelder for Norge og Sverige. Den
  * har static metode som returnerer en RuleBasedCollator. Den brukes for å
  * initialisere collatorer i serialiserte objekter. 
- * Laget av Hallbjørn Storruste
+ * Laget av Hallbjørn Storruste s165519
  * Siste versjon: 08-04-2014
  *
  * @author Hallbjørn

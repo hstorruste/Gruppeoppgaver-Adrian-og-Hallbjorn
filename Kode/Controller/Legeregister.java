@@ -3,7 +3,7 @@ package Controller;
 /**
  * Denne klassen legger leger inn i et register(TreeSet) og gjør operasjoner mot
  * den. 
- * Laget av Hallbjørn Storruste 
+ * Laget av Hallbjørn Storruste s165519
  * Siste versjon: 08-04-2014
  *
  * @author Hallbjørn

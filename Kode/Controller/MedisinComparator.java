@@ -2,7 +2,7 @@ package Controller;
 
 /**
  * Dette er en comparator for medisin-objekter. 
- * Laget av Hallbjørn Storruste
+ * Laget av Hallbjørn Storruste s165519
  * Siste versjon: 06-05-2014
  *
  * @author Hallbjørn

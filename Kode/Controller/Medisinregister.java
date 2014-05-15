@@ -2,7 +2,7 @@ package Controller;
 
 /**
  * Denne klassen legger medisiner inn i et register og gjør operasjoner mot den.
- * Laget av Hallbjørn Storruste 
+ * Laget av Hallbjørn Storruste s165519
  * Siste versjon: 06-05-2014
  *
  * @author Hallbjørn
