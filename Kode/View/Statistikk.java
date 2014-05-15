@@ -219,7 +219,7 @@ public class Statistikk extends JPanel {
         }
 
         Integer[] antallResept = new Integer[ANTALLMAANEDER];
-        Arrays.fill(antallResept, 0);
+        Arrays.fill(antallResept, new Integer(0));
         Resept[] reseptListe;
         Pasient[] pasientListe = parentFrame.getPasientListe(medisinListe);
 

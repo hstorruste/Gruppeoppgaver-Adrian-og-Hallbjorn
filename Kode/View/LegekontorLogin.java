@@ -44,7 +44,7 @@ public class LegekontorLogin extends JTabbedPane {
         LegeRegistrer registrerGUI = new LegeRegistrer(parentFrame);
         registrer.add(registrerGUI);
 
-        addTab("Login", login);
+        addTab("Innlogging", login);
         addTab("Registrer", registrer);
     }
 
