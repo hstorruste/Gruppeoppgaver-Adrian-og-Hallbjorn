@@ -1,9 +1,4 @@
 package Controller;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * Denne klassen legger medisiner inn i et register og gjør operasjoner mot den.
@@ -26,13 +21,12 @@ public class Medisinregister implements Serializable {
         komp = new MedisinComparator();
         medisinregister = new TreeSet<>(komp);
     }
-   
+
     //Returnerer medisinregisteret
-    public SortedSet<Medisin> getMedisinregister()
-    {
+    public SortedSet<Medisin> getMedisinregister() {
         return medisinregister;
     }
-    
+
     /*Oppretter og setter inn et Medisin-objekt. Returnerer true hvis vellykket.*/
     public boolean settInn(String navn, String kat, String gruppe,
             String styrke, String form, String pakning, String actNr) {
@@ -40,271 +34,239 @@ public class Medisinregister implements Serializable {
 
         return settInn(ny);
     }
-    /*Setter inn et nytt Medisin-objekt i medisinregisteret.*/
 
+    /*Setter inn et nytt Medisin-objekt i medisinregisteret.*/
     public boolean settInn(Medisin ny) {
         if (ny == null) {
             return false;
         }
         return medisinregister.add(ny);
     }
-    
+
     //Returnerer et Stringarray med alle medisinnavn.
-    public String[] getAlleMedisinnavn()
-    {
+    public String[] getAlleMedisinnavn() {
         int size = medisinregister.size();
-        
+
         String[] navn = new String[size];
-        int i =0;
-        
+        int i = 0;
+
         Iterator<Medisin> iterator = medisinregister.iterator();
         Medisin runner = null;
         while (iterator.hasNext()) {
             runner = iterator.next();
             String runnerNavn = runner.getNavn();
-            for(int j = 0; j <= i; j++)
-            {
-                if(navn[j] == null)
-                {
+            for (int j = 0; j <= i; j++) {
+                if (navn[j] == null) {
                     navn[i] = runner.getNavn();
                     i++;
                     break;
+                } else if (navn[j].equals(runnerNavn)) {
+                    break;
                 }
-                else
-                    if(navn[j].equals(runnerNavn))
-                        break;   
-            } 
+            }
         }
         navn = Arrays.copyOfRange(navn, 0, i);
         return navn;
     }
-    
-    
+
     //Returnerer et Stringarray med alle medisinnavn innen en kategori.
-    public String[] getAlleMedisinnavniKategori(String kategori)
-    {
+    public String[] getAlleMedisinnavniKategori(String kategori) {
         TreeSet<Medisin> medSet = this.finnMedisiniKategori(kategori);
         String[] navn = this.finnMedisinnavn(medSet);
-        
+
         return navn;
     }
-    
-    
+
     //Returnerer et Stringarray med alle medisinnavn innen en gruppe.
-    public String[] getAlleMedisinnavniGruppe(String gruppe)
-    {
+    public String[] getAlleMedisinnavniGruppe(String gruppe) {
         TreeSet<Medisin> medGruppe = this.finnMedisiniGruppe(gruppe);
 
         String[] navn = this.finnMedisinnavn(medGruppe);
 
         return navn;
     }
-    
-     //Returnerer et Stringarray med alle medisinnavn innen en gruppe og en kategori.
-    public String[] getAlleMedisinnavniGruppeKategori(String gruppe, String kategori)
-    {
+
+    //Returnerer et Stringarray med alle medisinnavn innen en gruppe og en kategori.
+    public String[] getAlleMedisinnavniGruppeKategori(String gruppe, String kategori) {
         TreeSet<Medisin> medSet = this.finnMedisiniGruppe(gruppe);
         medSet = this.finnMedisiniKategori(kategori, medSet);
         String[] navn = this.finnMedisinnavn(medSet);
-        
+
         return navn;
     }
+
     //Returnerer en Stringarray med alle pakninger innen en medisin, styrke og legemiddelform.
-    public String[] getAlleMedisinPakninger(String navn, String styrke, String form)
-    {
+    public String[] getAlleMedisinPakninger(String navn, String styrke, String form) {
         TreeSet<Medisin> navnSett = finnMedisin(navn);
-        
+
         int size = navnSett.size();
-        
+
         String[] pakning = new String[size];
-        int i =0;
-        
+        int i = 0;
+
         Iterator<Medisin> iterator = navnSett.iterator();
         Medisin runner = null;
         while (iterator.hasNext()) {
             runner = iterator.next();
-            if(runner.getStyrke().equals(styrke) 
-                    && runner.getForm().equals(form)){ 
+            if (runner.getStyrke().equals(styrke)
+                    && runner.getForm().equals(form)) {
                 String runnerPakning = runner.getPakning();
-                for(int j = 0; j <= i; j++)
-                {
-                    if(pakning[j] == null)
-                    {
+                for (int j = 0; j <= i; j++) {
+                    if (pakning[j] == null) {
                         pakning[i] = runnerPakning;
                         i++;
                         break;
+                    } else if (pakning[j].equals(runnerPakning)) {
+                        break;
                     }
-                    else
-                        if(pakning[j].equals(runnerPakning))
-                            break;   
-                } 
+                }
             }
         }
         pakning = Arrays.copyOfRange(pakning, 0, i);
         return pakning;
     }
+
     //Returnerer en Stringarray med alle legemiddelformer innen en medisin og styrke.
-    public String[] getAlleMedisinFormer(String navn, String styrke)
-    {
+    public String[] getAlleMedisinFormer(String navn, String styrke) {
         TreeSet<Medisin> navnSett = finnMedisin(navn);
-        
+
         int size = navnSett.size();
-        
+
         String[] form = new String[size];
-        int i =0;
-        
+        int i = 0;
+
         Iterator<Medisin> iterator = navnSett.iterator();
         Medisin runner = null;
         while (iterator.hasNext()) {
             runner = iterator.next();
-            if(runner.getStyrke().equals(styrke)){ 
+            if (runner.getStyrke().equals(styrke)) {
                 String runnerForm = runner.getForm();
-                for(int j = 0; j <= i; j++)
-                {
-                    if(form[j] == null)
-                    {
+                for (int j = 0; j <= i; j++) {
+                    if (form[j] == null) {
                         form[i] = runnerForm;
                         i++;
                         break;
+                    } else if (form[j].equals(runnerForm)) {
+                        break;
                     }
-                    else
-                        if(form[j].equals(runnerForm))
-                            break;   
-                } 
+                }
             }
         }
         form = Arrays.copyOfRange(form, 0, i);
         return form;
     }
-     //Returnerer et Stringarray med alle styrker innen en medisin.
-    public String[] getAlleMedisinStyrker(String navn)
-    {
+
+    //Returnerer et Stringarray med alle styrker innen en medisin.
+    public String[] getAlleMedisinStyrker(String navn) {
         TreeSet<Medisin> navnSett = finnMedisin(navn);
-        
+
         int size = navnSett.size();
-        
+
         String[] styrke = new String[size];
-        int i =0;
-        
+        int i = 0;
+
         Iterator<Medisin> iterator = navnSett.iterator();
         Medisin runner = null;
         while (iterator.hasNext()) {
             runner = iterator.next();
             String runnerStyrke = runner.getStyrke();
-            for(int j = 0; j <= i; j++)
-            {
-                if(styrke[j] == null)
-                {
+            for (int j = 0; j <= i; j++) {
+                if (styrke[j] == null) {
                     styrke[i] = runnerStyrke;
                     i++;
                     break;
+                } else if (styrke[j].equals(runnerStyrke)) {
+                    break;
                 }
-                else
-                    if(styrke[j].equals(runnerStyrke))
-                        break;   
-            } 
+            }
         }
         styrke = Arrays.copyOfRange(styrke, 0, i);
         return styrke;
     }
-    
+
     //Returnerer et array med alle de ulike kategorinavnene til medisinene.
-    public String[] getAlleKategorier()
-    {
+    public String[] getAlleKategorier() {
         int size = medisinregister.size();
-        String[] kategorier = new String[size]; 
+        String[] kategorier = new String[size];
         int i = 0;
-        
+
         Iterator<Medisin> iterator = medisinregister.iterator();
         Medisin runner = null;
         while (iterator.hasNext()) {
             runner = iterator.next();
             String runnerKat = runner.getKategori();
-            for(int j = 0; j <= i; j++)
-            {
-                if(kategorier[j] == null)
-                {
+            for (int j = 0; j <= i; j++) {
+                if (kategorier[j] == null) {
                     kategorier[j] = runner.getKategori();
                     i++;
                     break;
+                } else if (kategorier[j].equals(runnerKat)) {
+                    break;
                 }
-                else
-                    if(kategorier[j].equals(runnerKat))
-                        break;    
             }
         }
         kategorier = Arrays.copyOfRange(kategorier, 0, i);
-        
-        return kategorier;   
+
+        return kategorier;
     }
-    
+
     //Returnerer et array med alle de ulike kategorinavnene innen en gruppe.
-    public String[] getAlleKategorieriGruppe(String gruppe)
-    {
+    public String[] getAlleKategorieriGruppe(String gruppe) {
         int size = medisinregister.size();
-        String[] kategorier = new String[size]; 
+        String[] kategorier = new String[size];
         int i = 0;
-        
+
         Iterator<Medisin> iterator = medisinregister.iterator();
         Medisin runner = null;
         while (iterator.hasNext()) {
             runner = iterator.next();
-            if(runner.getGrupp().equals(gruppe))
-            {
+            if (runner.getGrupp().equals(gruppe)) {
                 String runnerKat = runner.getKategori();
-                for(int j = 0; j <= i; j++)
-                {
-                    if(kategorier[j] == null)
-                    {
+                for (int j = 0; j <= i; j++) {
+                    if (kategorier[j] == null) {
                         kategorier[j] = runner.getKategori();
                         i++;
                         break;
+                    } else if (kategorier[j].equals(runnerKat)) {
+                        break;
                     }
-                    else
-                        if(kategorier[j].equals(runnerKat))
-                            break;    
                 }
             }
         }
         kategorier = Arrays.copyOfRange(kategorier, 0, i);
-        
-        return kategorier;   
+
+        return kategorier;
     }
-    
+
     //Finner alle medisinnavn i en TreeSet<Medisin>.
-    private String[] finnMedisinnavn(TreeSet<Medisin> medisiner)
-    {
+    private String[] finnMedisinnavn(TreeSet<Medisin> medisiner) {
         int size = medisiner.size();
-        
+
         String[] navn = new String[size];
-        int i =0;
-        
+        int i = 0;
+
         Iterator<Medisin> iterator = medisiner.iterator();
         Medisin runner = null;
         while (iterator.hasNext()) {
             runner = iterator.next();
             String runnerNavn = runner.getNavn();
-            for(int j = 0; j <= i; j++)
-            {
-                if(navn[j] == null)
-                {
+            for (int j = 0; j <= i; j++) {
+                if (navn[j] == null) {
                     navn[i] = runner.getNavn();
                     i++;
                     break;
+                } else if (navn[j].equals(runnerNavn)) {
+                    break;
                 }
-                else
-                    if(navn[j].equals(runnerNavn))
-                        break;   
-             }
+            }
         }
         navn = Arrays.copyOfRange(navn, 0, i);
         return navn;
     }
-   
+
     /*Finner og returnerer en medisin i registeret basert på navnet, styrken,
      legemiddelformen og pakningsstørrelsen.
-     Returnerer 'null' hvis ikke den finnes. */
-
+     Returnerer 'null' hvis den ikke finnes. */
     public Medisin finnMedisin(String navn, String styrke, String form, String pakning) {
         Iterator<Medisin> iterator = medisinregister.iterator();
         Medisin runner = null;
@@ -312,21 +274,22 @@ public class Medisinregister implements Serializable {
         while (iterator.hasNext()) {
             runner = iterator.next();
             if (runner.getNavn().equals(navn) && runner.getStyrke().equals(styrke)
-                    &&runner.getForm().equals(form) && runner.getPakning().equals(pakning)) {
+                    && runner.getForm().equals(form) && runner.getPakning().equals(pakning)) {
                 return runner;
             }
         }
         return null;
     }
-    
-     /*Finner en eller flere medisiner som begynner med det aktuelle navnet.*/
+
+    /*Finner en eller flere medisiner som begynner med det aktuelle navnet.*/
     public Medisin[] finnMedisinNavn(String navn) {
         TreeSet<Medisin> medisinSet = finnMedisin(navn);
         Medisin[] medisiner = new Medisin[medisinSet.size()];
         return medisinSet.toArray(medisiner);
-        
+
     }
     /*Finner en eller flere medisiner som begynner med det aktuelle navnet.*/
+
     public TreeSet<Medisin> finnMedisin(String navn) {
         Iterator<Medisin> iterator = medisinregister.iterator();
         TreeSet<Medisin> medisinSet = new TreeSet<>(komp);
@@ -342,17 +305,18 @@ public class Medisinregister implements Serializable {
         }
         return medisinSet;
     }
-    
+
     /*Finner og returnerer alle medisiner i den eller de gruppene 
-     som passer med det aktuelle regulære uttrykket.*/
+     som passer med det aktuelle gruppen.*/
     public Medisin[] finnMedisinGruppe(String gruppe) {
-        TreeSet<Medisin> medisinSet = finnMedisiniGruppe(gruppe);     
+        TreeSet<Medisin> medisinSet = finnMedisiniGruppe(gruppe);
         Medisin[] medisiner = new Medisin[medisinSet.size()];
         return medisinSet.toArray(medisiner);
-        
+
     }
     /*Finner og returnerer alle medisiner i den eller de gruppene 
      som passer med det aktuelle regulære uttrykket.*/
+
     public TreeSet<Medisin> finnMedisiniGruppe(String regex) {
         Iterator<Medisin> iterator = medisinregister.iterator();
         TreeSet<Medisin> medisinSet = new TreeSet<>(komp);
@@ -367,43 +331,42 @@ public class Medisinregister implements Serializable {
         }
         return medisinSet;
     }
-    
+
     /*Finner og returnerer alle medisiner innen den eller de kategorier
-     som passer med det aktuelle regulære uttrykket.*/
-   public Medisin[] finnMedisinKategori(String kategori) {
+     som passer med den aktuelle kategorien.*/
+    public Medisin[] finnMedisinKategori(String kategori) {
         TreeSet<Medisin> medisinSet = finnMedisiniKategori(kategori);
         Medisin[] medisiner = new Medisin[medisinSet.size()];
         return medisinSet.toArray(medisiner);
     }
     /*Finner og returnerer alle medisiner innen den eller de kategorier
-     som passer med det aktuelle regulære uttrykket i det TreeSet som sendes med*/
+     som passer med den aktuelle kategorien i det TreeSet som sendes med*/
 
-    public TreeSet<Medisin> finnMedisiniKategori(String regex, TreeSet<Medisin> medreg) {
+    public TreeSet<Medisin> finnMedisiniKategori(String kat, TreeSet<Medisin> medreg) {
         Iterator<Medisin> iterator = medreg.iterator();
         TreeSet<Medisin> medisinSet = new TreeSet<>(komp);
         Medisin runner;
 
         while (iterator.hasNext()) {
             runner = iterator.next();
-            if (runner.getKategori().equals(regex)) {
+            if (runner.getKategori().equals(kat)) {
                 medisinSet.add(runner);
             }
 
         }
         return medisinSet;
     }
-    
+
     /*Finner og returnerer alle medisiner innen den eller de kategorier
      som passer med det aktuelle regulære uttrykket.*/
-
-    public TreeSet<Medisin> finnMedisiniKategori(String regex) {
+    public TreeSet<Medisin> finnMedisiniKategori(String kat) {
         Iterator<Medisin> iterator = medisinregister.iterator();
         TreeSet<Medisin> medisinSet = new TreeSet<>(komp);
         Medisin runner;
 
         while (iterator.hasNext()) {
             runner = iterator.next();
-            if (runner.getKategori().equals(regex)) {
+            if (runner.getKategori().equals(kat)) {
                 medisinSet.add(runner);
             }
 

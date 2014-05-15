@@ -331,7 +331,7 @@ public class StatistikkMedHistorikk extends JPanel {
 
                     legeListe = parentFrame.getLegeListe(medisinListe);
                     if (legeListe.length == 0) {
-                        String melding = "Finner ikke noen lege med dem medisinnerna.";
+                        String melding = "Finner ikke noen lege med de medisinene.";
                         Komponent.popup(parentFrame, melding);
                     } else {
                         personAlt = new String[legeListe.length];
@@ -346,7 +346,7 @@ public class StatistikkMedHistorikk extends JPanel {
 
                     legeListe = parentFrame.getLegeListe(medisinListe);
                     if (legeListe.length == 0) {
-                        String melding = "Finner ikke noen lege med dem medisinerna.";
+                        String melding = "Finner ikke noen lege med de medisinene.";
                         Komponent.popup(parentFrame, melding);
                     } else {
                         personAlt = new String[legeListe.length];
@@ -395,7 +395,7 @@ public class StatistikkMedHistorikk extends JPanel {
 
                     legeListe = parentFrame.finnLegeNavn(etternavn, fornavn, medisinListe);
                     if (legeListe.length == 0) {
-                        String melding = "Finner ikke noen lege med det navnet eller medisinerna";
+                        String melding = "Finner ikke noen lege med det navnet eller medisinene";
                         Komponent.popup(parentFrame, melding);
                     } else {
                         personAlt = new String[legeListe.length];
@@ -410,7 +410,7 @@ public class StatistikkMedHistorikk extends JPanel {
 
                     legeListe = parentFrame.finnLegeNavn(etternavn, fornavn, medisinListe);
                     if (legeListe.length == 0) {
-                        String melding = "Finner ikke noen lege med det navnet eller medisinerna";
+                        String melding = "Finner ikke noen lege med det navnet eller medisinene";
                         Komponent.popup(parentFrame, melding);
                     } else {
                         personAlt = new String[legeListe.length];
@@ -455,7 +455,7 @@ public class StatistikkMedHistorikk extends JPanel {
 
                     pasientListe = parentFrame.getPasientListe(medisinListe);
                     if (pasientListe.length == 0) {
-                        String melding = "Finner ikke noe pasienter med dem medisinnerna.";
+                        String melding = "Finner ikke noe pasienter med de medisinene.";
                         Komponent.popup(parentFrame, melding);
                     } else {
                         personAlt = new String[pasientListe.length];
@@ -470,7 +470,7 @@ public class StatistikkMedHistorikk extends JPanel {
 
                     pasientListe = parentFrame.getPasientListe(medisinListe);
                     if (pasientListe.length == 0) {
-                        String melding = "Finner ikke noen pasient med dem medisinerna.";
+                        String melding = "Finner ikke noen pasient med de medisinene.";
                         Komponent.popup(parentFrame, melding);
                     } else {
                         personAlt = new String[pasientListe.length];
@@ -519,7 +519,7 @@ public class StatistikkMedHistorikk extends JPanel {
 
                     pasientListe = parentFrame.finnPasientNavn(etternavn, fornavn, medisinListe);
                     if (pasientListe.length == 0) {
-                        String melding = "Finner ikke noen pasient med det navnet eller medisinerna.";
+                        String melding = "Finner ikke noen pasient med det navnet eller medisinene.";
                         Komponent.popup(parentFrame, melding);
                     } else {
                         personAlt = new String[pasientListe.length];
@@ -534,7 +534,7 @@ public class StatistikkMedHistorikk extends JPanel {
 
                     pasientListe = parentFrame.finnPasientNavn(etternavn, fornavn, medisinListe);
                     if (pasientListe.length == 0) {
-                        String melding = "Finner ikke noen pasient med det navnet eller medisinerna.";
+                        String melding = "Finner ikke noen pasient med det navnet eller medisinene.";
                         Komponent.popup(parentFrame, melding);
                     } else {
                         personAlt = new String[pasientListe.length];
