@@ -1,13 +1,9 @@
 package Controller;
 
-/**
- * Denne klassen legger resepter inn i register og gjør oprasjoner mot den. Den
- * har en tellvariabel for hvor mange resepter pasienten har fått. 
- * Laget av Hallbjørn Storruste s165519
- * Siste versjon: 30-04-2014
- *
- * @author Hallbjørn
- */
+/*Denne klassen legger resepter inn i register og gjør oprasjoner mot den. Den
+ har en tellvariabel for hvor mange resepter pasienten har fått. Laget av
+ Hallbjørn Storruste s165519 
+ Siste versjon: 30-04-2014 */
 import Model.*;
 import java.io.*;
 import java.util.*;
@@ -105,17 +101,25 @@ public class Reseptregister implements Serializable {
     }
     /*Finner og returnerer et array av resepter skrevet ut på den aktuelle 
      medisinen og for den aktuelle legen. Hvis lege objektet ikke eksisterer,
-     er 'null', så returnerers alle resepter med den gitte medisinen.*/
+     er 'null', så returnerers alle resepter med den gitte medisinen, eventuelt
+     alle resepter til pasienten hvis medisiner 'null'.
+     I tilfelle det fines en lege, men medisiner er 'null', så vil alle resepter
+     som er skrevet ut av legen returneres.*/
 
     public Resept[] finnReseptMedisin(Medisin[] medisiner, Lege lege) {
-        if (medisiner == null) {
+
+        if (medisiner == null && lege == null) {
             Resept[] resepter = new Resept[reseptregister.size()];
             return reseptregister.toArray(resepter);
-
         }
-        TreeSet<Resept> funnetResepter = new TreeSet<>(komp);
-        for (Medisin med : medisiner) {
-            funnetResepter.addAll(finnReseptAvMedisin(med));
+        TreeSet<Resept> funnetResepter = null;
+        if (medisiner != null) {
+            funnetResepter = new TreeSet<>(komp);
+
+            for (Medisin med : medisiner) {
+
+                funnetResepter.addAll(finnReseptAvMedisin(med));
+            }
         }
         if (lege != null) {
             funnetResepter = finnReseptAvLege(lege, funnetResepter);
