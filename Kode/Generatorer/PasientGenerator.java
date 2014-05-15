@@ -1,11 +1,4 @@
 package Generatorer;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**Dette er et vindu som fungerer som en pasientgenerator.
  * Laget av Hallbjørn Storruste
  * Siste versjon 08-04-2014
@@ -67,7 +60,7 @@ public class PasientGenerator {
                 dag = generator.nextInt(30) + 1;
 
         StringBuilder dato = new StringBuilder();
-        
+        //Legger til 0 foran dag, måned eller år hvis de er < 10.
         if(dag < 10)
             dato.append("0");
 
