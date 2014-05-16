@@ -1,4 +1,6 @@
-
+/*Detta är main-metoden till programet.
+ Läser först in filen data.dat och öppnar sen Legekontor, Admin, Apotek, Statistikk och Generator.
+ Siste versjon 15-05-2014*/
 
 import View.util.Komponent;
 import Generatorer.GeneratorVindu;
@@ -8,16 +10,8 @@ import java.awt.event.WindowEvent;
 import View.*;
 import java.io.*;
 
-
-/**
- *
- * @author Hallbjørn
- */
 public class Start {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
 
         Legeregister legeregister = new Legeregister();

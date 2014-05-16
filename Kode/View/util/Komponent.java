@@ -1,9 +1,9 @@
-package View.util;
 /*Denne klassen lager vanligt anvendte komponenter.
-Den har også noen andre hjelpemetoder for å forandre utseende til 
-brukergrensesnittet. Og metoder for å kontrollere gyldig epost og fødselsnummer.
+ Den har også noen andre hjelpemetoder for å forandre utseende til 
+ brukergrensesnittet. Og metoder for å kontrollere gyldig epost og fødselsnummer.
  Laget av Adrian Westlund 
  Siste versjon 25-04-2014*/
+package View.util;
 
 import javax.swing.*;
 import java.awt.*;
