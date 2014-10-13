@@ -1,4 +1,10 @@
-JavaSpring2014
+﻿JavaSpring2014
 ==============
 
-Prosjekt i Programutvikling for Adrian og Hallbjørn
+Innholder følgende gruppeoppgaver for Adrian og Hallbjørn:
+
+Prosjekt i Programutvikling våren 2014
+
+Obligatoriske oppgaver i Systemutvikling høsten 2014
+
+Obligatoriske oppgaver i Algoritmer og Datastukturer høsten 2014
