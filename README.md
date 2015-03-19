@@ -1,4 +1,4 @@
-﻿JavaSpring2014
+﻿Gruppeoppgaver for Adrian og Hallbjørn
 ==============
 
 Innholder følgende gruppeoppgaver for Adrian og Hallbjørn:
